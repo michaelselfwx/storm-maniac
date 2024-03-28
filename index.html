@@ -31,36 +31,80 @@
 
         "esri/symbols/SimpleFillSymbol",
 
-        "esri/geometry/Polygon",
-
-        "esri/geometry/Polyline",
-
         "esri/geometry/Point",
 
         "esri/widgets/Legend",
 
         "esri/widgets/Search"
 
-    ], function (esriConfig, Map, MapView, Graphic, GraphicsLayer, FeatureLayer, Editor, SimpleMarkerSymbol, Polygon, Polyline, SimpleFillSymbol, Point, Legend, Search) {
+    ], function (esriConfig, Map, MapView, Graphic, GraphicsLayer, FeatureLayer, Editor, SimpleMarkerSymbol, SimpleFillSymbol, Point, Legend, Search) {
 
         esriConfig.apiKey = "AAPKfb3b968ef66d4c848e795b3dd01897e8uTic-7qcXbjlpUVMGReQlWKWAjnWq5pH5r7mLxpcFbX1tfR5Y4bLBPhLOwFOm7NL";
         // esriConfig.apiKey = "";
                 // Create the map with the GraphicsLayer
-        const map = new Map({
+        var map = new Map({
             basemap: "topo-vector",
         });
 
-        const view = new MapView({
+        var view = new MapView({
         container: "viewDiv", // Reference to the scene div created in step 5
         map: map, // Reference to the map object created before the scene
-        zoom: 6, // Sets the zoom level based on level of detail (LOD), this is what I think looks the best
+        zoom: 7, // Sets the zoom level based on level of detail (LOD), this is what I think looks the best
         center: [-81.5158, 27.6648] // Sets the center point of view in lon/lat
         });
 
         // Create a new GraphicsLayer and add the graphic to it
         const graphicsLayer = new GraphicsLayer();
+        map.add(graphicsLayer);
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        var bounds = {
+            xmax: -79,
+            xmin: -85,
+            ymax: 31,
+            ymin: 25
+        };
+
+        function addLightningStrikes(data) {
+            // Create a new Graphic and add it to the GraphicsLayer
+            data.forEach(function(strike) {
+                var lon: strike.lon;
+                var lat: strike.lat;
+                
+                if (lon >= bounds.xmin && lon <= bounds.xmax && lat >=bounds.ymin && lat <= bounds.ymax) {
+                    var pointGraphic = new Graphic({
+                        geometry: {
+                            type: "point"
+                            longitude: lon,
+                            latitude: lat
+                        },
+                        symbol: {
+                            type: "simple-marker",
+                            color: "red",
+                            size: "5px"
+                        }
+                    });
+                    graphicsLayer.add(pointGraphic);
+                }
+            });
+        }
+        
+        // Fetch the lightning data from the AWS server
+        var url = "https://s3.amazonaws.com/noaa-goes16/GLM-L2-LCFA/2024/088/20/OR_GLM-L2-LCFA_G16_s20240882000000_e20240882000200_c20240882000220.nc";
+        
+        esriRequest(url, {
+            responseType: "arraybuffer"
+        }).then(function(response) {
+            // Convert array buffer to NewtCDF object
+            var netCDFData = response.data;
+
+            // Extract lightning data from netCDF data and convert it into JSON format
+            var lightningData = extractAndConvertToJSON(netCDFData);
+
+            // Add lightning strikes to the map
+            addLightningStrikes(lightningData);
+        }).catch(function(error) {
+            console.error('Error fetching lightning data:', error);
+        });
     });
   </script>
 
