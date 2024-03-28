@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Lightning Mapper</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="" />
+
+  <!-- calls for the arcgis api's CSS file and JS library. -->
+  <link rel="stylesheet" href="https://js.arcgis.com/4.25/esri/themes/light/main.css">
+  <script src="https://js.arcgis.com/4.25/"></script>
+
+  <!-- Adding the modules, API key, and map constant needed for a full screen map app -->
+  <script>
+
+    require([
+        "esri/config",
+        "esri/Map",
+        "esri/views/MapView",
+
+        // adding in the modules for the graphic and graphic layer
+        "esri/Graphic",
+        "esri/layers/GraphicsLayer",
+
+        //adding in the module for the feature layers
+        "esri/layers/FeatureLayer",
+
+        "esri/widgets/Editor",
+
+        "esri/symbols/SimpleMarkerSymbol",
+
+        "esri/symbols/SimpleFillSymbol",
+
+        "esri/geometry/Polygon",
+
+        "esri/geometry/Polyline",
+
+        "esri/geometry/Point",
+
+        "esri/widgets/Legend",
+
+        "esri/widgets/Search"
+
+    ], function (esriConfig, Map, MapView, Graphic, GraphicsLayer, FeatureLayer, Editor, SimpleMarkerSymbol, Polygon, Polyline, SimpleFillSymbol, Point, Legend, Search) {
+
+        esriConfig.apiKey = "AAPKfb3b968ef66d4c848e795b3dd01897e8uTic-7qcXbjlpUVMGReQlWKWAjnWq5pH5r7mLxpcFbX1tfR5Y4bLBPhLOwFOm7NL";
+        // esriConfig.apiKey = "";
+                // Create the map with the GraphicsLayer
+        const map = new Map({
+            basemap: "topo-vector",
+        });
+
+        const view = new MapView({
+        container: "viewDiv", // Reference to the scene div created in step 5
+        map: map, // Reference to the map object created before the scene
+        zoom: 10, // Sets the zoom level based on level of detail (LOD), this is what I think looks the best
+        center: [-97.7431, 30.2672] // Sets the center point of view in lon/lat
+        });
+
+        // Create a new GraphicsLayer and add the graphic to it
+        const graphicsLayer = new GraphicsLayer();
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
