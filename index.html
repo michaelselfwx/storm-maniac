@@ -102,11 +102,14 @@
         esriRequest(url, {
             responseType: "arraybuffer"
         }).then(function(response) {
-            // Convert array buffer to NewtCDF object
+            // Convert array buffer to NetCDF object
             var netCDFData = response.data;
 
             // Extract lightning data from netCDF data and convert it into JSON format
             var lightningData = extractAndConvertToJSON(netCDFData);
+
+            // Log the lightningData variable to the console
+            console.log(lightningData);
 
             // Add lightning strikes to the map
             addLightningStrikes(lightningData);
