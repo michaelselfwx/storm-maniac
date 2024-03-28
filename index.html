@@ -55,8 +55,15 @@
         });
 
         // Create a new GraphicsLayer and add the graphic to it
-        const graphicsLayer = new GraphicsLayer();
-        map.add(graphicsLayer);
+        var graphicsLayer = new GraphicsLayer();
+        // Log to check if graphicsLayer is properly created
+        console.log("graphicsLayers:", graphicsLayer);
+
+        try {
+            map.add(graphicsLayer);
+        }   catch (error) {
+            console.error('Error adding graphics layer:', error);   
+        }
 
         var bounds = {
             xmax: -79,
