@@ -6,15 +6,15 @@ The look of the application will consist mainly of a map of their nearby area (u
 
 Databases: 
 
-Basemap
-Esri.basemap (topo-vector)
+Basemap -
+Esri.basemap (topo-vector) -
 https://js.arcgis.com/4.25/ 
 
-GLM Lightning Strike Data
-NOAA AWS OpenData
+GLM Lightning Strike Data -
+NOAA AWS OpenData -
 https://registry.opendata.aws/noaa-goes/ 
 
-Other weather data
-NOAA/NWS Reports
+Other weather data -
+NOAA/NWS Reports -
 https://mesonet.agron.iastate.edu/request/download 
 
