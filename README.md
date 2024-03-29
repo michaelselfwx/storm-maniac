@@ -1,4 +1,4 @@
-# lightning_mapper
+# spc_mapper
 
 For my project application, I want to use my meteorology knowledge and mix it with my newly learned GIS programming skills. I will create an application that shows the live lightning-strike data from various sources, while also allowing the user to add reports of lightning, wind-damage, rainfall, and many other weather impacts. 
 
