@@ -36,7 +36,7 @@
 
         closestHour = ('0' + Math.floor(closestHour)).slice(-2) + ('0' + Math.round((closestHour % 1) * 60)).slice(-2);
 
-        var formattedDateTime = year + month + day + '_' + closestHour + '00';
+        var formattedDateTime = year + month + day + '_' + closestHour;
 
         var url = "https://michaelself10.tail8c79a.ts.net/https://www.spc.noaa.gov/products/outlook/archive/2024/day1otlk_" + formattedDateTime + "_cat.lyr.geojson";
 
