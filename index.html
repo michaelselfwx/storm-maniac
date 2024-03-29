@@ -9,7 +9,6 @@
   <!-- calls for the arcgis api's CSS file and JS library. -->
   <link rel="stylesheet" href="https://js.arcgis.com/4.25/esri/themes/light/main.css">
   <script src="https://js.arcgis.com/4.25/"></script>
-  <script src="https://github.com/michaelselfwx/lightning_mapper/blob/main/jest.config.js"></script>
 
   <!-- Adding the modules, API key, and map constant needed for a full screen map app -->
   <script>
@@ -18,37 +17,12 @@
         "esri/Map",
         "esri/views/MapView",
         "esri/request",
+        "esri/layers/GeoJSONLayer"
 
-        // adding in the modules for the graphic and graphic layer
-        "esri/Graphic",
-        "esri/layers/GraphicsLayer",
-
-        //adding in the module for the feature layers
-        "esri/layers/FeatureLayer",
-
-        "esri/widgets/Editor",
-
-        "esri/symbols/SimpleMarkerSymbol",
-
-        "esri/symbols/SimpleFillSymbol",
-
-        "esri/geometry/Point",
-
-        "esri/widgets/Legend",
-
-        "esri/widgets/Search"
-
-    ], function (esriConfig, Map, MapView, Graphic, GraphicsLayer, FeatureLayer, Editor, SimpleMarkerSymbol, SimpleFillSymbol, Point, Legend, Search, esriRequest) {
+    ], function (esriConfig, Map, MapView, GeoJSONLayer) {
 
         esriConfig.apiKey = "AAPKfb3b968ef66d4c848e795b3dd01897e8uTic-7qcXbjlpUVMGReQlWKWAjnWq5pH5r7mLxpcFbX1tfR5Y4bLBPhLOwFOm7NL";
-        // esriConfig.apiKey = "";
-                // Create the map with the GraphicsLayer
 
-        // Create a new GraphicsLayer and add the graphic to it
-        var graphicsLayer = new GraphicsLayer();
-        // Log to check if graphicsLayer is properly created
-        console.log("graphicsLayers:", graphicsLayer);
-        
         var map = new Map({
             basemap: "topo-vector",
         });
@@ -60,94 +34,13 @@
             center: [-81.5158, 27.6648] // Sets the center point of view in lon/lat
         });
 
-        var bounds = {
-            xmax: -79,
-            xmin: -85,
-            ymax: 31,
-            ymin: 25
-        };
+        var url = "https://www.spc.noaa.gov/products/outlook/archive/2024/day1otlk_20240327_1200_cat.lyr.geojson";
 
-        function addLightningStrikes(data) {
-            // Create a new Graphic and add it to the GraphicsLayer
-            data.forEach(function(strike) {
-                var lon = strike.lon;
-                var lat = strike.lat;
-                
-                if (lon >= bounds.xmin && lon <= bounds.xmax && lat >=bounds.ymin && lat <= bounds.ymax) {
-                    var pointGraphic = new Graphic({
-                        geometry: {
-                            type: "point",
-                            longitude: lon,
-                            latitude: lat
-                        },
-                        symbol: {
-                            type: "simple-marker",
-                            color: "red",
-                            size: "5px"
-                        }
-                    });
-                    graphicsLayer.add(pointGraphic);
-                }
-            });
-        }
-        
-        // Fetch the lightning data from the AWS server
-        var url = "https://s3.amazonaws.com/noaa-goes16/GLM-L2-LCFA/2024/088/20/OR_GLM-L2-LCFA_G16_s20240882000000_e20240882000200_c20240882000220.nc";
-
-        esriRequest(url, {
-            responseType: "arraybuffer"
-        }).then(function(response) {
-            var arrayToMap = response.data;
-            var reader = new NetCDFReader(arrayToMap);
-            var lightningData = reader.getDataVariable("flash_lat", "flash_lon");
-
-            // Log the lightningData variable to the console
-            console.log("Lightning data:", lightningData);
-
-            // Check if lightningData is an array
-            if (Array.isArray(lightningData)) {
-                // Add lightning strikes to the map
-                addLightningStrikes(lightningData);
-            } else {
-                console.error('Error: lightningData is not an array');
-            }
-        }).catch(function(error) {
-            console.error('Error fetching lightning data:', error);
+        var geojsonLayer = new GeoJSONLayer({
+            url: url
         });
 
-        function addLightningStrikes(data) {
-            if (!Array.isArray(data)) {
-                console.error('Error: Data is not an array');
-                return;
-            }
-
-            // Create a new Graphic and add it to the GraphicsLayer
-            data.forEach(function(strike) {
-                if (!strike || typeof strike !== 'object' || !('lon' in strike) || !('lat' in strike)) {
-                    console.error('Error: Invalid lightning strike data');
-                    return;
-                }
-
-                var lon = strike.lon;
-                var lat = strike.lat;
-
-                if (lon >= bounds.xmin && lon <= bounds.xmax && lat >= bounds.ymin && lat <= bounds.ymax) {
-                    var pointGraphic = new Graphic({
-                        geometry: {
-                            type: "point",
-                            longitude: lon,
-                            latitude: lat
-                        },
-                        symbol: {
-                            type: "simple-marker",
-                            color: "red",
-                            size: "5px"
-                        }
-                    });
-                    graphicsLayer.add(pointGraphic);
-                }
-            });
-        }
+        map.add(geojsonLayer);
     });
   </script>
 
