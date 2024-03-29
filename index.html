@@ -9,10 +9,10 @@
   <!-- calls for the arcgis api's CSS file and JS library. -->
   <link rel="stylesheet" href="https://js.arcgis.com/4.25/esri/themes/light/main.css">
   <script src="https://js.arcgis.com/4.25/"></script>
+  <script src="https://github.com/michaelselfwx/lightning_mapper/blob/main/jest.config.js"></script>
 
   <!-- Adding the modules, API key, and map constant needed for a full screen map app -->
   <script>
-
     require([
         "esri/config",
         "esri/Map",
@@ -93,15 +93,13 @@
         
         // Fetch the lightning data from the AWS server
         var url = "https://s3.amazonaws.com/noaa-goes16/GLM-L2-LCFA/2024/088/20/OR_GLM-L2-LCFA_G16_s20240882000000_e20240882000200_c20240882000220.nc";
-        
+
         esriRequest(url, {
             responseType: "arraybuffer"
         }).then(function(response) {
-            // Convert array buffer to NetCDF object
-            var netCDFData = response.data;
-
-            // Extract lightning data from netCDF data and convert it into JSON format
-            var lightningData = extractAndConvertToJSON(netCDFData);
+            var arrayToMap = response.data;
+            var reader = new NetCDFReader(arrayToMap);
+            var lightningData = reader.getDataVariable("flash_lat", "flash_lon");
 
             // Log the lightningData variable to the console
             console.log("Lightning data:", lightningData);
