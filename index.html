@@ -43,8 +43,15 @@
         esriConfig.apiKey = "AAPKfb3b968ef66d4c848e795b3dd01897e8uTic-7qcXbjlpUVMGReQlWKWAjnWq5pH5r7mLxpcFbX1tfR5Y4bLBPhLOwFOm7NL";
         // esriConfig.apiKey = "";
                 // Create the map with the GraphicsLayer
+
+        // Create a new GraphicsLayer and add the graphic to it
+        var graphicsLayer = new GraphicsLayer();
+        // Log to check if graphicsLayer is properly created
+        console.log("graphicsLayers:", graphicsLayer);
+        
         var map = new Map({
             basemap: "topo-vector",
+            layers: [graphicsLayer]
         });
 
         var view = new MapView({
@@ -53,17 +60,6 @@
         zoom: 7, // Sets the zoom level based on level of detail (LOD), this is what I think looks the best
         center: [-81.5158, 27.6648] // Sets the center point of view in lon/lat
         });
-
-        // Create a new GraphicsLayer and add the graphic to it
-        var graphicsLayer = new GraphicsLayer();
-        // Log to check if graphicsLayer is properly created
-        console.log("graphicsLayers:", graphicsLayer);
-
-        try {
-            map.add(graphicsLayer);
-        }   catch (error) {
-            console.error('Error adding graphics layer:', error);   
-        }
 
         var bounds = {
             xmax: -79,
