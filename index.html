@@ -38,7 +38,7 @@
 
         var formattedDateTime = year + month + day + '_' + closesthour + '00';
 
-        var url = "//10.16.218.201:8080/proxy?url=https://www.spc.noaa.gov/products/outlook/archive/2024/day1otlk_" + formattedDateTime + "_cat.lyr.geojson";
+        var url = "https://crossorigin.me/https://www.spc.noaa.gov/products/outlook/archive/2024/day1otlk_" + formattedDateTime + "_cat.lyr.geojson";
 
         var geojsonLayer = new GeoJSONLayer({
             url: url
