@@ -41,7 +41,27 @@
         var url = "https://michaelself10.tail8c79a.ts.net/proxy?url=https://www.spc.noaa.gov/products/outlook/archive/2024/day1otlk_" + formattedDateTime + "_cat.lyr.geojson";
 
         var geojsonLayer = new GeoJSONLayer({
-            url: url
+            url: url,
+            renderer: {
+              type: "simple",  // autocasts as new SimpleRenderer()
+              symbol: {
+                  type: "simple-fill",  // autocasts as new SimpleFillSymbol()
+                  color: "blue",
+                  outline: {  // autocasts as new SimpleLineSymbol()
+                      width: 1,
+                      color: "white"
+                  }
+              },
+              visualVariables: [{
+                  type: "color",
+                  field: "DN",
+                  stops: [
+                      { value: 2, color: "green" },
+                      { value: 3, color: "yellow" },
+                      { value: 4, color: "orange" }
+                  ]
+              }]
+          }
         });
 
         var map = new Map({
