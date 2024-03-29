@@ -109,13 +109,52 @@
             var lightningData = extractAndConvertToJSON(netCDFData);
 
             // Log the lightningData variable to the console
-            console.log(lightningData);
+            console.log("Lightning data:", lightningData);
 
-            // Add lightning strikes to the map
-            addLightningStrikes(lightningData);
+            // Check if lightningData is an array
+            if (Array.isArray(lightningData)) {
+                // Add lightning strikes to the map
+                addLightningStrikes(lightningData);
+            } else {
+                console.error('Error: lightningData is not an array');
+            }
         }).catch(function(error) {
             console.error('Error fetching lightning data:', error);
         });
+
+        function addLightningStrikes(data) {
+            if (!Array.isArray(data)) {
+                console.error('Error: Data is not an array');
+                return;
+            }
+
+            // Create a new Graphic and add it to the GraphicsLayer
+            data.forEach(function(strike) {
+                if (!strike || typeof strike !== 'object' || !('lon' in strike) || !('lat' in strike)) {
+                    console.error('Error: Invalid lightning strike data');
+                    return;
+                }
+
+                var lon = strike.lon;
+                var lat = strike.lat;
+
+                if (lon >= bounds.xmin && lon <= bounds.xmax && lat >= bounds.ymin && lat <= bounds.ymax) {
+                    var pointGraphic = new Graphic({
+                        geometry: {
+                            type: "point",
+                            longitude: lon,
+                            latitude: lat
+                        },
+                        symbol: {
+                            type: "simple-marker",
+                            color: "red",
+                            size: "5px"
+                        }
+                    });
+                    graphicsLayer.add(pointGraphic);
+                }
+            });
+        }
     });
   </script>
 
