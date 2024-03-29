@@ -22,7 +22,23 @@
 
         esriConfig.apiKey = "AAPKfb3b968ef66d4c848e795b3dd01897e8uTic-7qcXbjlpUVMGReQlWKWAjnWq5pH5r7mLxpcFbX1tfR5Y4bLBPhLOwFOm7NL";
 
-        var url = "//10.16.218.201:8080/proxy?url=https://www.spc.noaa.gov/products/outlook/archive/2024/day1otlk_20240329_1200_cat.lyr.geojson";
+        var date = new Date();
+        var year = date.getUTCFullYear();
+        var month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
+        var day = ('0' + date.getUTCDate()).slice(-2);
+        var hour = ('0' + date.getUTCHours()).slice(-2);
+        var minute = ('0' + date.getUTCMinutes()).slice(-2);
+
+        var availableHours = [1, 12, 13, 16.5, 20];
+        var closestHour = availableHours.reduce(function(prev, curr) {
+            return (Math.abs(curr - hour) < Math.abs(prev - hour) ? curr : prev);
+        });
+
+        closestHour = ('0' + Math.floor(closestHour)).slice(-2) + ('0' + Math.round((closestHour % 1) * 60)).slice(-2);
+
+        var formattedDateTime = year + month + day + '_' + closesthour + '00';
+
+        var url = "//10.16.218.201:8080/proxy?url=https://www.spc.noaa.gov/products/outlook/archive/2024/day1otlk_" + formattedDateTime + "_cat.lyr.geojson";
 
         var geojsonLayer = new GeoJSONLayer({
             url: url
