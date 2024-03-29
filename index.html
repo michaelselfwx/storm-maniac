@@ -51,14 +51,13 @@
         
         var map = new Map({
             basemap: "topo-vector",
-            layers: [graphicsLayer]
         });
 
         var view = new MapView({
-        container: "viewDiv", // Reference to the scene div created in step 5
-        map: map, // Reference to the map object created before the scene
-        zoom: 7, // Sets the zoom level based on level of detail (LOD), this is what I think looks the best
-        center: [-81.5158, 27.6648] // Sets the center point of view in lon/lat
+            container: "viewDiv", // Reference to the scene div created in step 5
+            map: map, // Reference to the map object created before the scene
+            zoom: 7, // Sets the zoom level based on level of detail (LOD), this is what I think looks the best
+            center: [-81.5158, 27.6648] // Sets the center point of view in lon/lat
         });
 
         var bounds = {
