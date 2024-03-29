@@ -16,23 +16,11 @@
         "esri/config",
         "esri/Map",
         "esri/views/MapView",
-        "esri/request",
         "esri/layers/GeoJSONLayer"
 
     ], function (esriConfig, Map, MapView, GeoJSONLayer) {
 
         esriConfig.apiKey = "AAPKfb3b968ef66d4c848e795b3dd01897e8uTic-7qcXbjlpUVMGReQlWKWAjnWq5pH5r7mLxpcFbX1tfR5Y4bLBPhLOwFOm7NL";
-
-        var map = new Map({
-            basemap: "topo-vector",
-        });
-
-        var view = new MapView({
-            container: "viewDiv", // Reference to the scene div created in step 5
-            map: map, // Reference to the map object created before the scene
-            zoom: 7, // Sets the zoom level based on level of detail (LOD), this is what I think looks the best
-            center: [-81.5158, 27.6648] // Sets the center point of view in lon/lat
-        });
 
         var url = "https://www.spc.noaa.gov/products/outlook/archive/2024/day1otlk_20240327_1200_cat.lyr.geojson";
 
@@ -40,7 +28,17 @@
             url: url
         });
 
-        map.add(geojsonLayer);
+        var map = new Map({
+            basemap: "topo-vector",
+            layers: [geojsonLayer]
+        });
+
+        var view = new MapView({
+            container: "viewDiv", // Reference to the scene div created in step 5
+            map: map, // Reference to the map object created before the scene
+            zoom: 4, // Sets the zoom level based on level of detail (LOD), this is what I think looks the best
+            center: [-81.5158, 27.6648] // Sets the center point of view in lon/lat
+        });
     });
   </script>
 
