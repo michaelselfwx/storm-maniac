@@ -43,6 +43,15 @@
             });
         }
 
+        function getPreviousHour(hour) {
+            var index = availableHours.indexOf(hour);
+            if (index > 0) {
+                return availableHours[index - 1];
+            } else {
+                return availableHours[availableHours.length - 1];
+            }
+        }
+
         function getUrl(hour) {
             hour = ('0' + Math.floor(hour)).slice(-2) + ('0' + Math.round((hour % 1) * 60)).slice(-2);
             var formattedDateTime = year + month + day + '_' + hour;
