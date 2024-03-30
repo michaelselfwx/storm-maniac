@@ -60,13 +60,13 @@
             hour = ('0' + Math.floor(hour)).slice(-2) + ('0' + Math.round((hour % 1) * 60)).slice(-2);
             hour = hour.toString().padStart(2, '0');
             var formattedDateTime = date.year + date.month + date.day + '_' + hour;
-            return "https://michaelself10.tail8c79a.ts.net/proxy?url=https://www.spc.noaa.gov/products/outlook/archive/2024/day1otlk_" + formattedDateTime + "_cat.lyr.geojson";
+            return "https://ham_shack_pi.tail8c79a.ts.net/proxy?url=https://www.spc.noaa.gov/products/outlook/archive/2024/day1otlk_" + formattedDateTime + "_cat.lyr.geojson";
         }
 
         var closestHourStr = closestHour.toString().padStart(2, '0');
         var formattedDateTime = year + month + day + '_' + closestHourStr + '00';
 
-        var url = "https://michaelself10.tail8c79a.ts.net/proxy?url=https://www.spc.noaa.gov/products/outlook/archive/2024/day1otlk_" + formattedDateTime + "_cat.lyr.geojson";
+        var url = "https://ham_shack_pi.tail8c79a.ts.net/proxy?url=https://www.spc.noaa.gov/products/outlook/archive/2024/day1otlk_" + formattedDateTime + "_cat.lyr.geojson";
         console.log(url);
 
         fetch(url)
