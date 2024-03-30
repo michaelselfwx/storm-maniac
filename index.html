@@ -31,8 +31,12 @@
 
         var availableHours = [1, 12, 13, 16.5, 20];
         var closestHour = availableHours.reduce(function(prev, curr) {
-            return (Math.abs(curr - hour) < Math.abs(prev - hour) ? curr : prev);
+            return (curr <= hour && Math.abs(curr - hour) < Math.abs(prev - hour) ? curr : prev);
         });
+
+        if (closestHour === -Infinity) {
+          closestHour = availableHours[availableHours.length - 1];
+        }
 
         closestHour = ('0' + Math.floor(closestHour)).slice(-2) + ('0' + Math.round((closestHour % 1) * 60)).slice(-2);
 
