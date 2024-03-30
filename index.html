@@ -30,31 +30,17 @@
         var minute = ('0' + date.getUTCMinutes()).slice(-2);
 
         var availableHours = [1, 12, 13, 16.5, 20];
-        var closestHour = availableHours.reduce(function(prev, curr) {
-            return (curr <= hour && Math.abs(curr - hour) < Math.abs(prev - hour) ? curr : prev);
-        });
-
-        if (closestHour === -Infinity) {
-          closestHour = availableHours[availableHours.length - 1];
-        }
-
-        // If the current hour is less than the earliest available hour, subtract one day from the date
+        var closestHour;
         if (hour < availableHours[0]) {
+            closestHour = availableHours[availableHours.length - 1];
             date.setDate(date.getDate() - 1);
             year = date.getUTCFullYear();
             month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
             day = ('0' + date.getUTCDate()).slice(-2);
-        }
-
-        closestHour = ('0' + Math.floor(closestHour)).slice(-2) + ('0' + Math.round((closestHour % 1) * 60)).slice(-2);
-
-        function getPreviousHour(hour) {
-            var index = availableHours.indexOf(hour);
-            if (index > 0) {
-                return availableHours[index - 1];
-            } else {
-                return availableHours[availableHours.length - 1];
-            }
+        } else {
+            closestHour = availableHours.reduce(function(prev, curr) {
+                return (curr <= hour && Math.abs(curr - hour) < Math.abs(prev - hour) ? curr : prev);
+            });
         }
 
         function getUrl(hour) {
