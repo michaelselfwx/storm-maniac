@@ -27,16 +27,16 @@
         var month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
         var day = ('0' + date.getUTCDate()).slice(-2);
         var hour = date.getUTCHours().toString().padStart(2, '0');
-        var minute = ('0' + date.getUTCMinutes()).slice(-2);
 
         var availableHours = [1, 12, 13, 16.5, 20];
         var closestHour;
+
         if (hour < availableHours[0]) {
             closestHour = availableHours[availableHours.length - 1];
             date.setDate(date.getDate() - 1);
             year = date.getUTCFullYear();
             month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
-            day = ('0' + date.getUTCDate()).slice(-2);
+            day = ('0' + (date.getUTCDate()).slice(-2));
         } else {
             closestHour = availableHours.reduce(function(prev, curr) {
                 return (curr <= hour && Math.abs(curr - hour) < Math.abs(prev - hour) ? curr : prev);
