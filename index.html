@@ -26,7 +26,7 @@
         var year = date.getUTCFullYear();
         var month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
         var day = ('0' + date.getUTCDate()).slice(-2);
-        var hour = ('0' + date.getUTCHours()).slice(-2);
+        var hour = Number(('0' + date.getUTCHours()).slice(-2));
         var minute = ('0' + date.getUTCMinutes()).slice(-2);
 
         var availableHours = [1, 12, 13, 16.5, 20];
@@ -57,7 +57,7 @@
         }
 
         function getUrl(hour, date) {
-            hour = ('0' + Math.floor(hour)).slice(-2) + ('0' + Math.round((hour % 2) * 60)).slice(-2);
+            hour = ('0' + Math.floor(hour)).slice(-2) + ('0' + Math.round((hour % 1) * 60)).slice(-2);
             var formattedDateTime = date.year + date.month + date.day + '_' + hour;
             return "https://michaelself10.tail8c79a.ts.net/proxy?url=https://www.spc.noaa.gov/products/outlook/archive/2024/day1otlk_" + formattedDateTime + "_cat.lyr.geojson";
         }
