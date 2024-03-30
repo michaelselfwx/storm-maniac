@@ -38,6 +38,14 @@
           closestHour = availableHours[availableHours.length - 1];
         }
 
+        // If the current hour is less than the earliest available hour, subtract one day from the date
+        if (hour < availableHours[0]) {
+            date.setDate(date.getDate() - 1);
+            year = date.getUTCFullYear();
+            month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
+            day = ('0' + date.getUTCDate()).slice(-2);
+        }
+
         closestHour = ('0' + Math.floor(closestHour)).slice(-2) + ('0' + Math.round((closestHour % 1) * 60)).slice(-2);
 
         function getPreviousHour(hour) {
