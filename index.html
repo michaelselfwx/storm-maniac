@@ -43,18 +43,22 @@
             });
         }
 
-        function getPreviousHour(hour) {
-            var index = availableHours.indexOf(hour);
-            if (index > 0) {
-                return availableHours[index - 1];
-            } else {
-                return availableHours[availableHours.length - 1];
-            }
+        function getPreviousHour(hour, date) {
+          var index = availableHours.indexOf(hour);
+          if (index > 0) {
+              return { hour: availableHours[index - 1], date: date };
+          } else {
+              date.setDate(date.getDate() - 1);
+              var year = date.getUTCFullYear();
+              var month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
+              var day = ('0' + date.getUTCDate()).slice(-2);
+              return { hour: availableHours[availableHours.length - 1], date: { year: year, month: month, day: day } };
+          }
         }
 
-        function getUrl(hour) {
+        function getUrl(hour, date) {
             hour = ('0' + Math.floor(hour)).slice(-2) + ('0' + Math.round((hour % 1) * 60)).slice(-2);
-            var formattedDateTime = year + month + day + '_' + hour;
+            var formattedDateTime = date.year + date.month + date.day + '_' + hour;
             return "https://michaelself10.tail8c79a.ts.net/proxy?url=https://www.spc.noaa.gov/products/outlook/archive/2024/day1otlk_" + formattedDateTime + "_cat.lyr.geojson";
         }
 
@@ -76,8 +80,8 @@
             })
             .catch(function(error) {
                 // Data for the new hour is not available, use the previous hour
-                var previousHour = getPreviousHour(closestHour);
-                url = getUrl(previousHour);
+                var previous = getPreviousHour(closestHour, date);
+                url = getUrl(previous.hour, previous.date);
                 createGeoJSONLayer(url);
             });
 
