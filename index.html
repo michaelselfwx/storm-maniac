@@ -111,6 +111,17 @@
                         { value: "6", color: [255, 192, 203, 0.5] } // pink with 50% transparency
                     ]
                 }]
+            },
+            popupTemplate: {  // autocasts as new PopupTemplate()
+                title: "Information",
+                content: [{
+                    type: "fields",
+                    fieldInfos: [{
+                        fieldName: "Label2",
+                        label: "Label2 Value",
+                        visible: true
+                    }]
+                }]
             }
           });
 
@@ -123,7 +134,7 @@
               container: "viewDiv", // Reference to the scene div created in step 5
               map: map, // Reference to the map object created before the scene
               zoom: 5, // Sets the zoom level based on level of detail (LOD), this is what I think looks the best
-              center: [-98.5795, 39.8283] // Sets the center point of view in lon/lat
+              center: [-98.5795, 37.8283] // Sets the center point of view in lon/lat
           });
         }
     });
