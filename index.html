@@ -40,45 +40,80 @@
 
         closestHour = ('0' + Math.floor(closestHour)).slice(-2) + ('0' + Math.round((closestHour % 1) * 60)).slice(-2);
 
+        function getPreviousHour(hour) {
+            var index = availableHours.indexOf(hour);
+            if (index > 0) {
+                return availableHours[index - 1];
+            } else {
+                return availableHours[availableHours.length - 1];
+            }
+        }
+
+        function getUrl(hour) {
+            hour = ('0' + Math.floor(hour)).slice(-2) + ('0' + Math.round((hour % 1) * 60)).slice(-2);
+            var formattedDateTime = year + month + day + '_' + hour;
+            return "https://michaelself10.tail8c79a.ts.net/proxy?url=https://www.spc.noaa.gov/products/outlook/archive/2024/day1otlk_" + formattedDateTime + "_cat.lyr.geojson";
+        }
+
         var formattedDateTime = year + month + day + '_' + closestHour;
 
         var url = "https://michaelself10.tail8c79a.ts.net/proxy?url=https://www.spc.noaa.gov/products/outlook/archive/2024/day1otlk_" + formattedDateTime + "_cat.lyr.geojson";
 
-        var geojsonLayer = new GeoJSONLayer({
-            url: url,
-            renderer: {
-              type: "simple",  // autocasts as new SimpleRenderer()
-              symbol: {
-                  type: "simple-fill",  // autocasts as new SimpleFillSymbol()
-                  color: "blue",
-                  outline: {  // autocasts as new SimpleLineSymbol()
-                      width: 1,
-                      color: "white"
-                  }
-              },
-              visualVariables: [{
-                  type: "color",
-                  field: "DN",
-                  stops: [
-                      { value: 2, color: "green" },
-                      { value: 3, color: "yellow" },
-                      { value: 4, color: "orange" }
-                  ]
-              }]
-          }
-        });
+        fetch(url)
+            .then(function(response) {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(function(data) {
+                // Data for the new hour is available, proceed as normal
+                createGeoJSONLayer(url);
+            })
+            .catch(function(error) {
+                // Data for the new hour is not available, use the previous hour
+                var previousHour = getPreviousHour(closestHour);
+                url = getUrl(previousHour);
+                createGeoJSONLayer(url);
+            });
 
-        var map = new Map({
-            basemap: "topo-vector",
-            layers: [geojsonLayer]
-        });
+        function createGeoJSONLayer(url) {
+          var geojsonLayer = new GeoJSONLayer({
+              url: url,
+              renderer: {
+                type: "simple",  // autocasts as new SimpleRenderer()
+                symbol: {
+                    type: "simple-fill",  // autocasts as new SimpleFillSymbol()
+                    color: "blue",
+                    outline: {  // autocasts as new SimpleLineSymbol()
+                        width: 1,
+                        color: "white"
+                    }
+                },
+                visualVariables: [{
+                    type: "color",
+                    field: "DN",
+                    stops: [
+                        { value: 2, color: "green" },
+                        { value: 3, color: "yellow" },
+                        { value: 4, color: "orange" }
+                    ]
+                }]
+            }
+          });
 
-        var view = new MapView({
-            container: "viewDiv", // Reference to the scene div created in step 5
-            map: map, // Reference to the map object created before the scene
-            zoom: 4, // Sets the zoom level based on level of detail (LOD), this is what I think looks the best
-            center: [-81.5158, 27.6648] // Sets the center point of view in lon/lat
-        });
+          var map = new Map({
+              basemap: "topo-vector",
+              layers: [geojsonLayer]
+          });
+
+          var view = new MapView({
+              container: "viewDiv", // Reference to the scene div created in step 5
+              map: map, // Reference to the map object created before the scene
+              zoom: 4, // Sets the zoom level based on level of detail (LOD), this is what I think looks the best
+              center: [-81.5158, 27.6648] // Sets the center point of view in lon/lat
+          });
+        }
     });
   </script>
 
