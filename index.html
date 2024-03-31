@@ -72,9 +72,7 @@
         console.log(url);
 
         var map = new Map({
-              basemap: "topo-vector",
-              layers: [geojsonLayer]
-          
+              basemap: "topo-vector",          
         });
 
         var view = new MapView({
@@ -139,9 +137,11 @@
                 title: "Categorical Outlook",
                 content: "{LABEL2}"
             }
-          });
+        });
 
-          // Create a new Legend widget instance
+        map.add(geojsonLayer);
+
+        // Create a new Legend widget instance
         var legend = new Legend({
             view: view,
             layerInfos: [
