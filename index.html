@@ -16,9 +16,11 @@
         "esri/config",
         "esri/Map",
         "esri/views/MapView",
-        "esri/layers/GeoJSONLayer"
+        "esri/layers/GeoJSONLayer",
+        "esri/widgets/Legend",
+        "esri/widgets/Search"
 
-    ], function (esriConfig, Map, MapView, GeoJSONLayer) {
+    ], function (esriConfig, Map, MapView, GeoJSONLayer, Legend, Search) {
 
         esriConfig.apiKey = "AAPKfb3b968ef66d4c848e795b3dd01897e8uTic-7qcXbjlpUVMGReQlWKWAjnWq5pH5r7mLxpcFbX1tfR5Y4bLBPhLOwFOm7NL";
 
@@ -88,18 +90,18 @@
             });
 
         function createGeoJSONLayer(url) {
-          var geojsonLayer = new GeoJSONLayer({
-              url: url,
-              renderer: {
-                type: "simple",  // autocasts as new SimpleRenderer()
-                symbol: {
-                    type: "simple-fill",  // autocasts as new SimpleFillSymbol()
-                    color: "blue",
-                    outline: {  // autocasts as new SimpleLineSymbol()
-                        width: 1,
-                        color: "white"
-                    }
-                },
+            var geojsonLayer = new GeoJSONLayer({
+                url: url,
+                renderer: {
+                    type: "simple",  // autocasts as new SimpleRenderer()
+                    symbol: {
+                        type: "simple-fill",  // autocasts as new SimpleFillSymbol()
+                        color: "blue",
+                        outline: {  // autocasts as new SimpleLineSymbol()
+                            width: 1,
+                            color: "white"
+                        }
+                    },
                 visualVariables: [{
                     type: "color",
                     field: "DN",
@@ -126,17 +128,46 @@
             }
           });
 
-          var map = new Map({
+          // Create a new Legend widget instance
+        var legend = new Legend({
+            view: view,
+            layerInfos: [
+            {
+                layer: geojsonLayer,
+                title: "Day 1 Convective Outlook"
+            },
+            ]
+        });
+
+        // Add widget to the bottom left corner of the view
+        view.ui.add(legend, "bottom-left");
+
+
+        // Create a new Search widget instance
+        var search = new Search({
+            view: view
+        });
+
+        // Add widget to the top right corner of the view
+        view.ui.add(search, 
+        {
+            position: "top-left",
+            index: 2
+        });
+          
+        var map = new Map({
               basemap: "topo-vector",
               layers: [geojsonLayer]
-          });
+          
+        });
 
-          var view = new MapView({
+        var view = new MapView({
               container: "viewDiv", // Reference to the scene div created in step 5
               map: map, // Reference to the map object created before the scene
               zoom: 5, // Sets the zoom level based on level of detail (LOD), this is what I think looks the best
               center: [-98.5795, 37.8283] // Sets the center point of view in lon/lat
-          });
+        });
+
         }
     });
   </script>
