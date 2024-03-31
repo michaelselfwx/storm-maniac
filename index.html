@@ -71,6 +71,13 @@
         var url = "https://ham-shack-pi.tail8c79a.ts.net/proxy?url=https://www.spc.noaa.gov/products/outlook/archive/2024/day1otlk_" + formattedDateTime + "_cat.lyr.geojson";
         console.log(url);
 
+        var view = new MapView({
+              container: "viewDiv", // Reference to the scene div created in step 5
+              map: map, // Reference to the map object created before the scene
+              zoom: 5, // Sets the zoom level based on level of detail (LOD), this is what I think looks the best
+              center: [-98.5795, 37.8283] // Sets the center point of view in lon/lat
+        });
+        
         fetch(url)
             .then(function(response) {
                 if (!response.ok) {
@@ -159,13 +166,6 @@
               basemap: "topo-vector",
               layers: [geojsonLayer]
           
-        });
-
-        var view = new MapView({
-              container: "viewDiv", // Reference to the scene div created in step 5
-              map: map, // Reference to the map object created before the scene
-              zoom: 5, // Sets the zoom level based on level of detail (LOD), this is what I think looks the best
-              center: [-98.5795, 37.8283] // Sets the center point of view in lon/lat
         });
 
         }
