@@ -112,9 +112,19 @@
                     ]
                 }]
             },
+            labelingInfo: [{
+                labelExpressionInfo: { expression: "$feature.LABEL" },
+                symbol: {
+                    type: "text",
+                    color: "black",
+                    haloColor: "white",
+                    haloSize: "1px",
+                    font: { size: 15 }
+                }
+            }],
             popupTemplate: {  // autocasts as new PopupTemplate()
                 title: "Categorical Outlook",
-                content: "{Label2}"
+                content: "{LABEL2}"
             }
           });
 
