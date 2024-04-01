@@ -121,7 +121,7 @@
             });
 
             // Fetch the data for the closest available hour
-            fetch(url)
+            fetch(urlData.url)
                 .then(function(response) {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -130,7 +130,7 @@
                 })
                 .then(function(data) {
                     // Data for the new hour is available, proceed as normal
-                    createGeoJSONLayer(url);
+                    createGeoJSONLayer(urlData);
                 })
                 .catch(function(error) {
                     // Data for the new hour is not available, use the previous hour
