@@ -176,6 +176,14 @@
         // Add widget to the bottom left corner of the view
         view.ui.add(legend, "bottom-left");
 
+        legend.watch('layerInfos', function() {
+            var labels = document.querySelectorAll('.esri-legend__layer-label');
+            labels.forEach(function(label) {
+                if (label.textContent === 'LABEL2') {
+                    label.style.display = 'none';
+                }
+            });
+        });
 
         // Create a new Search widget instance
         var search = new Search({
@@ -202,10 +210,6 @@
       margin: 0;
       height: 100%; 
       width: 100%;
-    }
-
-    .esri-legend__layer-title {
-        display: none;
     }
   </style>
 
