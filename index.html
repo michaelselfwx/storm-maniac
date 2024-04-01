@@ -176,13 +176,16 @@
         // Add widget to the bottom left corner of the view
         view.ui.add(legend, "bottom-left");
 
-        legend.watch('layerInfos', function() {
-            var labels = document.querySelectorAll('.esri-legend__layer-label');
-            labels.forEach(function(label) {
-                if (label.textContent === 'LABEL2') {
-                    label.style.display = 'none';
-                }
-            });
+        legend.watch('activeLayerInfos', function() {
+            setTimeout(function() {
+                var labels = document.querySelectorAll('.esri-legend__layer-table');
+                labels.forEach(function(label) {
+                    var firstRow = label.querySelector('.esri-legend__layer-cell');
+                    if (firstRow && firstRow.textContent === 'LABEL2') {
+                        firstRow.style.display = 'none';
+                    }
+                });
+            }, 500);
         });
 
         // Create a new Search widget instance
