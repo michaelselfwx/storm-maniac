@@ -9,7 +9,6 @@
   <!-- calls for the arcgis api's CSS file and JS library. -->
   <link rel="stylesheet" href="https://js.arcgis.com/4.25/esri/themes/light/main.css">
   <script src="https://js.arcgis.com/4.25/"></script>
-  <!-- <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script> -->
 
   <!-- Adding the modules, API key, and map constant needed for a full screen map app -->
   <script>
@@ -186,6 +185,27 @@
 
         map.add(geojsonLayer);
 
+        // Add the click event handler after the MapView and GeoJSONLayer are created
+        view.on("click", function(event) {
+            view.hitTest(event).then(function(response) {
+                if (response.results.length) {
+                    // Sort the results by DN in descending order
+                    response.results.sort(function(a, b) {
+                        return b.graphic.attributes.DN - a.graphic.attributes.DN;
+                    });
+
+                    // Get the graphic with the highest DN
+                    var graphic = response.results[0].graphic;
+
+                    // Show the popup
+                    view.popup.open({
+                        features: [graphic],
+                        location: event.mapPoint
+                    });
+                }
+            });
+        });
+        
         // Create a new Legend widget instance
         var legend = new Legend({
             view: view,
