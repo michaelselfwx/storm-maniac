@@ -66,8 +66,8 @@
             return "https://ham-shack-pi.tail8c79a.ts.net/proxy?url=https://www.spc.noaa.gov/products/outlook/archive/2024/day1otlk_" + formattedDateTime + "_cat.lyr.geojson";
         }
 
-        var closestHourStr = closestHour.padStart(2, '0');
-        var formattedDateTime = year + month + day + '_' + closestHourStr + '00';
+        var closestHourStr = closestHour.toString().padStart(2, '0');
+        var formattedDateTime = date.year + date.month + date.day + '_' + closestHourStr + '00';
 
         var url = "https://ham-shack-pi.tail8c79a.ts.net/proxy?url=https://www.spc.noaa.gov/products/outlook/archive/2024/day1otlk_" + formattedDateTime + "_cat.lyr.geojson";
         console.log(url);
