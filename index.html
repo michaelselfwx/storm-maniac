@@ -109,11 +109,46 @@
                 type: "unique-value",
                 field: "LABEL2",
                 uniqueValueInfos: [
-                    { value: "General Thunderstorm Risk", color: [0, 128, 0, 0.5] }, // green with 50% transparency
-                    { value: "Marginal Risk", color: [255, 255, 0, 0.5] }, // yellow with 50% transparency
-                    { value: "Slight Risk", color: [255, 165, 0, 0.5] }, // orange with 50% transparency
-                    { value: "Moderate Risk", color: [255, 0, 0, 0.5] }, // red with 50% transparency
-                    { value: "High Risk", color: [255, 192, 203, 0.5] } // pink with 50% transparency
+                    { 
+                        value: "General Thunderstorm Risk", 
+                        symbol: {
+                            type: "simple-fill", 
+                            color: [0, 128, 0, 0.5], 
+                            outline: { width: 1, color: "white" }
+                        }
+                    },
+                    { 
+                        value: "Marginal Risk", 
+                        symbol: {
+                            type: "simple-fill", 
+                            color: [255, 255, 0, 0.5], 
+                            outline: { width: 1, color: "white" }
+                        }
+                    },
+                    { 
+                        value: "Slight Risk", 
+                        symbol: {
+                            type: "simple-fill", 
+                            color: [255, 165, 0, 0.5], 
+                            outline: { width: 1, color: "white" }
+                        }
+                    },
+                    { 
+                        value: "Moderate Risk", 
+                        symbol: {
+                            type: "simple-fill", 
+                            color: [255, 0, 0, 0.5], 
+                            outline: { width: 1, color: "white" }
+                        }
+                    },
+                    { 
+                        value: "High Risk", 
+                        symbol: {
+                            type: "simple-fill", 
+                            color: [255, 192, 203, 0.5], 
+                            outline: { width: 1, color: "white" }
+                        }
+                    }
                 ]
             }
             var geojsonLayer = new GeoJSONLayer({
