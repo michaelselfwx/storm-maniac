@@ -87,48 +87,48 @@
               center: [-98.5795, 37.8283] // Sets the center point of view in lon/lat
         });
 
-        // fetch(url)
-        //     .then(function(response) {
-        //         if (!response.ok) {
-        //             throw new Error('Network response was not ok');
-        //         }
-        //         return response.json();
-        //     })
-        //     .then(function(data) {
-        //         // Data for the new hour is available, proceed as normal
-        //         createGeoJSONLayer(url);
-        //     })
-        //     .catch(function(error) {
-        //         // Data for the new hour is not available, use the previous hour
-        //         var previous = getPreviousHour(closestHour, date);
-        //         url = getUrl(previous.hour, previous.date);
-        //         createGeoJSONLayer(url);
-        //     });
-
         fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                // Convert the GeoJSON data to a format that Turf.js can understand
-                var features = data.features.map(feature => turf.feature(feature.geometry, feature.properties));
-
-                // Perform the dissolution
-                var dissolved = turf.dissolve(turf.featureCollection(features));
-
-                // Convert the dissolved data back to GeoJSON
-                var geojson = dissolved.features.map(feature => ({
-                    type: "Feature",
-                    geometry: feature.geometry,
-                    properties: feature.properties
-                }));
-
-                // Use the dissolved data to create the GeoJSONLayer
-                createGeoJSONLayer(geojson);
+            .then(function(response) {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
             })
-            .catch(error => {
-                console.error('Error:', error);
+            .then(function(data) {
+                // Data for the new hour is available, proceed as normal
+                createGeoJSONLayer(url);
+            })
+            .catch(function(error) {
+                // Data for the new hour is not available, use the previous hour
+                var previous = getPreviousHour(closestHour, date);
+                url = getUrl(previous.hour, previous.date);
+                createGeoJSONLayer(url);
             });
 
-        function createGeoJSONLayer(data) {
+        // fetch(url)
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         // Convert the GeoJSON data to a format that Turf.js can understand
+        //         var features = data.features.map(feature => turf.feature(feature.geometry, feature.properties));
+
+        //         // Perform the dissolution
+        //         var dissolved = turf.dissolve(turf.featureCollection(features));
+
+        //         // Convert the dissolved data back to GeoJSON
+        //         var geojson = dissolved.features.map(feature => ({
+        //             type: "Feature",
+        //             geometry: feature.geometry,
+        //             properties: feature.properties
+        //         }));
+
+        //         // Use the dissolved data to create the GeoJSONLayer
+        //         createGeoJSONLayer(geojson);
+        //     })
+        //     .catch(error => {
+        //         console.error('Error:', error);
+        //     });
+
+        function createGeoJSONLayer(url) {
             var renderer = {
                 type: "unique-value",
                 field: "LABEL2",
@@ -176,7 +176,7 @@
                 ]
             }
             var geojsonLayer = new GeoJSONLayer({
-                features: data,
+                url: url,
                 renderer: renderer,
                 popupTemplate: {  // autocasts as new PopupTemplate()
                     title: "Categorical Outlook",
