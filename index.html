@@ -9,6 +9,7 @@
   <!-- calls for the arcgis api's CSS file and JS library. -->
   <link rel="stylesheet" href="https://js.arcgis.com/4.25/esri/themes/light/main.css">
   <script src="https://js.arcgis.com/4.25/"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
 
   <!-- Adding the modules, API key, and map constant needed for a full screen map app -->
   <script>
@@ -86,25 +87,48 @@
               center: [-98.5795, 37.8283] // Sets the center point of view in lon/lat
         });
 
+        // fetch(url)
+        //     .then(function(response) {
+        //         if (!response.ok) {
+        //             throw new Error('Network response was not ok');
+        //         }
+        //         return response.json();
+        //     })
+        //     .then(function(data) {
+        //         // Data for the new hour is available, proceed as normal
+        //         createGeoJSONLayer(url);
+        //     })
+        //     .catch(function(error) {
+        //         // Data for the new hour is not available, use the previous hour
+        //         var previous = getPreviousHour(closestHour, date);
+        //         url = getUrl(previous.hour, previous.date);
+        //         createGeoJSONLayer(url);
+        //     });
+
         fetch(url)
-            .then(function(response) {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
+            .then(response => response.json())
+            .then(data => {
+                // Convert the GeoJSON data to a format that Turf.js can understand
+                var features = data.features.map(feature => turf.feature(feature.geometry, feature.properties));
+
+                // Perform the dissolution
+                var dissolved = turf.dissolve(turf.featureCollection(features));
+
+                // Convert the dissolved data back to GeoJSON
+                var geojson = dissolved.features.map(feature => ({
+                    type: "Feature",
+                    geometry: feature.geometry,
+                    properties: feature.properties
+                }));
+
+                // Use the dissolved data to create the GeoJSONLayer
+                createGeoJSONLayer(geojson);
             })
-            .then(function(data) {
-                // Data for the new hour is available, proceed as normal
-                createGeoJSONLayer(url);
-            })
-            .catch(function(error) {
-                // Data for the new hour is not available, use the previous hour
-                var previous = getPreviousHour(closestHour, date);
-                url = getUrl(previous.hour, previous.date);
-                createGeoJSONLayer(url);
+            .catch(error => {
+                console.error('Error:', error);
             });
 
-        function createGeoJSONLayer(url) {
+        function createGeoJSONLayer(data) {
             var renderer = {
                 type: "unique-value",
                 field: "LABEL2",
@@ -152,7 +176,7 @@
                 ]
             }
             var geojsonLayer = new GeoJSONLayer({
-                url: url,
+                features: data,
                 renderer: renderer,
                 popupTemplate: {  // autocasts as new PopupTemplate()
                     title: "Categorical Outlook",
