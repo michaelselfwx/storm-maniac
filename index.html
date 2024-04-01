@@ -166,10 +166,13 @@
         var legend = new Legend({
             view: view,
             layerInfos: [
-            {
-                layer: geojsonLayer,
-                title: "Day 1 Convective Outlook"
-            },
+                {
+                    layer: geojsonLayer,
+                    title: "Day 1 Convective Outlook",
+                    legendOptions: {
+                        title: ""
+                    }
+                },
             ]
         });
 
