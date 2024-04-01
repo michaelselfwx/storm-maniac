@@ -33,7 +33,7 @@
         var availableHours = [1, 12, 13, 16.5, 20];
         var closestHour;
         var result;
-        
+
         if (hour < availableHours[0]) {
             closestHour = availableHours[availableHours.length - 1];
             date.setDate(date.getDate() - 1);
@@ -47,7 +47,6 @@
             });
             result = { closestHour: closestHour, date: date };
         }
-        return result;
 
         function getPreviousHour(hour, date) {
           var index = availableHours.indexOf(hour);
