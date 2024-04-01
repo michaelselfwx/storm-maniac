@@ -173,9 +173,6 @@
             ]
         });
 
-        // Add widget to the bottom left corner of the view
-        view.ui.add(legend, "bottom-left");
-
         legend.watch('activeLayerInfos', function() {
             setTimeout(function() {
                 var labels = document.querySelectorAll('.esri-legend__layer-table');
@@ -187,6 +184,9 @@
                 });
             }, 500);
         });
+
+        // Add widget to the bottom left corner of the view
+        view.ui.add(legend, "bottom-left");
 
         // Create a new Search widget instance
         var search = new Search({
