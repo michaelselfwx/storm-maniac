@@ -220,29 +220,37 @@
                 });
 
                 // Create a legend and add it to the view
-                var legend = new Legend({
-                    view: view,
-                    layerInfos: [
-                        {
-                            layer: geojsonLayer,
-                            title: "Day 1 Convective Outlook"
-                        },
-                    ]
-                });
-                view.ui.add(legend, "bottom-left");
+                if (!view.ui.find("legend")) {
+                    var legend = new Legend({
+                        view: view,
+                        layerInfos: [
+                            {
+                                layer: geojsonLayer,
+                                title: "Day 1 Convective Outlook"
+                            },
+                        ]
+                    });
+                    view.ui.add(legend, "bottom-left");
+                }
 
                 // Create a search widget and add it to the view
-                var search = new Search({
-                    view: view
-                });
-                view.ui.add(search, 
-                {
-                    position: "top-left",
-                    index: 2
-                });
+                if (!view.ui.find("search")) {
+                    var search = new Search({
+                        view: view
+                    });
+                    view.ui.add(search, 
+                    {
+                        position: "top-left",
+                        index: 2
+                    });
+                }
 
                 // Update the date div
-                document.getElementById('dateDiv').textContent = 'Valid: ' + formattedDateTime;
+                var dateDiv = document.getElementById('dateDiv');
+                if (!dateDiv.textContent) {
+                    dateDiv.textContent = 'Valid: ' + formattedDateTime
+                    document.getElementById('dateDiv').textContent = 'Valid: ' + formattedDateTime;
+                }
             }
         });
     </script>
