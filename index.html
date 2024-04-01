@@ -32,18 +32,22 @@
 
         var availableHours = [1, 12, 13, 16.5, 20];
         var closestHour;
-
+        var result;
+        
         if (hour < availableHours[0]) {
             closestHour = availableHours[availableHours.length - 1];
             date.setDate(date.getDate() - 1);
             year = date.getUTCFullYear();
             month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
             day = ('0' + (date.getUTCDate()).slice(-2));
+            result = { closestHour: closestHour, date: { year: year, month: month, day: day } };
         } else {
             closestHour = availableHours.reduce(function(prev, curr) {
                 return (curr <= hour && Math.abs(curr - hour) < Math.abs(prev - hour) ? curr : prev);
             });
+            result = { closestHour: closestHour, date: date };
         }
+        return result;
 
         function getPreviousHour(hour, date) {
           var index = availableHours.indexOf(hour);
