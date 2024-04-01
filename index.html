@@ -205,7 +205,7 @@
                 }
             });
         });
-        
+
         // Create a new Legend widget instance
         var legend = new Legend({
             view: view,
@@ -231,6 +231,8 @@
             position: "top-left",
             index: 2
         });
+
+        document.getElementById('dateDiv').textContent = 'Valid: ' + formattedDateTime;
           
         }
     });
@@ -246,6 +248,17 @@
       height: 100%; 
       width: 100%;
     }
+    #dateDiv {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 10px;
+      background-color: white;
+      border: 1px solid black;
+      border-radius: 5px;
+      margin: 10px;
+      z-index: 1000;
+    }
   </style>
 
 </head>
@@ -253,6 +266,7 @@
 
   <!-- the div to displays the map  -->
   <div id="viewDiv"></div>
+  <div id="dateDiv"></div>
 
 </body>
 </html>
