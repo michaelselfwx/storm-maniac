@@ -113,7 +113,7 @@
                         value: "General Thunderstorms Risk", 
                         symbol: {
                             type: "simple-fill", 
-                            color: [0, 128, 0, 0.5], 
+                            color: [0, 128, 0, 0.75], 
                             outline: { width: 1, color: "black" }
                         }
                     },
@@ -171,18 +171,6 @@
                     title: "Day 1 Convective Outlook"
                 },
             ]
-        });
-
-        legend.watch('activeLayerInfos', function() {
-            setTimeout(function() {
-                var labels = document.querySelectorAll('.esri-legend__layer-table');
-                labels.forEach(function(label) {
-                    var firstRow = label.querySelector('.esri-legend__layer-cell');
-                    if (firstRow && firstRow.textContent === 'LABEL2') {
-                        firstRow.style.display = 'none';
-                    }
-                });
-            }, 500);
         });
 
         // Add widget to the bottom left corner of the view
