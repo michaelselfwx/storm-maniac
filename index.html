@@ -61,6 +61,9 @@
           }
         }
 
+        var closestHourStr = closestHour.toString().padStart(2, '0');
+        var formattedDateTime = year + month + day + '_' + closestHourStr + '00';
+
         function getUrl(hour, date) {
             var minutes = Math.round((hour % 1) * 60);
             hour = ('0' + Math.floor(hour)).slice(-2);
@@ -68,9 +71,6 @@
             var formattedDateTime = date.year + date.month + date.day + '_' + hour + minutes;
             return "https://ham-shack-pi.tail8c79a.ts.net/proxy?url=https://www.spc.noaa.gov/products/outlook/archive/2024/day1otlk_" + formattedDateTime + "_cat.lyr.geojson";
         }
-
-        var closestHourStr = closestHour.toString().padStart(2, '0');
-        var formattedDateTime = year + month + day + '_' + closestHourStr + '00';
 
         var url = getUrl(closestHour, { year: year, month: month, day: day });
         console.log(url);
