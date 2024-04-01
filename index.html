@@ -1,272 +1,270 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>SPC Outlook Mapper</title>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="" />
+    <title>SPC Outlook Mapper</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="" />
 
-  <!-- calls for the arcgis api's CSS file and JS library. -->
-  <link rel="stylesheet" href="https://js.arcgis.com/4.25/esri/themes/light/main.css">
-  <script src="https://js.arcgis.com/4.25/"></script>
-
-  <!-- Adding the modules, API key, and map constant needed for a full screen map app -->
-  <script>
-    require([
-        "esri/config",
-        "esri/Map",
-        "esri/views/MapView",
-        "esri/layers/GeoJSONLayer",
-        "esri/widgets/Legend",
-        "esri/widgets/Search"
-
-    ], function (esriConfig, Map, MapView, GeoJSONLayer, Legend, Search) {
-
-        esriConfig.apiKey = "AAPKfb3b968ef66d4c848e795b3dd01897e8uTic-7qcXbjlpUVMGReQlWKWAjnWq5pH5r7mLxpcFbX1tfR5Y4bLBPhLOwFOm7NL";
-
-        var date = new Date();
-        var year = date.getUTCFullYear();
-        var month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
-        var day = ('0' + date.getUTCDate()).slice(-2);
-        var hour = date.getUTCHours().toString().padStart(2, '0');
-
-        var availableHours = [1, 12, 13, 16.5, 20];
-        var closestHour;
-        var result;
-
-        if (hour < availableHours[0]) {
-            closestHour = availableHours[availableHours.length - 1];
-            date.setDate(date.getDate() - 1);
-            year = date.getUTCFullYear();
-            month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
-            day = ('0' + (date.getUTCDate()).slice(-2));
-            result = { closestHour: closestHour, date: { year: year, month: month, day: day } };
-        } else {
-            closestHour = availableHours.reduce(function(prev, curr) {
-                return (curr <= hour && Math.abs(curr - hour) < Math.abs(prev - hour) ? curr : prev);
-            });
-            result = { closestHour: closestHour, date: date };
+    <!-- CSS for the page and the map -->
+    <style>
+        html,
+        body,
+        #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: 100%; 
+            width: 100%;
         }
-
-        function getPreviousHour(hour, date) {
-          var index = availableHours.indexOf(hour);
-          if (index > 0) {
-              return { hour: availableHours[index - 1], date: date };
-          } else {
-              date.setDate(date.getDate() - 1);
-              var year = date.getUTCFullYear();
-              var month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
-              var day = ('0' + date.getUTCDate()).slice(-2);
-              return { hour: availableHours[availableHours.length - 1], date: { year: year, month: month, day: day } };
-          }
+        #dateDiv {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 10px;
+            background-color: white;
+            border: 1px solid black;
+            border-radius: 5px;
+            margin: 10px;
+            z-index: 1000;
         }
+    </style>
 
-        var closestHourStr = closestHour.toString().padStart(2, '0');
-        var formattedDateTime = year + month + day + '_' + closestHourStr + '00';
-
-        function getUrl(hour, date) {
-            var minutes = Math.round((hour % 1) * 60);
-            hour = ('0' + Math.floor(hour)).slice(-2);
-            minutes = ('0' + minutes).slice(-2);
-            var formattedDateTime = date.year + date.month + date.day + '_' + hour + minutes;
-            return "https://ham-shack-pi.tail8c79a.ts.net/proxy?url=https://www.spc.noaa.gov/products/outlook/archive/2024/day1otlk_" + formattedDateTime + "_cat.lyr.geojson";
-        }
-
-        var url = getUrl(closestHour, { year: year, month: month, day: day });
-        console.log(url);
-
-        var map = new Map({
-              basemap: "topo-vector",          
-        });
-
-        var view = new MapView({
-              container: "viewDiv", // Reference to the scene div created in step 5
-              map: map, // Reference to the map object created before the scene
-              zoom: 5, // Sets the zoom level based on level of detail (LOD), this is what I think looks the best
-              center: [-98.5795, 37.8283] // Sets the center point of view in lon/lat
-        });
-
-        fetch(url)
-            .then(function(response) {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(function(data) {
-                // Data for the new hour is available, proceed as normal
-                createGeoJSONLayer(url);
-            })
-            .catch(function(error) {
-                // Data for the new hour is not available, use the previous hour
-                var previous = getPreviousHour(closestHour, date);
-                url = getUrl(previous.hour, previous.date);
-                createGeoJSONLayer(url);
-            });
-
-        // fetch(url)
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         // Convert the GeoJSON data to a format that Turf.js can understand
-        //         var features = data.features.map(feature => turf.feature(feature.geometry, feature.properties));
-
-        //         // Perform the dissolution
-        //         var dissolved = turf.dissolve(turf.featureCollection(features));
-
-        //         // Convert the dissolved data back to GeoJSON
-        //         var geojson = dissolved.features.map(feature => ({
-        //             type: "Feature",
-        //             geometry: feature.geometry,
-        //             properties: feature.properties
-        //         }));
-
-        //         // Use the dissolved data to create the GeoJSONLayer
-        //         createGeoJSONLayer(geojson);
-        //     })
-        //     .catch(error => {
-        //         console.error('Error:', error);
-        //     });
-
-        function createGeoJSONLayer(url) {
-            var renderer = {
-                type: "unique-value",
-                field: "LABEL2",
-                uniqueValueInfos: [
-                    { 
-                        value: "General Thunderstorms Risk", 
-                        symbol: {
-                            type: "simple-fill", 
-                            color: [0, 128, 0, 0.25], 
-                            outline: { width: 0.5, color: "black" }
-                        }
-                    },
-                    { 
-                        value: "Marginal Risk", 
-                        symbol: {
-                            type: "simple-fill", 
-                            color: [255, 255, 0, 0.4], 
-                            outline: { width: 0.5, color: "black" }
-                        }
-                    },
-                    { 
-                        value: "Slight Risk", 
-                        symbol: {
-                            type: "simple-fill", 
-                            color: [255, 165, 0, 0.45], 
-                            outline: { width: 0.5, color: "black" }
-                        }
-                    },
-                    { 
-                        value: "Moderate Risk", 
-                        symbol: {
-                            type: "simple-fill", 
-                            color: [255, 0, 0, 0.5], 
-                            outline: { width: 0.5, color: "black" }
-                        }
-                    },
-                    { 
-                        value: "High Risk", 
-                        symbol: {
-                            type: "simple-fill", 
-                            color: [255, 0, 255, 0.5], 
-                            outline: { width: 0.5, color: "black" }
-                        }
-                    }
-                ]
-            }
-            var geojsonLayer = new GeoJSONLayer({
-                url: url,
-                renderer: renderer,
-                popupTemplate: {  // autocasts as new PopupTemplate()
-                    title: "Categorical Outlook",
-                    content: "{LABEL2}"
-            }
-        });
-
-        map.add(geojsonLayer);
-
-        // Add the click event handler after the MapView and GeoJSONLayer are created
-        view.on("click", function(event) {
-            view.hitTest(event).then(function(response) {
-                if (response.results.length) {
-                    // Sort the results by DN in descending order
-                    response.results.sort(function(a, b) {
-                        return b.graphic.attributes.DN - a.graphic.attributes.DN;
-                    });
-
-                    // Get the graphic with the highest DN
-                    var graphic = response.results[0].graphic;
-
-                    // Show the popup
-                    view.popup.open({
-                        features: [graphic],
-                        location: event.mapPoint
-                    });
-                }
-            });
-        });
-
-        // Create a new Legend widget instance
-        var legend = new Legend({
-            view: view,
-            layerInfos: [
-                {
-                    layer: geojsonLayer,
-                    title: "Day 1 Convective Outlook"
-                },
-            ]
-        });
-
-        // Add widget to the bottom left corner of the view
-        view.ui.add(legend, "bottom-left");
-
-        // Create a new Search widget instance
-        var search = new Search({
-            view: view
-        });
-
-        // Add widget to the top right corner of the view
-        view.ui.add(search, 
-        {
-            position: "top-left",
-            index: 2
-        });
-
-        document.getElementById('dateDiv').textContent = 'Valid: ' + formattedDateTime;
-          
-        }
-    });
-  </script>
-
-  <!-- css to make a full screen map -->
-  <style>
-    html,
-    body,
-    #viewDiv {
-      padding: 0;
-      margin: 0;
-      height: 100%; 
-      width: 100%;
-    }
-    #dateDiv {
-      position: absolute;
-      top: 0;
-      right: 0;
-      padding: 10px;
-      background-color: white;
-      border: 1px solid black;
-      border-radius: 5px;
-      margin: 10px;
-      z-index: 1000;
-    }
-  </style>
+    <!-- ArcGIS API's CSS file and JS library -->
+    <link rel="stylesheet" href="https://js.arcgis.com/4.25/esri/themes/light/main.css">
+    <script src="https://js.arcgis.com/4.25/"></script>
 
 </head>
 <body>
 
-  <!-- the div to displays the map  -->
-  <div id="viewDiv"></div>
-  <div id="dateDiv"></div>
+    <!-- The div to display the map -->
+    <div id="viewDiv"></div>
+    <div id="dateDiv"></div>
+
+    <!-- JavaScript for the map -->
+    <script>
+        require([
+                "esri/config",
+                "esri/Map",
+                "esri/views/MapView",
+                "esri/layers/GeoJSONLayer",
+                "esri/widgets/Legend",
+                "esri/widgets/Search"
+        ], function (esriConfig, Map, MapView, GeoJSONLayer, Legend, Search) {
+            esriConfig.apiKey = "AAPKfb3b968ef66d4c848e795b3dd01897e8uTic-7qcXbjlpUVMGReQlWKWAjnWq5pH5r7mLxpcFbX1tfR5Y4bLBPhLOwFOm7NL";
+
+            var date = new Date();
+            var year = date.getUTCFullYear();
+            var month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
+            var day = ('0' + date.getUTCDate()).slice(-2);
+            var hour = date.getUTCHours().toString().padStart(2, '0');
+
+            var availableHours = [1, 12, 13, 16.5, 20];
+            var closestHour;
+            var result;
+
+            if (hour < availableHours[0]) {
+                closestHour = availableHours[availableHours.length - 1];
+                date.setDate(date.getDate() - 1);
+                year = date.getUTCFullYear();
+                month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
+                day = ('0' + (date.getUTCDate()).slice(-2));
+                result = { closestHour: closestHour, date: { year: year, month: month, day: day } };
+            } else {
+                closestHour = availableHours.reduce(function(prev, curr) {
+                    return (curr <= hour && Math.abs(curr - hour) < Math.abs(prev - hour) ? curr : prev);
+                });
+                result = { closestHour: closestHour, date: date };
+            }
+
+            function getPreviousHour(hour, date) {
+            var index = availableHours.indexOf(hour);
+            if (index > 0) {
+                return { hour: availableHours[index - 1], date: date };
+            } else {
+                date.setDate(date.getDate() - 1);
+                var year = date.getUTCFullYear();
+                var month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
+                var day = ('0' + date.getUTCDate()).slice(-2);
+                return { hour: availableHours[availableHours.length - 1], date: { year: year, month: month, day: day } };
+            }
+            }
+
+            var closestHourStr = closestHour.toString().padStart(2, '0');
+            var formattedDateTime = year + month + day + '_' + closestHourStr + '00';
+
+            function getUrl(hour, date) {
+                var minutes = Math.round((hour % 1) * 60);
+                hour = ('0' + Math.floor(hour)).slice(-2);
+                minutes = ('0' + minutes).slice(-2);
+                var formattedDateTime = date.year + date.month + date.day + '_' + hour + minutes;
+                return "https://ham-shack-pi.tail8c79a.ts.net/proxy?url=https://www.spc.noaa.gov/products/outlook/archive/2024/day1otlk_" + formattedDateTime + "_cat.lyr.geojson";
+            }
+
+            var url = getUrl(closestHour, { year: year, month: month, day: day });
+            console.log(url);
+
+            var map = new Map({
+                basemap: "topo-vector",          
+            });
+
+            var view = new MapView({
+                container: "viewDiv", // Reference to the scene div created in step 5
+                map: map, // Reference to the map object created before the scene
+                zoom: 5, // Sets the zoom level based on level of detail (LOD), this is what I think looks the best
+                center: [-98.5795, 37.8283] // Sets the center point of view in lon/lat
+            });
+
+            fetch(url)
+                .then(function(response) {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(function(data) {
+                    // Data for the new hour is available, proceed as normal
+                    createGeoJSONLayer(url);
+                })
+                .catch(function(error) {
+                    // Data for the new hour is not available, use the previous hour
+                    var previous = getPreviousHour(closestHour, date);
+                    url = getUrl(previous.hour, previous.date);
+                    createGeoJSONLayer(url);
+                });
+
+            // fetch(url)
+            //     .then(response => response.json())
+            //     .then(data => {
+            //         // Convert the GeoJSON data to a format that Turf.js can understand
+            //         var features = data.features.map(feature => turf.feature(feature.geometry, feature.properties));
+
+            //         // Perform the dissolution
+            //         var dissolved = turf.dissolve(turf.featureCollection(features));
+
+            //         // Convert the dissolved data back to GeoJSON
+            //         var geojson = dissolved.features.map(feature => ({
+            //             type: "Feature",
+            //             geometry: feature.geometry,
+            //             properties: feature.properties
+            //         }));
+
+            //         // Use the dissolved data to create the GeoJSONLayer
+            //         createGeoJSONLayer(geojson);
+            //     })
+            //     .catch(error => {
+            //         console.error('Error:', error);
+            //     });
+
+            function createGeoJSONLayer(url) {
+                var renderer = {
+                    type: "unique-value",
+                    field: "LABEL2",
+                    uniqueValueInfos: [
+                        { 
+                            value: "General Thunderstorms Risk", 
+                            symbol: {
+                                type: "simple-fill", 
+                                color: [0, 128, 0, 0.25], 
+                                outline: { width: 0.5, color: "black" }
+                            }
+                        },
+                        { 
+                            value: "Marginal Risk", 
+                            symbol: {
+                                type: "simple-fill", 
+                                color: [255, 255, 0, 0.4], 
+                                outline: { width: 0.5, color: "black" }
+                            }
+                        },
+                        { 
+                            value: "Slight Risk", 
+                            symbol: {
+                                type: "simple-fill", 
+                                color: [255, 165, 0, 0.45], 
+                                outline: { width: 0.5, color: "black" }
+                            }
+                        },
+                        { 
+                            value: "Moderate Risk", 
+                            symbol: {
+                                type: "simple-fill", 
+                                color: [255, 0, 0, 0.5], 
+                                outline: { width: 0.5, color: "black" }
+                            }
+                        },
+                        { 
+                            value: "High Risk", 
+                            symbol: {
+                                type: "simple-fill", 
+                                color: [255, 0, 255, 0.5], 
+                                outline: { width: 0.5, color: "black" }
+                            }
+                        }
+                    ]
+                }
+                var geojsonLayer = new GeoJSONLayer({
+                    url: url,
+                    renderer: renderer,
+                    popupTemplate: {  // autocasts as new PopupTemplate()
+                        title: "Categorical Outlook",
+                        content: "{LABEL2}"
+                }
+            });
+
+            map.add(geojsonLayer);
+
+            // Add the click event handler after the MapView and GeoJSONLayer are created
+            view.on("click", function(event) {
+                view.hitTest(event).then(function(response) {
+                    if (response.results.length) {
+                        // Sort the results by DN in descending order
+                        response.results.sort(function(a, b) {
+                            return b.graphic.attributes.DN - a.graphic.attributes.DN;
+                        });
+
+                        // Get the graphic with the highest DN
+                        var graphic = response.results[0].graphic;
+
+                        // Show the popup
+                        view.popup.open({
+                            features: [graphic],
+                            location: event.mapPoint
+                        });
+                    }
+                });
+            });
+
+            // Create a new Legend widget instance
+            var legend = new Legend({
+                view: view,
+                layerInfos: [
+                    {
+                        layer: geojsonLayer,
+                        title: "Day 1 Convective Outlook"
+                    },
+                ]
+            });
+
+            // Add widget to the bottom left corner of the view
+            view.ui.add(legend, "bottom-left");
+
+            // Create a new Search widget instance
+            var search = new Search({
+                view: view
+            });
+
+            // Add widget to the top right corner of the view
+            view.ui.add(search, 
+            {
+                position: "top-left",
+                index: 2
+            });
+
+            document.getElementById('dateDiv').textContent = 'Valid: ' + formattedDateTime;
+            
+            }
+        });
+    </script>
 
 </body>
 </html>
