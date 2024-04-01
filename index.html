@@ -101,12 +101,13 @@
                 hour = ('0' + Math.floor(hour)).slice(-2);
                 minutes = ('0' + minutes).slice(-2);
                 var formattedDateTime = date.year + date.month + date.day + '_' + hour + minutes;
-                return "https://ham-shack-pi.tail8c79a.ts.net/proxy?url=https://www.spc.noaa.gov/products/outlook/archive/2024/day1otlk_" + formattedDateTime + "_cat.lyr.geojson";
+                var url = "https://ham-shack-pi.tail8c79a.ts.net/proxy?url=https://www.spc.noaa.gov/products/outlook/archive/2024/day1otlk_" + formattedDateTime + "_cat.lyr.geojson";
+                return { url: url, formattedDateTime: formattedDateTime}
             }
 
-            // Get the URL for the closest available hour
-            var url = getUrl(closestHour, { year: year, month: month, day: day });
-            console.log(url);
+            // Get the data for the closest available hour
+            var urlData = getUrl(closestHour, { year: year, month: month, day: day });
+            console.log(urlData.url);
 
             // Create the map and view
             var map = new Map({
@@ -248,8 +249,7 @@
                 // Update the date div
                 var dateDiv = document.getElementById('dateDiv');
                 if (!dateDiv.textContent) {
-                    dateDiv.textContent = 'Valid: ' + formattedDateTime
-                    document.getElementById('dateDiv').textContent = 'Valid: ' + formattedDateTime;
+                    dateDiv.textContent = 'Valid: ' + urlData.formattedDateTime;
                 }
             }
         });
