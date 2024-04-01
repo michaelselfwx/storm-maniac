@@ -59,9 +59,10 @@
         }
 
         function getUrl(hour, date) {
-            hour = ('0' + Math.floor(hour)).slice(-2) + ('0' + Math.round((hour % 1) * 60)).slice(-2);
-            hour = hour.toString().padStart(2, '0');
-            var formattedDateTime = date.year + date.month + date.day + '_' + hour;
+            var minutes = Math.round((hour % 1) * 60);
+            hour = ('0' + Math.floor(hour)).slice(-2);
+            minutes = ('0' + minutes).slice(-2);
+            var formattedDateTime = date.year + date.month + date.day + '_' + hour + minutes;
             return "https://ham-shack-pi.tail8c79a.ts.net/proxy?url=https://www.spc.noaa.gov/products/outlook/archive/2024/day1otlk_" + formattedDateTime + "_cat.lyr.geojson";
         }
 
