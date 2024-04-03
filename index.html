@@ -247,13 +247,18 @@
                 }
 
                 // Update the date div
+                var validTime = data.features[0].properties.VALID;
+                var expireTime = data.features[0].properties.EXPIRE;
+
                 var dateDiv = document.getElementById('dateDiv');
                 if (!dateDiv.textContent) {
-                    dateDiv.textContent = 'Valid: ' + urlData.formattedDateTime;
-                }
+                    dateDiv.textContent = 'Valid: ' + validTime + ' - ' + expireTime;
+                    }
+            
             }
         });
-    </script>
 
+    </script>
+    
 </body>
 </html>
