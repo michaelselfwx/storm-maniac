@@ -196,8 +196,13 @@
                     }
                 });
 
-                // Add the GeoJSON layer to the map
-                map.add(geojsonLayer);
+                 // Add the GeoJSON layer to the map
+                if (!map.findLayerById('geojsonLayer')) {
+                    geojsonLayer.id = 'geojsonLayer';
+                    map.add(geojsonLayer);
+                } else {
+                    map.findLayerById('geojsonLayer').url = urlData.url;
+                }
 
                 // Add a click event handler to the view
                 view.on("click", function(event) {
@@ -259,6 +264,6 @@
         });
 
     </script>
-    
+
 </body>
 </html>
