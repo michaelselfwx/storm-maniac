@@ -130,7 +130,7 @@
                 })
                 .then(function(data) {
                     // Data for the new hour is available, proceed as normal
-                    createGeoJSONLayer(urlData);
+                    createGeoJSONLayer(urlData, data);
                 })
                 .catch(function(error) {
                     // Data for the new hour is not available, use the previous hour
@@ -140,7 +140,7 @@
                 });
 
             // Define a function to create a GeoJSON layer
-            function createGeoJSONLayer(url) {
+            function createGeoJSONLayer(url, data) {
                 var renderer = {
                     type: "unique-value",
                     field: "LABEL2",
@@ -252,14 +252,15 @@
                 }
 
                 // Update the date div
-                var validTime = data.features[0].properties.VALID;
-                var expireTime = data.features[0].properties.EXPIRE;
+                if (data) {
+                    var validTime = data.features[0].properties.VALID;
+                    var expireTime = data.features[0].properties.EXPIRE;
 
-                var dateDiv = document.getElementById('dateDiv');
-                if (!dateDiv.textContent) {
-                    dateDiv.textContent = 'Valid: ' + validTime + ' - ' + expireTime;
+                    var dateDiv = document.getElementById('dateDiv');
+                    if (!dateDiv.textContent) {
+                        dateDiv.textContent = 'Valid: ' + validTime + ' - ' + expireTime;
                     }
-            
+                }
             }
         });
 
