@@ -5,7 +5,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="description" content="" />
-    <meta http-equiv="refresh" content="30">
     <!-- CSS for the page and the map -->
     <style>
         html,
@@ -52,6 +51,25 @@
         ], function (esriConfig, Map, MapView, GeoJSONLayer, Legend, Search) {
             // Set the API key
             esriConfig.apiKey = "AAPKfb3b968ef66d4c848e795b3dd01897e8uTic-7qcXbjlpUVMGReQlWKWAjnWq5pH5r7mLxpcFbX1tfR5Y4bLBPhLOwFOm7NL";
+
+            // Make sure the page refreshes when the user is inactive
+            var timeout;
+            var delay = 5 * 60 * 1000; // 5 minutes
+
+            function resetTimeout() {
+                clearTimeout(timeout);
+                timeout = setTimeout(function() {
+                    location.reload();
+                }, delay);
+            }
+
+            window.onload = resetTimeout;
+            window.onmousemove = resetTimeout;
+            window.onmousedown = resetTimeout; 
+            window.ontouchstart = resetTimeout;
+            window.onclick = resetTimeout;     
+            window.onscroll = resetTimeout;    
+            window.onkeypress = resetTimeout;
 
             // Define the available hours
             var availableHours = [1, 12, 13, 16.5, 20];
