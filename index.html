@@ -26,6 +26,9 @@
             margin: 10px;
             z-index: 1000;
         }
+        .small-legend .esri-legend__layer {
+            font-size: 0.8em; /* Adjust as needed */
+        }
     </style>
 
     <!-- ArcGIS API's CSS file and JS library -->
@@ -255,6 +258,7 @@
                 if (!view.ui.find("legend")) {
                     var legend = new Legend({
                         view: view,
+                        container: document.createElement("div"),
                         layerInfos: [
                             {
                                 layer: geojsonLayer,
@@ -262,8 +266,11 @@
                             },
                         ]
                     });
-                    view.ui.add(legend, "bottom-left");
-                }
+
+                    var legendContainer = document.createElement("div");
+                    legendContainer.className = "small-legend";
+                    legendContainer.appendChild(legend.container);
+                    view.ui.add(legendContainer, "bottom-left");
 
                 // Create a search widget and add it to the view
                 if (!view.ui.find("search")) {
