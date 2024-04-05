@@ -120,7 +120,10 @@
             var view = new MapView({
                 container: "viewDiv",
                 map: map,
-                center: [-98.5795, 37.8283]
+                center: [-98.5795, 37.8283],
+                ui: {
+                    components: ["attribution"]
+                }
             });
 
             view.scale = 18650000; // Sets a 1:24,0000 scale on the view
