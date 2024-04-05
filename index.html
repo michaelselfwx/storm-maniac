@@ -32,6 +32,7 @@
             position: absolute;
             bottom: 0;
             left: 0;
+            padding: 10px;
         }
     </style>
 
@@ -274,7 +275,7 @@
                     var legendContainer = document.createElement("div");
                     legendContainer.className = "small-legend";
                     legendContainer.appendChild(legend.container);
-                    view.ui.add(legendContainer, "bottom-left");
+                    view.ui.add(legendContainer);
 
                 // Create a search widget and add it to the view
                 if (!view.ui.find("search")) {
