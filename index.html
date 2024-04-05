@@ -145,7 +145,7 @@
                 center: [-98.5795, 37.8283]
             });
 
-            view.scale = 186250000; // Sets a 1:24,0000 scale on the view
+            view.scale = 18625000; // Sets a 1:24,0000 scale on the view
 
             // Fetch the data for the closest available hour
             fetch(urlData.url)
@@ -295,8 +295,8 @@
                     var validTime = data.features[0].properties.VALID;
                     var expireTime = data.features[0].properties.EXPIRE;
 
-                    var validFormatted = validTime.substring(6,8) + "/" + validTime.substring(4,6) + "/" + validTime.substring(0,4) + " @ " + validTime.substring(8,10) + validTime.substring(10,12) + " UTC";
-                    var expireFormatted = expireTime.substring(6,8) + "/" + expireTime.substring(4,6) + "/" + expireTime.substring(0,4) + " @ " + expireTime.substring(8,10) + expireTime.substring(10,12) + " UTC";
+                    var validFormatted = validTime.substring(4,6) + "/" + validTime.substring(6,8) + "/" + validTime.substring(0,4) + " @ " + validTime.substring(8,10) + validTime.substring(10,12) + " UTC";
+                    var expireFormatted = expireTime.substring(4,6) + "/" + expireTime.substring(6,8) + "/" + expireTime.substring(0,4) + " @ " + expireTime.substring(8,10) + expireTime.substring(10,12) + " UTC";
 
                     var dateDiv = document.getElementById('dateDiv');
                     if (!dateDiv.textContent) {
