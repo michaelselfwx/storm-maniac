@@ -332,14 +332,16 @@
                 // Create a search widget and add it to the view
                 if (!view.ui.find("search")) {
                     var search = new Search({
-                        view: view
-                    });
-                    view.ui.add(search, 
-                    {
-                        position: "top-left",
-                        index: 2
-                    });
-                }
+                        view: view,
+                        container: document.createElement("div"),
+                        layerInfos: [
+                            {
+                                layer: geojsonLayer,
+                                placeholder: "Search for a location"
+                            }],
+                        }
+                    )};
+                
 
                 // Update the date div
                 if (data) {
@@ -353,11 +355,10 @@
                     if (!dateDiv.textContent) {
                         dateDiv.textContent = 'Valid: ' + validFormatted + ' - ' + expireFormatted;
                     }
-                }
-            }
+                };
+            }   
         }
     });
-
     </script>
 
 </body>
