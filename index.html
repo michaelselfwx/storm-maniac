@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="description" content="" />
+
     <!-- CSS for the page and the map -->
     <style>
         html,
@@ -91,8 +92,8 @@
                 closestHour = availableHours[availableHours.length - 1];
                 date.setDate(date.getDate() - 1);
                 year = date.getUTCFullYear();
-                month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
-                day = ('0' + (date.getUTCDate()).slice(-2));
+                month = ('0' + (date.getUTCMonth() + 1)).toString().slice(-2);
+                day = ('0' + (date.getUTCDate()).toString().slice(-2));
                 result = { closestHour: closestHour, date: { year: year, month: month, day: day } };
             } else {
                 // Otherwise, use the available hour that is closest to the current hour
