@@ -33,19 +33,21 @@
             bottom: 0;
             left: 0;
             padding: 10px;
-        }
-        #container {
-            display: flex;
-            justify-content: center;
-        }
 
-        #left-column, #right-column {
-            flex: 0 0 auto;
+        .sidebar {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 200px; /* adjust as needed */
             display: none; /* initially hidden */
+            }
+
+        #left-column {
+            left: 0;
         }
 
-        #map {
-            flex: 1; /* takes up remaining space */
+        #right-column {
+            right: 0;
         }
     </style>
 
@@ -55,12 +57,14 @@
 
 </head>
 <body>
-    <button id="toggle-left">Toggle Left Column</button>
-    <button id="toggle-right">Toggle Right Column</button>
 
     <!-- The div to display the map -->
     <div id="viewDiv"></div>
     <div id="dateDiv"></div>
+    <div id="left-column" class="sidebar">Left Column</div>
+    <div id="right-column" class="sidebar">Right Column</div>
+    <button id="toggle-left">Toggle Left Column</button>
+    <button id="toggle-right">Toggle Right Column</button>
 
     <!-- JavaScript for the map -->
     <script>
@@ -94,19 +98,32 @@
             window.onscroll = resetTimeout;    
             window.onkeypress = resetTimeout;
 
-            function toggleColumn(id) {
-                var column = document.getElementById(id);
-                column.style.display = column.style.display === 'none' ? 'block' : 'none';
-            }
+            // Create the map and view
+            var map = new Map({
+                basemap: "topo-vector",          
+            });
+            var view = new MapView({
+                container: "viewDiv",
+                map: map,
+                center: [-98.5795, 37.8283]
+            });
+
+            view.scale = 18650000; // Sets a 1:24,0000 scale on the view
+
 
             document.getElementById('toggle-left').addEventListener('click', function() {
-                toggleColumn('left-column');
+                toggleSidebar('left-column');
             });
 
             document.getElementById('toggle-right').addEventListener('click', function() {
-                toggleColumn('right-column');
+                toggleSidebar('right-column');
             });
-            
+
+            function toggleSidebar(id) {
+                var sidebar = document.getElementById(id);
+                sidebar.style.display = sidebar.style.display === 'none' ? 'block' : 'none';
+            }
+
             // Define the available hours
             var availableHours = [1, 12, 13, 16.5, 20];
 
@@ -162,18 +179,6 @@
             // Get the data for the closest available hour
             var urlData = getUrl(closestHour, { year: year, month: month, day: day });
             console.log(urlData.url);
-
-            // Create the map and view
-            var map = new Map({
-                basemap: "topo-vector",          
-            });
-            var view = new MapView({
-                container: "viewDiv",
-                map: map,
-                center: [-98.5795, 37.8283]
-            });
-
-            view.scale = 18650000; // Sets a 1:24,0000 scale on the view
 
             // Fetch the data for the closest available hour
             fetch(urlData.url)
