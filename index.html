@@ -34,6 +34,19 @@
             left: 0;
             padding: 10px;
         }
+        #container {
+            display: flex;
+            justify-content: center;
+        }
+
+        #left-column, #right-column {
+            flex: 0 0 auto;
+            display: none; /* initially hidden */
+        }
+
+        #map {
+            flex: 1; /* takes up remaining space */
+        }
     </style>
 
     <!-- ArcGIS API's CSS file and JS library -->
@@ -42,6 +55,8 @@
 
 </head>
 <body>
+    <button id="toggle-left">Toggle Left Column</button>
+    <button id="toggle-right">Toggle Right Column</button>
 
     <!-- The div to display the map -->
     <div id="viewDiv"></div>
@@ -79,6 +94,19 @@
             window.onscroll = resetTimeout;    
             window.onkeypress = resetTimeout;
 
+            function toggleColumn(id) {
+                var column = document.getElementById(id);
+                column.style.display = column.style.display === 'none' ? 'block' : 'none';
+            }
+
+            document.getElementById('toggle-left').addEventListener('click', function() {
+                toggleColumn('left-column');
+            });
+
+            document.getElementById('toggle-right').addEventListener('click', function() {
+                toggleColumn('right-column');
+            });
+            
             // Define the available hours
             var availableHours = [1, 12, 13, 16.5, 20];
 
