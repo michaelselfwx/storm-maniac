@@ -152,10 +152,12 @@
             window.onscroll = resetTimeout;    
             window.onkeypress = resetTimeout;
 
-            // Create the map and view
+            // Create the map
             var map = new Map({
                 basemap: "topo-vector",          
             });
+
+            // Create the view
             var view = new MapView({
                 container: "viewDiv",
                 map: map,
@@ -164,32 +166,21 @@
                     components: ["attribution"]
                 }
             });
-
             view.scale = 18650000; // Sets a 1:24,0000 scale on the view
 
 
-            view.when(function() {
-
-                // Add LayerList to the view
-                var layerList = new LayerList({
-                    view: view
-                });
-
-                view.ui.add(layerList, "top-right");
-
-                document.getElementById('toggle-left').addEventListener('click', function() {
-                    toggleSidebar('left-column');
-                });
-
-                document.getElementById('toggle-right').addEventListener('click', function() {
-                    toggleSidebar('right-column');
-                });
-
-                function toggleSidebar(id) {
-                    var sidebar = document.getElementById(id);
-                    sidebar.style.display = sidebar.style.display === 'none' ? 'block' : 'none';
-                }
+            // Add LayerList to the view
+            var layerList = new LayerList({
+                view: view
             });
+            view.ui.add(layerList, "top-right");
+
+            // Add Editor widget to the view
+            var editor = new Editor({
+                view: view
+            });
+            view.ui.add(editor, "right-center");
+
 
             // Define the available hours
             var availableHours = [1, 12, 13, 16.5, 20];
