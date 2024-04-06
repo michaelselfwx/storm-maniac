@@ -433,33 +433,22 @@
                 },
                 popupTemplate: {
                     title: "{TYPETEXT}",
-                    content: [
-                        {
-                            type: "fields",
-                            fieldInfos: [
-                                {
-                                    fieldName: "VALID",
-                                    label: "Time",
-                                    formatFunction: function(value) {
-                                        // Extract the hour and minute from the VALID string
-                                        var hour = value.substring(8, 10);
-                                        var minute = value.substring(10, 12);
+                    content: function(feature) {
+                        // Extract the hour and minute from the VALID string
+                        var valid = feature.graphic.attributes.VALID;
+                        var hour = valid.substring(8, 10);
+                        var minute = valid.substring(10, 12);
 
-                                        // Return the formatted time
-                                        return hour + ":" + minute + " UTC";
-                                    }
-                                },
-                                {
-                                    fieldName: "SOURCE",
-                                    label: "Source"
-                                },
-                                {
-                                    fieldName: "REMARK",
-                                    label: "Remarks"
-                                }
-                            ]
-                        }
-                    ]
+                        // Format the time
+                        var time = hour + ":" + minute + " UTC";
+
+                        // Create the content for the popup
+                        var content = "Time: " + time + "<br>" +
+                                    "Source: " + feature.graphic.attributes.SOURCE + "<br>" +
+                                    "Remarks: " + feature.graphic.attributes.REMARK;
+
+                        return content;
+                    }
                 }
             });
 
