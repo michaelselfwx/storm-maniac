@@ -123,10 +123,6 @@
             });
             view.scale = 18650000; // Sets a 1:24,0000 scale on the view
 
-            // Declare GeoJSONs
-            var geojsonLayer;
-            var stormreportsJson;
-
             // Add LayerList to the view
             var layerList = new LayerList({
                 view: view
@@ -137,7 +133,9 @@
             var editor = new Editor({
                 view: view
             });
-            view.ui.add(editor, "right-center");
+            view.ui.add(editor, "bottom-right");
+
+
 
             // Define a function to get the URL for a given hour and date
             function getUrl(hour, date) {
@@ -147,34 +145,6 @@
                 var formattedDateTime = date.year + date.month + date.day + '_' + hour + minutes;
                 var url = "https://ham-shack-pi.tail8c79a.ts.net/proxy?url=https://www.spc.noaa.gov/products/outlook/archive/2024/day1otlk_" + formattedDateTime + "_cat.lyr.geojson";
                 return { url: url, formattedDateTime: formattedDateTime}
-            }
-
-            // Get the current date and time (UTC, not local)
-            var date = new Date();
-            var year = date.getUTCFullYear();
-            var month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
-            var day = ('0' + date.getUTCDate()).slice(-2);
-            var hour = date.getUTCHours().toString().padStart(2, '0');
-
-            // Define the available hours for the day 1 convective outlook
-            var availableHours = [1, 12, 13, 16.5, 20];
-
-            // Determine the closest available hour to the current hour
-            var closestHour, result;
-            if (hour < availableHours[0]) {
-                // If the current hour is before the first available hour, use the last available hour from the previous day
-                closestHour = availableHours[availableHours.length - 1];
-                date.setDate(date.getDate() - 1);
-                year = date.getUTCFullYear();
-                month = ('0' + (date.getUTCMonth() + 1)).toString().slice(-2);
-                day = ('0' + (date.getUTCDate()).toString().slice(-2));
-                result = { closestHour: closestHour, date: { year: year, month: month, day: day } };
-            } else {
-                // Otherwise, use the available hour that is closest to the current hour
-                closestHour = availableHours.reduce(function(prev, curr) {
-                    return (curr <= hour && Math.abs(curr - hour) < Math.abs(prev - hour) ? curr : prev);
-                });
-                result = { closestHour: closestHour, date: date };
             }
 
             // Define a function to get the previous available hour
@@ -190,41 +160,6 @@
                     return { hour: availableHours[availableHours.length - 1], date: { year: year, month: month, day: day } };
                 }
             }
-
-            // Get the data for the closest available hour
-            var urlData = getUrl(closestHour, { year: year, month: month, day: day });
-            console.log(urlData.url);
-
-            // Fetch the data for the closest available hour
-            fetch(urlData.url)
-                .then(function(response) {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(function(data) {
-                    // Data for the new hour is available, proceed as normal
-                    createGeoJSONLayer(urlData, data);
-                })
-                .catch(function(error) {
-                    // Data for the new hour is not available, use the previous hour
-                    var previous = getPreviousHour(closestHour, date);
-                    url = getUrl(previous.hour, previous.date);
-                    fetch(url.url)
-                        .then(function(response) {
-                            if (!response.ok) {
-                                throw new Error('Network response was not ok');
-                            }
-                            return response.json();
-                        })
-                        .then(function(data) {
-                            createGeoJSONLayer(url, data);
-                        })
-                        .catch(function(error) {
-                            console.error('Error fetching data:', error);
-                        });
-                });
 
             // Define a function to create a GeoJSON layer
             function createGeoJSONLayer(url, data) {
@@ -295,27 +230,6 @@
                 // Add the GeoJSON layer to the map
                 map.add(geojsonLayer);
 
-                // Create a new Legend widget for the GeoJSON layer
-                var geojsonLegend = new Legend({
-                    view: view,
-                    layerInfos: [
-                        {
-                            layer: geojsonLayer,
-                            title: "Day 1 Convective Outlook"
-                        }
-                    ]
-                });
-
-                // Create a container for the Legend widget
-                var geojsonLegendContainer = document.createElement("div");
-                geojsonLegendContainer.className = "small-legend";
-
-                // Add the Legend widget to the view
-                view.ui.add(geojsonLegendContainer, "bottom-right");
-
-                // Add the Legend widget container to the view
-                geojsonLegendContainer.appendChild(geojsonLegend.container);
-
                 // Update the date div
                 if (data) {
                     var validTime = data.features[0].properties.VALID;
@@ -330,6 +244,69 @@
                     }
                 }
             };
+
+            // Get the current date and time (UTC, not local)
+            var date = new Date();
+            var year = date.getUTCFullYear();
+            var month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
+            var day = ('0' + date.getUTCDate()).slice(-2);
+            var hour = date.getUTCHours().toString().padStart(2, '0');
+
+            // Define the available hours for the day 1 convective outlook
+            var availableHours = [1, 12, 13, 16.5, 20];
+
+            // Determine the closest available hour to the current hour
+            var closestHour, result;
+            if (hour < availableHours[0]) {
+                // If the current hour is before the first available hour, use the last available hour from the previous day
+                closestHour = availableHours[availableHours.length - 1];
+                date.setDate(date.getDate() - 1);
+                year = date.getUTCFullYear();
+                month = ('0' + (date.getUTCMonth() + 1)).toString().slice(-2);
+                day = ('0' + (date.getUTCDate()).toString().slice(-2));
+                result = { closestHour: closestHour, date: { year: year, month: month, day: day } };
+            } else {
+                // Otherwise, use the available hour that is closest to the current hour
+                closestHour = availableHours.reduce(function(prev, curr) {
+                    return (curr <= hour && Math.abs(curr - hour) < Math.abs(prev - hour) ? curr : prev);
+                });
+                result = { closestHour: closestHour, date: date };
+            }
+
+            // Get the data for the closest available hour
+            var urlData = getUrl(closestHour, { year: year, month: month, day: day });
+            console.log(urlData.url);
+
+            // Fetch the data for the closest available hour
+            fetch(urlData.url)
+                .then(function(response) {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(function(data) {
+                    // Data for the new hour is available, proceed as normal
+                    createGeoJSONLayer(urlData, data);
+                })
+                .catch(function(error) {
+                    // Data for the new hour is not available, use the previous hour
+                    var previous = getPreviousHour(closestHour, date);
+                    url = getUrl(previous.hour, previous.date);
+                    fetch(url.url)
+                        .then(function(response) {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then(function(data) {
+                            createGeoJSONLayer(url, data);
+                        })
+                        .catch(function(error) {
+                            console.error('Error fetching data:', error);
+                        });
+                });
 
             // URL of the GeoJSON data
             var stormreportsJson = new GeoJSONLayer({
@@ -491,28 +468,6 @@
             });
 
             map.add(stormreportsJson);
-
-            // Create a new Legend widget for the storm reports layer
-            var stormreportsLegend = new Legend({
-                view: view,
-                layerInfos: [
-                    {
-                        layer: stormreportsJson,
-                        title: "Storm Reports in past 24hrs",
-                    }
-                ]
-            });
-            
-            // Create a container for the Legend widget
-            var stormreportsLegendContainer = document.createElement("div");
-            stormreportsLegendContainer.className = "small-legend";
-
-            // Add the Legend widget to the view
-            view.ui.add(stormreportsLegendContainer, "bottom-right");
-
-            // Add the Legend widget container to the view
-            stormreportsLegendContainer.appendChild(stormreportsLegend.container);
-
         }
     );
     </script>
