@@ -49,11 +49,14 @@
         @media screen and (max-width: 768px) {
             #dateDiv {
                 width: 80%; 
-                height: 3%; 
-                font-size: calc(1px + 2.5vw); 
+                height: 4%; 
+                font-size: calc(1px + 2.75vw); 
             }
             .small-legend {
                 transform: scale(0.5);
+            }
+            .small-legend .esri-legend__layer-caption {
+                font-size: calc(1px + 1.5vw);
             }
             .esri-layer-list {
                 transform: scale(0.6);
@@ -72,6 +75,9 @@
                 transform: scale(0.6);
                 left: 0;
                 bottom: 0;
+            }
+            .small-legend .esri-legend__layer-caption {
+                font-size: calc(1px + 1vw);
             }
             .esri-layer-list {
                 transform: scale(0.7);
