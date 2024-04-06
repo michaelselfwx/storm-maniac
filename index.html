@@ -487,7 +487,14 @@
                         {
                             fieldName: "VALID",
                             label: "Valid",
-                            visible: true
+                            visible: true,
+                            format: {
+                                dateFormat: "short-date-short-time-utc" // Custom date format
+                            },
+                            getAlias: function (value, key, { fieldName }) {
+                                // Custom function to format the date
+                                return formatDate(value);
+                            }
                         },
                         {
                             fieldName: "SOURCE",
@@ -502,6 +509,19 @@
                     ]
                 }]
             };
+
+            // Custom function to format date
+            function formatDate(dateString) {
+                const date = new Date(dateString.slice(0, 4), // Year
+                                    parseInt(dateString.slice(4, 6)) - 1, // Month (0-based)
+                                    dateString.slice(6, 8), // Day
+                                    dateString.slice(8, 10), // Hour
+                                    dateString.slice(10, 12)); // Minute
+
+                const formattedDate = `${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getDate().toString().padStart(2, '0')} @ ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')} UTC`;
+                
+                return formattedDate;
+            }
 
             map.add(stormreportsJson);
 
