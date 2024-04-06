@@ -129,6 +129,16 @@
             // Declare geojsonLayer variable
             var geojsonLayer;
 
+            var legend = new Legend({
+                view: view,
+                container: document.createElement("div"),
+            });
+
+            var legendContainer = document.createElement("div");
+            legendContainer.className = "small-legend";
+            legendContainer.appendChild(legend.container);
+            view.ui.add(legendContainer);
+
             // Add LayerList to the view
             var layerList = new LayerList({
                 view: view
@@ -284,7 +294,20 @@
                 });
 
                 // Add the GeoJSON layer to the map
-                map.add.geojsonLayer;
+                map.add(geojsonLayer);
+
+                // Update the Legend widget
+                legend.layerInfos = [
+                    {
+                        layer: geojsonLayer,
+                        title: "Day 1 Convective Outlook"
+                    },
+                    {
+                        layer: stormreportsJson,
+                        title: "Storm Reports in past 24hrs",
+                    }
+                ];
+                legend.refresh();
 
                 // Update the date div
                 if (data) {
@@ -459,26 +482,6 @@
                     ]
                 }
             });
-
-            var legend = new Legend({
-                view: view,
-                container: document.createElement("div"),
-                layerInfos: [
-                    {
-                        layer: geojsonLayer,
-                        title: "Day 1 Convective Outlook"
-                    },
-                    {
-                        layer: stormreportsJson,
-                        title: "Storm Reports in past 24hrs",
-                    }           
-                ]
-            });
-
-            var legendContainer = document.createElement("div");
-            legendContainer.className = "small-legend";
-            legendContainer.appendChild(legend.container);
-            view.ui.add(legendContainer);
         }
     );
     </script>
