@@ -298,13 +298,15 @@
                     ]
                 });
 
-                // Add the Legend widget to the view
-                view.ui.add(geojsonLegend, "bottom-right");
-
                 // Create a container for the Legend widget
                 var geojsonLegendContainer = document.createElement("div");
                 geojsonLegendContainer.className = "small-legend";
-                geojsonLegendContainer.appendChild(geojsonLegend.domNode);
+
+                // Add the Legend widget to the view
+                view.ui.add(geojsonLegendContainer, "bottom-right");
+
+                // Add the Legend widget container to the view
+                geojsonLegendContainer.appendChild(geojsonLegend.container);
 
 
                 // Update the date div
@@ -492,13 +494,15 @@
                 ]
             });
             
-            // Add the Legend widget to the view
-            view.ui.add(stormreportsLegend, "bottom-right");
-
             // Create a container for the Legend widget
             var stormreportsLegendContainer = document.createElement("div");
             stormreportsLegendContainer.className = "small-legend";
-            stormreportsLegendContainer.appendChild(stormreportsLegend.domNode);
+
+            // Add the Legend widget to the view
+            view.ui.add(stormreportsLegendContainer, "bottom-right");
+
+            // Add the Legend widget container to the view
+            stormreportsLegendContainer.appendChild(stormreportsLegend.container);
 
         }
     );
