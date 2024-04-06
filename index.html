@@ -176,6 +176,9 @@
                 }
             }
 
+            // Declare geojsonLayer in the outer scope
+            var geojsonLayer;  
+
             // Define a function to create a GeoJSON layer
             function createGeoJSONLayer(url, data) {
                 var renderer = {
@@ -233,7 +236,7 @@
                     ]
                 };
 
-                var geojsonLayer = new GeoJSONLayer({
+                geojsonLayer = new GeoJSONLayer({
                     url: url.url,
                     title: "Day 1 Convective Outlook",
                     renderer: renderer,
@@ -627,6 +630,10 @@
                     {
                         layer: stormreportsJson,
                         title: "Recent Storm Reports"
+                    },
+                    {
+                        layer: geojsonLayer,
+                        title: "Day 1 Convective Outlook"
                     }
                 ]
             });
