@@ -51,9 +51,6 @@
                 height: 5%; /* adjust as needed */
                 font-size: calc(1px + 2vw); /* adjust as needed */
             }
-            #toggle-left, #toggle-right {
-                font-size: calc(1px + 2vw); /* adjust as needed */
-            }
         }
         .small-legend {
             transform: scale(0.8); /* Adjust as needed */
@@ -61,33 +58,6 @@
             bottom: 0;
             left: 0;
             padding: 10px;
-        }
-
-        .sidebar {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 200px; /* adjust as needed */
-            display: none; /* initially hidden */
-        }
-        #left-column {
-            left: 0;
-        }
-
-        #right-column {
-            right: 0;
-        }
-        #toggle-left, #toggle-right {
-            position: absolute;
-            top: 10px;
-        }
-
-        #toggle-left {
-            left: 10px;
-        }
-
-        #toggle-right {
-            right: 10px;
         }
         .esri-layer-list {
             margin-top: 20px; /* Adjust as needed */
@@ -104,18 +74,6 @@
     <!-- The div to display the map -->
     <div id="viewDiv"></div>
     <div id="dateDiv"></div>
-    <div id="left-column" class="sidebar">
-        <h2>View Selections</h2>
-        <input type="checkbox" id="layer1" checked>
-        <label for="layer1">SPC Day 1 Convective Outlook</label><br>
-        <input type="checkbox" id="layer2" checked>
-        <label for="layer2">Layer 2</label><br>
-        <input type="checkbox" id="layer3" checked>
-        <label for="layer3">Layer 3</label><br>
-    </div>
-    <div id="right-column" class="sidebar">Storm Reports</div>
-    <button id="toggle-left">Menu</button>
-    <button id="toggle-right">Add Report</button>
 
     <!-- JavaScript for the map -->
     <script>
