@@ -404,28 +404,73 @@
                         dateDiv.textContent = 'Valid: ' + validFormatted + ' - ' + expireFormatted;
                     }
                 };
-
-                // Toggle layers based on sidebar checkboxes
-                document.getElementById("layer1").addEventListener("change", function() {
-                    layer1.visible = this.checked;
-                });
-                document.getElementById("layer2").addEventListener("change", function() {
-                    layer2.visible = this.checked;
-                });
-                document.getElementById("layer3").addEventListener("change", function() {
-                    layer3.visible = this.checked;
-                });
             }
             
             // Create a GeoJSON layer for the storm reports
-            var stormReportsLayer = new GeoJSONLayer({
+            var stormReportsData = new GeoJSONLayer({
                 url: "https://mesonet.agron.iastate.edu/data/gis/shape/4326/us/lsr_24hour.geojson", // Replace with the URL of your GeoJSON file
                 title: "Storm Reports", // The title of the layer
                 // Add any other properties you need...
             });
 
-            // Add the storm reports layer to the map
-            map.add(stormReportsLayer);   
+            // Parse GeoJSON and create graphics for each storm report
+            stormReportsData.features.forEach(function(feature) {
+                var lon = feature.geometry.coordinates[0];
+                var lat = feature.geometry.coordinates[1];
+                var type = feature.properties.TYPETEXT;
+
+                // Create a point geometry
+                var point = {
+                    type: "point",
+                    longitude: lon,
+                    latitude: lat
+                };
+
+                // Create a symbol for the point based on storm report type
+                var symbol;
+                if (type === "HAIL") {
+                    symbol = {
+                        type: "simple-marker",
+                        color: "blue",
+                        size: "10px"
+                    };
+                } else if (type === "SNOW") {
+                    symbol = {
+                        type: "simple-marker",
+                        color: "white",
+                        outline: {
+                            color: "blue",
+                            width: 1
+                        },
+                        size: "10px"
+                    };
+                } else {
+                    // Default symbol for other types of reports
+                    symbol = {
+                        type: "simple-marker",
+                        color: "red",
+                        size: "10px"
+                    };
+                }
+
+                // Create a graphic and add it to the graphics layer
+                var graphic = new Graphic({
+                    geometry: point,
+                    symbol: symbol
+                });
+                view.graphics.add(graphic);
+            });
+            
+            // Toggle layers based on sidebar checkboxes
+            document.getElementById("layer1").addEventListener("change", function() {
+                    layer1.visible = this.checked;
+                });
+            document.getElementById("layer2").addEventListener("change", function() {
+                layer2.visible = this.checked;
+            });
+            document.getElementById("layer3").addEventListener("change", function() {
+                layer3.visible = this.checked;
+            });
         }
     });
     </script>
