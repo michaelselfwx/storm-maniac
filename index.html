@@ -167,7 +167,7 @@
                 var index = availableHours.indexOf(hour);
                 if (index > 0) {
                     return { hour: availableHours[index - 1], date: date };
-                } else {
+                } else if (index === 0 || index === -1) {
                     date.setDate(date.getDate() - 1);
                     var year = date.getUTCFullYear();
                     var month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
@@ -495,16 +495,133 @@
                 outFields: ["*"],
                 id: "userStormReports",
                 renderer: {
-                    type: "simple",
-                    symbol: {
-                        type: "simple-marker",
-                        style: "circle",
-                        color: "red",
-                        outline: {
-                            color: "black",
-                            width: 0.5
+                    type: "unique-value",
+                    field: "TYPETEXT",
+                    uniqueValueInfos: [
+                        {
+                            value: "RAIN",
+                            symbol: {
+                                type: "simple-marker",
+                                style: "circle",
+                                color: "blue",
+                                outline: {
+                                    color: "blue",
+                                    width: 1
+                                },
+                                size: "5px"
+                            }
+                        },
+                        {
+                            value: "HAIL",
+                            symbol: {
+                                type: "simple-marker",
+                                style: "circle",
+                                color: "grey",
+                                size: "7.5px"
+                            }
+                        },
+                        {
+                            value: "SNOW",
+                            symbol: {
+                                type: "simple-marker",
+                                style: "circle",
+                                color: "white",
+                                outline: {
+                                    color: "grey",
+                                    width: 1
+                                },
+                                size: "5px"
+                            }
+                        },
+                        {
+                            value: "NON-TSTM WND GST",
+                            symbol: {
+                                type: "simple-marker",
+                                style: "triangle",
+                                color: "green",
+                                size: "7.5px"
+                            }
+                        },
+                        {
+                            value: "TSTM WND GST",
+                            symbol: {
+                                type: "simple-marker",
+                                style: "triangle",
+                                color: "green",
+                                outline: {
+                                    color: "grey",
+                                    width: 1
+                                },
+                                size: "7.5px"
+                            }
+                        },
+                        {
+                            value: "TSTM WND DMG",
+                            symbol: {
+                                type: "simple-marker",
+                                style: "triangle",
+                                color: "green",
+                                outline: {
+                                    color: "black",
+                                    width: 1
+                                },
+                                size: "7.5px"
+                            }
+                        },
+                        {
+                            value: "HIGH SUST WINDS",
+                            symbol: {
+                                type: "simple-marker",
+                                style: "triangle",
+                                color: "pink",
+                                outline: {
+                                    color: "black",
+                                    width: 1
+                                },
+                                size: "7.5px"
+                            }
+                        },
+                        {
+                            value: "TORNADO",
+                            symbol: {
+                                type: "simple-marker",
+                                style: "diamond",
+                                color: "red",
+                                size: "7.5px"
+                            }
+                        },
+                        {
+                            value: "FLOOD",
+                            symbol: {
+                                type: "simple-marker",
+                                color: "blue",
+                                style: "diamond",
+                                outline: {
+                                    color: "black",
+                                    width: 1
+                                },
+                                size: "7.5px"
+                            }
+                        },
+                        {
+                            value: "WILDFIRE",
+                            symbol: {
+                                type: "simple-marker",
+                                style: "diamond",
+                                color: "orange",
+                                size: "7.5px"
+                            }
+                        },
+                        {
+                            value: "OTHER",
+                            symbol: {
+                                type: "simple-marker",
+                                style: "x",
+                                color: "red",
+                                size: "7.5px"
+                            }
                         }
-                    }
+                    ]
                 }
             });
             map.add(userStormReports);
