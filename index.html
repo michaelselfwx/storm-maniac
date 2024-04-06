@@ -483,6 +483,9 @@
                 stormreportsJson.popupTemplate = {
                     title: "{TYPETEXT}",
                     content: function(feature) {
+                        // Log the attributes to the console
+                        console.log(feature.attributes);
+                        
                         // Check if the feature has the necessary attributes
                         if (feature.attributes && feature.attributes.VALID && feature.attributes.SOURCE && feature.attributes.REMARK) {
                             // Extract the hour and minute from the VALID string
