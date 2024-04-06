@@ -176,8 +176,6 @@
                 }
             }
 
-            // Declare geojsonLayer in the outer scope
-            var geojsonLayer;  
 
             // Define a function to create a GeoJSON layer
             function createGeoJSONLayer(url, data) {
@@ -236,7 +234,7 @@
                     ]
                 };
 
-                geojsonLayer = new GeoJSONLayer({
+                var geojsonLayer = new GeoJSONLayer({
                     url: url.url,
                     title: "Day 1 Convective Outlook",
                     renderer: renderer,
@@ -262,6 +260,25 @@
                         dateDiv.textContent = 'Outlook Valid: ' + validFormatted + ' - ' + expireFormatted;
                     }
                 }
+
+                // Add a legend to the view
+                var legend = new Legend({
+                    view: view,
+                    container: document.createElement("div"),
+                    basemapLegendVisible: true,
+                    layerInfos: [
+                        {
+                            layer: stormreportsJson,
+                            title: "Recent Storm Reports"
+                        },
+                        {
+                            layer: geojsonLayer,
+                            title: "Day 1 Convective Outlook"
+                        }
+                    ]
+                });
+                legend.container.classList.add("small-legend");
+                view.ui.add(legend, "bottom-left");
             };
 
             // Get the current date and time (UTC, not local)
@@ -619,26 +636,6 @@
                 }
             });
             map.add(userStormReports);
-
-
-             // Add a legend to the view
-             var legend = new Legend({
-                view: view,
-                container: document.createElement("div"),
-                basemapLegendVisible: true,
-                layerInfos: [
-                    {
-                        layer: stormreportsJson,
-                        title: "Recent Storm Reports"
-                    },
-                    {
-                        layer: geojsonLayer,
-                        title: "Day 1 Convective Outlook"
-                    }
-                ]
-            });
-            legend.container.classList.add("small-legend");
-            view.ui.add(legend, "bottom-left");
 
 
 
