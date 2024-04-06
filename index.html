@@ -318,6 +318,19 @@
                     field: "TYPETEXT",
                     uniqueValueInfos: [
                         {
+                            value: "RAIN",
+                            symbol: {
+                                type: "simple-marker",
+                                style: "circle",
+                                color: "blue",
+                                outline: {
+                                    color: "blue",
+                                    width: 1
+                                },
+                                size: "5px"
+                            }
+                        },
+                        {
                             value: "HAIL",
                             symbol: {
                                 type: "simple-marker",
@@ -349,13 +362,13 @@
                             }
                         },
                         {
-                            value: "FLOOD",
+                            value: "TSTM WND GST",
                             symbol: {
                                 type: "simple-marker",
-                                color: "blue",
-                                style: "diamond",
+                                style: "triangle",
+                                color: "green",
                                 outline: {
-                                    color: "black",
+                                    color: "grey",
                                     width: 1
                                 },
                                 size: "7.5px"
@@ -375,19 +388,6 @@
                             }
                         },
                         {
-                            value: "TSTM WND GST",
-                            symbol: {
-                                type: "simple-marker",
-                                style: "triangle",
-                                color: "green",
-                                outline: {
-                                    color: "grey",
-                                    width: 1
-                                },
-                                size: "7.5px"
-                            }
-                        },
-                        {
                             value: "HIGH SUST WINDS",
                             symbol: {
                                 type: "simple-marker",
@@ -401,16 +401,25 @@
                             }
                         },
                         {
-                            value: "RAIN",
+                            value: "TORNADO",
                             symbol: {
                                 type: "simple-marker",
-                                style: "circle",
+                                style: "diamond",
+                                color: "red",
+                                size: "7.5px"
+                            }
+                        },
+                        {
+                            value: "FLOOD",
+                            symbol: {
+                                type: "simple-marker",
                                 color: "blue",
+                                style: "diamond",
                                 outline: {
-                                    color: "blue",
+                                    color: "black",
                                     width: 1
                                 },
-                                size: "5px"
+                                size: "7.5px"
                             }
                         },
                         {
