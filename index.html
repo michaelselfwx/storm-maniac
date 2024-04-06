@@ -61,7 +61,7 @@
             }
             .esri-layer-list {
                 transform: scale(0.6);
-                margin-top: 20px;
+                margin-top: 30px;
             }
         }
         /* For iPads */
@@ -72,8 +72,8 @@
                 font-size: calc(1px + 2vw); 
             }
             .esri-layer-list {
-                transform: scale(0.7);
-                margin-top: 20px;
+                transform: scale(0.8);
+                margin-top: 30px;
             }
         }
     </style>
@@ -100,7 +100,8 @@
             "esri/widgets/LayerList",
             "esri/widgets/Editor",
             "esri/Graphic",
-        ], function (esriConfig, Map, MapView, GeoJSONLayer, Legend, LayerList, Editor, Graphic) {
+            "esri/layers/FeatureLayer"
+        ], function (esriConfig, Map, MapView, GeoJSONLayer, Legend, LayerList, Editor, Graphic, FeatureLayer) {
             // Set the API key
             esriConfig.apiKey = "AAPKfb3b968ef66d4c848e795b3dd01897e8uTic-7qcXbjlpUVMGReQlWKWAjnWq5pH5r7mLxpcFbX1tfR5Y4bLBPhLOwFOm7NL";
 
@@ -487,7 +488,31 @@
             });
             legend.container.classList.add("small-legend");
             view.ui.add(legend, "bottom-left");
-        }
+
+
+            var userStormReports = new FeatureLayer({
+                url: "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/User_Storm_Reports/FeatureServer",
+                outFields: ["*"],
+                id: "userStormReports",
+                renderer: {
+                    type: "simple",
+                    symbol: {
+                        type: "simple-marker",
+                        style: "circle",
+                        color: "red",
+                        outline: {
+                            color: "black",
+                            width: 0.5
+                        }
+                    }
+                }
+            });
+            map.add(userStormReports);
+
+
+            
+        }   
+
     );
     </script>
 
