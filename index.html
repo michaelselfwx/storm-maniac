@@ -37,7 +37,6 @@
             position: absolute;
             bottom: 0;
             left: 0;
-            padding: 1px;
         }
         .small-legend .esri-legend__layer-caption {
                 display: none;
@@ -323,7 +322,7 @@
             // URL of the GeoJSON data
             var stormreportsJson = new GeoJSONLayer({
                 url: "https://mesonet.agron.iastate.edu/data/gis/shape/4326/us/lsr_24hour.geojson",
-                title: "Storm Reports",
+                title: "Recent Storm Reports",
                 renderer: {
                     type: "unique-value",
                     field: "TYPETEXT",
@@ -480,6 +479,7 @@
             var legend = new Legend({
                 view: view,
                 container: document.createElement("div"),
+                basemapLegendVisible: true
             });
             legend.container.classList.add("small-legend");
             view.ui.add(legend, "bottom-left");
