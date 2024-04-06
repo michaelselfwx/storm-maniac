@@ -114,8 +114,9 @@
             "esri/views/MapView",
             "esri/layers/GeoJSONLayer",
             "esri/widgets/Legend",
-            "esri/widgets/Search"
-        ], function (esriConfig, Map, MapView, GeoJSONLayer, Legend, Search) {
+            "esri/widgets/Search",
+            "esri/widgets/LayerList"
+        ], function (esriConfig, Map, MapView, GeoJSONLayer, Legend, Search, LayerList) {
             // Set the API key
             esriConfig.apiKey = "AAPKfb3b968ef66d4c848e795b3dd01897e8uTic-7qcXbjlpUVMGReQlWKWAjnWq5pH5r7mLxpcFbX1tfR5Y4bLBPhLOwFOm7NL";
 
@@ -153,7 +154,17 @@
 
             view.scale = 18650000; // Sets a 1:24,0000 scale on the view
 
+            // Add this block of code
+            view.when(function() {
+                // Create a new LayerList instance and set its container to a div element
+                var layerList = new LayerList({
+                    view: view
+                });
 
+                // Add the LayerList to the left sidebar
+                document.getElementById("left-column").appendChild(layerList.container);
+            });
+            
             document.getElementById('toggle-left').addEventListener('click', function() {
                 toggleSidebar('left-column');
             });
