@@ -480,15 +480,6 @@
 
             map.add(stormreportsJson);
 
-            // Add a legend to the view
-            var legend = new Legend({
-                view: view,
-                container: document.createElement("div"),
-                basemapLegendVisible: true
-            });
-            legend.container.classList.add("small-legend");
-            view.ui.add(legend, "bottom-left");
-
 
             var userStormReports = new FeatureLayer({
                 url: "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/User_Storm_Reports/FeatureServer/0",
@@ -625,6 +616,26 @@
                 }
             });
             map.add(userStormReports);
+            
+
+             // Add a legend to the view
+             var legend = new Legend({
+                view: view,
+                container: document.createElement("div"),
+                basemapLegendVisible: true,
+                layerInfos: [
+                    {
+                        layer: stormreportsJson,
+                        title: "Recent Storm Reports"
+                    },
+                    {
+                        layer: geojsonLayer,
+                        title: "Day 1 Convective Outlook"
+                    }
+                ]
+            });
+            legend.container.classList.add("small-legend");
+            view.ui.add(legend, "bottom-left");
 
 
 
