@@ -483,12 +483,12 @@
                 title: "{TYPETEXT}",
                 content: function (feature) {
                     // Log the attributes to the console
-                    console.log(feature.attributes);
+                    console.log(feature.properties);
 
                     // Check if the feature has the necessary attributes
-                    if (feature.attributes && feature.attributes.VALID && feature.attributes.SOURCE && feature.attributes.REMARK) {
+                    if (feature.properties && feature.properties.VALID && feature.properties.SOURCE && feature.properties.REMARK) {
                         // Extract the hour and minute from the VALID string
-                        var valid = feature.attributes.VALID;
+                        var valid = feature.properties.VALID;
                         var hour = valid.substring(8, 10);
                         var minute = valid.substring(10, 12);
 
@@ -497,8 +497,8 @@
 
                         // Create the content for the popup
                         var content = "Time: " + time + "<br>" +
-                            "Source: " + feature.attributes.SOURCE + "<br>" +
-                            "Remarks: " + feature.attributes.REMARK;
+                            "Source: " + feature.properties.SOURCE + "<br>" +
+                            "Remarks: " + feature.properties.REMARK;
 
                         return content;
                     } else {
