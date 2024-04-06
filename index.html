@@ -156,7 +156,7 @@
 
             // Add this block of code
             var layerList;
-            document.getElementById('toggle-left').addEventListener('click', function() {
+            view.when(function() {
                 if (!layerList) {
                     // Create a new LayerList instance and set its container to a div element
                     layerList = new LayerList({
@@ -166,6 +166,9 @@
                     // Add the LayerList to the left sidebar
                     document.getElementById("left-column").appendChild(layerList.container);
                 }
+            });
+
+            document.getElementById('toggle-left').addEventListener('click', function() {
                 toggleSidebar('left-column');
             });
 
