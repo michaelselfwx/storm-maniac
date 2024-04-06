@@ -144,12 +144,6 @@
             });
             view.ui.add(layerList, "top-right");
 
-            // Add Editor widget to the view
-            var editor = new Editor({
-                view: view
-            });
-            view.ui.add(editor, "bottom-right");
-
 
 
             // Define a function to get the URL for a given hour and date
@@ -642,8 +636,12 @@
             });
             map.add(userStormReports);
 
-
-
+             // Add Editor widget to the view
+             var editor = new Editor({
+                view: view
+            });
+            view.ui.add(editor, "bottom-right");
+            
         }   
 
     );
