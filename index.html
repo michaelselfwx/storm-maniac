@@ -31,36 +31,48 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: calc(0.5px + 1vw); /* adjust as needed */
-        }
-        /* For mobile devices */
-        @media screen and (max-width: 768px) {
-            #dateDiv {
-                width: 55%; /* adjust as needed */
-                height: 7%; /* adjust as needed */
-                font-size: calc(1px + 3vw); /* adjust as needed */
-            }
-            #toggle-left, #toggle-right {
-                font-size: calc(1px + 3vw); /* adjust as needed */
-            }
-        }
-        /* For iPads */
-        @media screen and (min-width: 769px) and (max-width: 1024px) {
-            #dateDiv {
-                width: 45%; /* adjust as needed */
-                height: 5%; /* adjust as needed */
-                font-size: calc(1px + 2vw); /* adjust as needed */
-            }
+            font-size: calc(0.5px + 1vw); 
         }
         .small-legend {
-            transform: scale(0.8); /* Adjust as needed */
+            transform: scale(0.8); 
             position: absolute;
             bottom: 0;
             left: 0;
             padding: 10px;
         }
         .esri-layer-list {
-            margin-top: 20px; /* Adjust as needed */
+            margin-top: 20px; 
+        }
+        /* For mobile devices */
+        @media screen and (max-width: 768px) {
+            #dateDiv {
+                width: 60%; 
+                height: 7%; 
+                font-size: calc(1px + 3vw); 
+            }
+            .small-legend {
+                transform: scale(0.4)
+            }
+            .esri-layer-list {
+                transform: scale(0.5);
+                margin-top: 40px; 
+            }
+        }
+        /* For iPads */
+        @media screen and (min-width: 769px) and (max-width: 1024px) {
+            #dateDiv {
+                width: 43%; 
+                height: 5%; 
+                font-size: calc(1px + 2vw); 
+            }
+            .small-legend {
+                transform: scale(0.6)
+            }
+            .esri-layer-list {
+                transform: scale(0.7);
+                margin-top: 40px;
+            }
+
         }
     </style>
 
