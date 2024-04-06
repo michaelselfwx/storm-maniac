@@ -168,13 +168,21 @@
             var layerList;
             view.when(function() {
                 if (!layerList) {
-                    // Create a new LayerList instance and set its container to a div element
+                    // Create a new LayerList instance
                     layerList = new LayerList({
                         view: view
                     });
 
-                    // Add the LayerList to the left sidebar
-                    document.getElementById("left-column").appendChild(layerList.container);
+                    // Get the container element for the left sidebar
+                    var leftColumn = document.getElementById("left-column");
+
+                    // Check if the container element exists
+                    if (leftColumn) {
+                        // Add the LayerList container to the left sidebar
+                        leftColumn.appendChild(layerList.container);
+                    } else {
+                        console.error("Left column container not found.");
+                    }
                 }
             });
 
