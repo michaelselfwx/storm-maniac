@@ -83,14 +83,12 @@
             "esri/views/MapView",
             "esri/layers/GeoJSONLayer",
             "esri/widgets/Legend",
-            "esri/widgets/Search",
             "esri/widgets/LayerList",
             "esri/widgets/Editor",
             "esri/Graphic",
-        ], function (esriConfig, Map, MapView, GeoJSONLayer, Legend, Search, LayerList, Editor, Graphic) {
+        ], function (esriConfig, Map, MapView, GeoJSONLayer, Legend, LayerList, Editor, Graphic) {
             // Set the API key
             esriConfig.apiKey = "AAPKfb3b968ef66d4c848e795b3dd01897e8uTic-7qcXbjlpUVMGReQlWKWAjnWq5pH5r7mLxpcFbX1tfR5Y4bLBPhLOwFOm7NL";
-
 
             // Make sure the page refreshes when the user is inactive
             var timeout;
@@ -108,7 +106,6 @@
             window.onclick = resetTimeout;     
             window.onscroll = resetTimeout;    
             window.onkeypress = resetTimeout;
-
 
             // Create the map
             var map = new Map({
@@ -142,9 +139,15 @@
             });
             view.ui.add(editor, "right-center");
 
-
-            // Define the available hours for the day 1 convective outlook
-            var availableHours = [1, 12, 13, 16.5, 20];
+            // Define a function to get the URL for a given hour and date
+            function getUrl(hour, date) {
+                var minutes = Math.round((hour % 1) * 60);
+                hour = ('0' + Math.floor(hour)).slice(-2);
+                minutes = ('0' + minutes).slice(-2);
+                var formattedDateTime = date.year + date.month + date.day + '_' + hour + minutes;
+                var url = "https://ham-shack-pi.tail8c79a.ts.net/proxy?url=https://www.spc.noaa.gov/products/outlook/archive/2024/day1otlk_" + formattedDateTime + "_cat.lyr.geojson";
+                return { url: url, formattedDateTime: formattedDateTime}
+            }
 
             // Get the current date and time (UTC, not local)
             var date = new Date();
@@ -152,6 +155,9 @@
             var month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
             var day = ('0' + date.getUTCDate()).slice(-2);
             var hour = date.getUTCHours().toString().padStart(2, '0');
+
+            // Define the available hours for the day 1 convective outlook
+            var availableHours = [1, 12, 13, 16.5, 20];
 
             // Determine the closest available hour to the current hour
             var closestHour, result;
@@ -185,16 +191,6 @@
                 }
             }
 
-            // Define a function to get the URL for a given hour and date
-            function getUrl(hour, date) {
-                var minutes = Math.round((hour % 1) * 60);
-                hour = ('0' + Math.floor(hour)).slice(-2);
-                minutes = ('0' + minutes).slice(-2);
-                var formattedDateTime = date.year + date.month + date.day + '_' + hour + minutes;
-                var url = "https://ham-shack-pi.tail8c79a.ts.net/proxy?url=https://www.spc.noaa.gov/products/outlook/archive/2024/day1otlk_" + formattedDateTime + "_cat.lyr.geojson";
-                return { url: url, formattedDateTime: formattedDateTime}
-            }
-
             // Get the data for the closest available hour
             var urlData = getUrl(closestHour, { year: year, month: month, day: day });
             console.log(urlData.url);
@@ -215,7 +211,19 @@
                     // Data for the new hour is not available, use the previous hour
                     var previous = getPreviousHour(closestHour, date);
                     url = getUrl(previous.hour, previous.date);
-                    createGeoJSONLayer(url);
+                    fetch(url.url)
+                        .then(function(response) {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then(function(data) {
+                            createGeoJSONLayer(url, data);
+                        })
+                        .catch(function(error) {
+                            console.error('Error fetching data:', error);
+                        });
                 });
 
             // Define a function to create a GeoJSON layer
@@ -276,7 +284,7 @@
                 };
 
                 var geojsonLayer = new GeoJSONLayer({
-                    url: urlData.url,
+                    url: url.url,
                     renderer: renderer,
                     popupTemplate: {
                         title: "Categorical Outlook",
@@ -307,7 +315,6 @@
 
                 // Add the Legend widget container to the view
                 geojsonLegendContainer.appendChild(geojsonLegend.container);
-
 
                 // Update the date div
                 if (data) {
