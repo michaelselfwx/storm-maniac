@@ -220,6 +220,7 @@
 
                 var geojsonLayer = new GeoJSONLayer({
                     url: url.url,
+                    title: "Day 1 Convective Outlook",
                     renderer: renderer,
                     popupTemplate: {
                         title: "Categorical Outlook",
@@ -311,6 +312,7 @@
             // URL of the GeoJSON data
             var stormreportsJson = new GeoJSONLayer({
                 url: "https://mesonet.agron.iastate.edu/data/gis/shape/4326/us/lsr_24hour.geojson",
+                title: "Storm Reports",
                 renderer: {
                     type: "unique-value",
                     field: "TYPETEXT",
