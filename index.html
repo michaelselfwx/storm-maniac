@@ -350,42 +350,6 @@
                     });
                 });
 
-                // Create a legend and add it to the view
-                if (!view.ui.find("legend")) {
-                    var legend = new Legend({
-                        view: view,
-                        container: document.createElement("div"),
-                        layerInfos: [
-                            {
-                                layer: geojsonLayer,
-                                title: "Day 1 Convective Outlook"
-                            },
-                            {
-                                layer: stormreportsJson,
-                                title: "Storm Reports in past 24hrs",
-                            }           
-                        ]
-                    });
-
-                    var legendContainer = document.createElement("div");
-                    legendContainer.className = "small-legend";
-                    legendContainer.appendChild(legend.container);
-                    view.ui.add(legendContainer);
-
-                // Create a search widget and add it to the view
-                if (!view.ui.find("search")) {
-                    var search = new Search({
-                        view: view,
-                        container: document.createElement("div"),
-                        layerInfos: [
-                            {
-                                layer: geojsonLayer,
-                                placeholder: "Search for a location"
-                            }],
-                        }
-                    )};
-                
-
                 // Update the date div
                 if (data) {
                     var validTime = data.features[0].properties.VALID;
@@ -399,7 +363,6 @@
                         dateDiv.textContent = 'Valid: ' + validFormatted + ' - ' + expireFormatted;
                     }
                 };
-            }
             
             // URL of the GeoJSON data
             var stormreportsJson = new GeoJSONLayer({
@@ -528,6 +491,26 @@
 
             // Add the storm reports layer to the map
             map.add(stormreportsJson);
+
+            var legend = new Legend({
+                view: view,
+                container: document.createElement("div"),
+                layerInfos: [
+                    {
+                        layer: geojsonLayer,
+                        title: "Day 1 Convective Outlook"
+                    },
+                    {
+                        layer: stormreportsJson,
+                        title: "Storm Reports in past 24hrs",
+                    }           
+                ]
+            });
+
+            var legendContainer = document.createElement("div");
+            legendContainer.className = "small-legend";
+            legendContainer.appendChild(legend.container);
+            view.ui.add(legendContainer);
             
             // Toggle layers based on sidebar checkboxes
             document.getElementById("layer1").addEventListener("change", function() {
