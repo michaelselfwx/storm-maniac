@@ -126,6 +126,9 @@
             });
             view.scale = 18650000; // Sets a 1:24,0000 scale on the view
 
+            // Declare geojsonLayer variable
+            var geojsonLayer;
+
             // Add LayerList to the view
             var layerList = new LayerList({
                 view: view
@@ -270,7 +273,7 @@
                         }
                     ]
                 };
-                
+
                 var geojsonLayer = new GeoJSONLayer({
                     url: urlData.url,
                     renderer: renderer,
