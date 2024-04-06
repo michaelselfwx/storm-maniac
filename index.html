@@ -25,7 +25,7 @@
             border: 1px solid black;
             border-radius: 5px;
             z-index: 1000;
-            width: 28%; /* fixed width */
+            width: 30%; /* fixed width */
             height: 5%; /* fixed height */
             text-align: center;
             display: flex;
@@ -36,7 +36,7 @@
         /* For mobile devices */
         @media screen and (max-width: 768px) {
             #dateDiv {
-                width: 50%; /* adjust as needed */
+                width: 55%; /* adjust as needed */
                 height: 7%; /* adjust as needed */
                 font-size: calc(1px + 3vw); /* adjust as needed */
             }
@@ -47,7 +47,7 @@
         /* For iPads */
         @media screen and (min-width: 769px) and (max-width: 1024px) {
             #dateDiv {
-                width: 40%; /* adjust as needed */
+                width: 45%; /* adjust as needed */
                 height: 5%; /* adjust as needed */
                 font-size: calc(1px + 2vw); /* adjust as needed */
             }
@@ -241,7 +241,7 @@
 
                     var dateDiv = document.getElementById('dateDiv');
                     if (!dateDiv.textContent) {
-                        dateDiv.textContent = 'Valid: ' + validFormatted + ' - ' + expireFormatted;
+                        dateDiv.textContent = 'Outlook Valid: ' + validFormatted + ' - ' + expireFormatted;
                     }
                 }
             };
