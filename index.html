@@ -270,6 +270,7 @@
                         }
                     ]
                 };
+                
                 var geojsonLayer = new GeoJSONLayer({
                     url: urlData.url,
                     renderer: renderer,
@@ -279,34 +280,8 @@
                     }
                 });
 
-                 // Add the GeoJSON layer to the map
-                if (!map.findLayerById('geojsonLayer')) {
-                    geojsonLayer.id = 'geojsonLayer';
-                    map.add(geojsonLayer);
-                } else {
-                    map.findLayerById('geojsonLayer').url = urlData.url;
-                }
-
-                // Add a click event handler to the view
-                view.on("click", function(event) {
-                    view.hitTest(event).then(function(response) {
-                        if (response.results.length) {
-                            // Sort the results by DN in descending order
-                            response.results.sort(function(a, b) {
-                                return b.graphic.attributes.DN - a.graphic.attributes.DN;
-                            });
-
-                            // Get the graphic with the highest DN
-                            var graphic = response.results[0].graphic;
-
-                            // Show the popup
-                            view.popup.open({
-                                features: [graphic],
-                                location: event.mapPoint
-                            });
-                        }
-                    });
-                });
+                // Add the GeoJSON layer to the map
+                map.add.geojsonLayer;
 
                 // Update the date div
                 if (data) {
@@ -320,7 +295,7 @@
                     if (!dateDiv.textContent) {
                         dateDiv.textContent = 'Valid: ' + validFormatted + ' - ' + expireFormatted;
                     }
-                };
+                }
             };
 
             // URL of the GeoJSON data
