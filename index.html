@@ -119,13 +119,13 @@
         require([
             "esri/config",
             "esri/Map",
-            "esri/Graphic",
             "esri/views/MapView",
             "esri/layers/GeoJSONLayer",
             "esri/widgets/Legend",
             "esri/widgets/Search",
             "esri/widgets/LayerList",
-            "esri/widgets/Editor"
+            "esri/widgets/Editor",
+            "esri/Graphic",
         ], function (esriConfig, Map, MapView, GeoJSONLayer, Legend, Search, LayerList, Editor, Graphic) {
             // Set the API key
             esriConfig.apiKey = "AAPKfb3b968ef66d4c848e795b3dd01897e8uTic-7qcXbjlpUVMGReQlWKWAjnWq5pH5r7mLxpcFbX1tfR5Y4bLBPhLOwFOm7NL";
@@ -164,25 +164,29 @@
 
             view.scale = 18650000; // Sets a 1:24,0000 scale on the view
 
-            // Add LayerList to the view
-            var layerList = new LayerList({
-                view: view
+
+            view.when(function() {
+
+                // Add LayerList to the view
+                var layerList = new LayerList({
+                    view: view
+                });
+
+                view.ui.add(layerList, "top-right");
+
+                document.getElementById('toggle-left').addEventListener('click', function() {
+                    toggleSidebar('left-column');
+                });
+
+                document.getElementById('toggle-right').addEventListener('click', function() {
+                    toggleSidebar('right-column');
+                });
+
+                function toggleSidebar(id) {
+                    var sidebar = document.getElementById(id);
+                    sidebar.style.display = sidebar.style.display === 'none' ? 'block' : 'none';
+                }
             });
-
-            view.ui.add(layerList, "top-right");
-
-            document.getElementById('toggle-left').addEventListener('click', function() {
-                toggleSidebar('left-column');
-            });
-
-            document.getElementById('toggle-right').addEventListener('click', function() {
-                toggleSidebar('right-column');
-            });
-
-            function toggleSidebar(id) {
-                var sidebar = document.getElementById(id);
-                sidebar.style.display = sidebar.style.display === 'none' ? 'block' : 'none';
-            }
 
             // Define the available hours
             var availableHours = [1, 12, 13, 16.5, 20];
