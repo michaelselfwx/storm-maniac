@@ -51,10 +51,12 @@
                 font-size: calc(1px + 3vw); 
             }
             .small-legend {
-                transform: scale(0.4)
+                transform: scale(0.4);
             }
             .esri-layer-list {
                 transform: scale(0.5);
+                right: 0;
+                top: 0;
                 margin-top: 40px; 
             }
         }
@@ -66,10 +68,12 @@
                 font-size: calc(1px + 2vw); 
             }
             .small-legend {
-                transform: scale(0.6)
+                transform: scale(0.5);
             }
             .esri-layer-list {
                 transform: scale(0.7);
+                right: 0;
+                top: 0;
                 margin-top: 40px;
             }
 
@@ -480,7 +484,9 @@
             // Add a legend to the view
             var legend = new Legend({
                 view: view,
+                container: document.createElement("div"),
             });
+            legend.container.classList.add("small-legend");
             view.ui.add(legend, "bottom-left");
         }
     );
