@@ -34,14 +34,12 @@
             font-size: calc(0.5px + 1vw); 
         }
         .small-legend {
-            transform: scale(0.8); 
             position: absolute;
             bottom: 0;
             left: 0;
             padding: 10px;
         }
         .esri-layer-list {
-            transform: scale(0.8);
             top: 0;
             right: 0;
         }
@@ -52,37 +50,22 @@
                 height: 4%; 
                 font-size: calc(1px + 2.75vw); 
             }
-            .small-legend {
-                transform: scale(0.5);
-            }
             .small-legend .esri-legend__layer-caption {
                 font-size: calc(1px + 1.5vw);
-            }
-            .esri-layer-list {
-                transform: scale(0.6);
-                right: 0;
-                top: 0; 
             }
         }
         /* For iPads */
         @media screen and (min-width: 769px) and (max-width: 1024px) {
             #dateDiv {
-                width: 60%; 
+                width: 55%; 
                 height: 3%; 
                 font-size: calc(1px + 2vw); 
             }
-            .small-legend {
-                transform: scale(0.6);
-                left: 0;
-                bottom: 0;
-            }
             .small-legend .esri-legend__layer-caption {
-                font-size: calc(1px + 1vw);
+                display: none;
             }
-            .esri-layer-list {
-                transform: scale(0.7);
-                right: 0;
-                top: 0;
+            .small-legend .esri-legend__layer-sub-caption {
+                font-size: calc(1px + 1vw);
             }
 
         }
