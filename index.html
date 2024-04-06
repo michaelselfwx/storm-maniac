@@ -39,9 +39,16 @@
             left: 0;
             padding: 10px;
         }
+        .small-legend .esri-legend__layer-caption {
+                display: none;
+        }
+        .small-legend .esri-legend__layer-sub-caption {
+                font-size: calc(1px + 1vw);
+        }
         .esri-layer-list {
             top: 0;
             right: 0;
+            font-size: calc(1px + 1vw);
         }
         /* For mobile devices */
         @media screen and (max-width: 768px) {
@@ -50,8 +57,8 @@
                 height: 4%; 
                 font-size: calc(1px + 2.75vw); 
             }
-            .small-legend .esri-legend__layer-caption {
-                font-size: calc(1px + 1.5vw);
+            .small-legend .esri-legend__layer-sub-caption {
+                font-size: calc(1px + 1vw);
             }
         }
         /* For iPads */
@@ -60,9 +67,6 @@
                 width: 55%; 
                 height: 3%; 
                 font-size: calc(1px + 2vw); 
-            }
-            .small-legend .esri-legend__layer-caption {
-                display: none;
             }
             .small-legend .esri-legend__layer-sub-caption {
                 font-size: calc(1px + 1vw);
