@@ -370,6 +370,10 @@
                                 layer: geojsonLayer,
                                 title: "Day 1 Convective Outlook"
                             },
+                            {
+                                layer: geojsonLayer,
+                                title: "Categorical Outlook",
+                            }           
                         ]
                     });
 
@@ -408,36 +412,24 @@
             }
             
             // URL of the GeoJSON data
-            var geoJsonUrl = "https://mesonet.agron.iastate.edu/data/gis/shape/4326/us/lsr_24hour.geojson";
-
-            // Fetch GeoJSON data
-            fetch(geoJsonUrl)
-                .then(response => response.json())
-                .then(data => {
-                    // Process GeoJSON data and create graphics for each storm report
-                    data.features.forEach(function(feature) {
-                        var lon = feature.geometry.coordinates[0];
-                        var lat = feature.geometry.coordinates[1];
-                        var type = feature.properties.TYPETEXT;
-
-                        // Create a point geometry
-                        var point = {
-                            type: "point",
-                            longitude: lon,
-                            latitude: lat
-                        };
-
-                        // Create a symbol for the point based on storm report type
-                        var symbol;
-                        if (type === "HAIL") {
-                            symbol = {
+            var stormreportsJson = new GeoJSONLayer({
+                url: "https://mesonet.agron.iastate.edu/data/gis/shape/4326/us/lsr_24hour.geojson",
+                renderer: {
+                    type: "unique-value",
+                    field: "TYPETEXT",
+                    uniqueValueInfos: [
+                        {
+                            value: "HAIL",
+                            symbol: {
                                 type: "simple-marker",
                                 style: "circle",
                                 color: "grey",
-                                size: "10px"
-                            };
-                        } else if (type === "SNOW") {
-                            symbol = {
+                                size: "7.5px"
+                            }
+                        },
+                        {
+                            value: "SNOW",
+                            symbol: {
                                 type: "simple-marker",
                                 style: "circle",
                                 color: "white",
@@ -446,16 +438,20 @@
                                     width: 1
                                 },
                                 size: "5px"
-                            };
-                        } else if (type === "NON-TSTM WND GST") {
-                            symbol = {
+                            }
+                        },
+                        {
+                            value: "NON-TSTM WND GST",
+                            symbol: {
                                 type: "simple-marker",
-                                sytle: "triangle",
+                                style: "triangle",
                                 color: "green",
-                                size: "10px"
-                            };
-                        } else if (type === "FLOOD") {
-                            symbol = {
+                                size: "7.5px"
+                            }
+                        },
+                        {
+                            value: "FLOOD",
+                            symbol: {
                                 type: "simple-marker",
                                 color: "blue",
                                 style: "diamond",
@@ -463,10 +459,12 @@
                                     color: "black",
                                     width: 1
                                 },
-                                size: "10px"
-                            };
-                        } else if (type === "TSTM WND DMG") {
-                            symbol = {
+                                size: "7.5px"
+                            }
+                        },
+                        {
+                            value: "TSTM WND DMG",
+                            symbol: {
                                 type: "simple-marker",
                                 style: "triangle",
                                 color: "green",
@@ -474,10 +472,12 @@
                                     color: "black",
                                     width: 1
                                 },
-                                size: "10px"
-                            };
-                        } else if (type === "TSTM WND GST") {
-                            symbol = {
+                                size: "7.5px"
+                            }
+                        },
+                        {
+                            value: "TSTM WND GST",
+                            symbol: {
                                 type: "simple-marker",
                                 style: "triangle",
                                 color: "green",
@@ -485,10 +485,12 @@
                                     color: "grey",
                                     width: 1
                                 },
-                                size: "10px"
-                            };
-                        } else if (type === "HIGH SUST WINDS") {
-                            symbol = {
+                                size: "7.5px"
+                            }
+                        },
+                        {
+                            value: "HIGH SUST WINDS",
+                            symbol: {
                                 type: "simple-marker",
                                 style: "triangle",
                                 color: "pink",
@@ -496,10 +498,12 @@
                                     color: "black",
                                     width: 1
                                 },
-                                size: "10px"
-                            };
-                        } else if (type === "RAIN") {
-                            symbol = {
+                                size: "7.5px"
+                            }
+                        },
+                        {
+                            value: "RAIN",
+                            symbol: {
                                 type: "simple-marker",
                                 style: "circle",
                                 color: "blue",
@@ -508,35 +512,32 @@
                                     width: 1
                                 },
                                 size: "5px"
-                            };
-                        } else if (type === "WILDFIRE") {
-                            symbol = {
+                            }
+                        },
+                        {
+                            value: "WILDFIRE",
+                            symbol: {
                                 type: "simple-marker",
                                 style: "diamond",
                                 color: "orange",
-                                size: "10px"
-                            };
-                        } else {
-                            // Default symbol for other types of reports not listed above
-                            symbol = {
+                                size: "7.5px"
+                            }
+                        },
+                        {
+                            value: "OTHER",
+                            symbol: {
                                 type: "simple-marker",
                                 style: "x",
                                 color: "red",
-                                size: "10px"
-                            };
+                                size: "7.5px"
+                            }
                         }
+                    ]
+                }
+            })
 
-                        // Create a graphic and add it to the map
-                        var graphic = new Graphic({
-                            geometry: point,
-                            symbol: symbol
-                        });
-                        view.graphics.add(graphic);
-                    });
-                })
-                .catch(error => {
-                    console.error("Error fetching GeoJSON data:", error);
-                });
+            // Add the storm reports layer to the map
+            map.add(stormreportsJson);
             
             // Toggle layers based on sidebar checkboxes
             document.getElementById("layer1").addEventListener("change", function() {
