@@ -508,7 +508,7 @@
 
             var userStormReports = new FeatureLayer({
                 url: "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/User_Storm_Reports/FeatureServer/0",
-                outFields: ["*"],
+                outFields: ["TYPETEXT", "REMARK", "VALID"],
                 id: "userStormReports",
                 renderer: {
                     type: "unique-value",
