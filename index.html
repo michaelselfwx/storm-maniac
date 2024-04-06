@@ -430,7 +430,7 @@
                             symbol = {
                                 type: "simple-marker",
                                 color: "blue",
-                                size: "10px"
+                                size: "5px"
                             };
                         } else if (type === "SNOW") {
                             symbol = {
@@ -440,14 +440,84 @@
                                     color: "blue",
                                     width: 1
                                 },
-                                size: "10px"
+                                size: "5px"
+                            };
+                        } else if (type === "NON-TSTM WND GST") {
+                            symbol = {
+                                type: "simple-marker",
+                                color: "green",
+                                outline: {
+                                    color: "black",
+                                    width: 1
+                                },
+                                size: "5px"
+                            };
+                        } else if (type === "FLOOD") {
+                            symbol = {
+                                type: "simple-marker",
+                                color: "blue",
+                                outline: {
+                                    color: "black",
+                                    width: 1
+                                },
+                                size: "5px"
+                            };
+                        } else if (type === "TSTM WND DMG") {
+                            symbol = {
+                                type: "simple-marker",
+                                color: "red",
+                                outline: {
+                                    color: "black",
+                                    width: 1
+                                },
+                                size: "5px"
+                            };
+                        } else if (type === "TSTM WND GST") {
+                            symbol = {
+                                type: "simple-marker",
+                                color: "light-green",
+                                outline: {
+                                    color: "black",
+                                    width: 1
+                                },
+                                size: "5px"
+                            };
+                        } else if (type === "HIGH SUST WINDS") {
+                            symbol = {
+                                type: "simple-marker",
+                                color: "pink",
+                                outline: {
+                                    color: "black",
+                                    width: 1
+                                },
+                                size: "5px"
+                            };
+                        } else if (type === "RAIN") {
+                            symbol = {
+                                type: "simple-marker",
+                                color: "light-blue",
+                                outline: {
+                                    color: "blue",
+                                    width: 1
+                                },
+                                size: "5px"
+                            };
+                        } else if (type === "WILDFIRE") {
+                            symbol = {
+                                type: "simple-marker",
+                                color: "orange",
+                                outline: {
+                                    color: "brown",
+                                    width: 1
+                                },
+                                size: "5px"
                             };
                         } else {
                             // Default symbol for other types of reports
                             symbol = {
                                 type: "simple-marker",
                                 color: "red",
-                                size: "10px"
+                                size: "5px"
                             };
                         }
 
