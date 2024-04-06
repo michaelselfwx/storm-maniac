@@ -46,7 +46,8 @@
         .esri-layer-list {
             top: 0;
             right: 0;
-            font-size: calc(1px + 1vw);
+            transform-origin: top right;
+            transform: scale(0.8);
         }
         /* For mobile devices */
         @media screen and (max-width: 768px) {
@@ -54,9 +55,6 @@
                 width: 80%; 
                 height: 4%; 
                 font-size: calc(1px + 2.75vw); 
-            }
-            .small-legend .esri-legend__layer-sub-caption {
-                font-size: calc(1px + 1vw);
             }
         }
         /* For iPads */
@@ -66,10 +64,6 @@
                 height: 3%; 
                 font-size: calc(1px + 2vw); 
             }
-            .small-legend .esri-legend__layer-sub-caption {
-                font-size: calc(1px + 1vw);
-            }
-
         }
     </style>
 
