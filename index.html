@@ -126,18 +126,9 @@
             });
             view.scale = 18650000; // Sets a 1:24,0000 scale on the view
 
-            // Declare geojsonLayer variable
+            // Declare GeoJSONs
             var geojsonLayer;
-
-            var legend = new Legend({
-                view: view,
-                container: document.createElement("div"),
-            });
-
-            var legendContainer = document.createElement("div");
-            legendContainer.className = "small-legend";
-            legendContainer.appendChild(legend.container);
-            view.ui.add(legendContainer);
+            var stormreportsJson;
 
             // Add LayerList to the view
             var layerList = new LayerList({
@@ -296,18 +287,24 @@
                 // Add the GeoJSON layer to the map
                 map.add(geojsonLayer);
 
-                // Update the Legend widget
-                legend.layerInfos = [
-                    {
-                        layer: geojsonLayer,
-                        title: "Day 1 Convective Outlook"
-                    },
-                    {
-                        layer: stormreportsJson,
-                        title: "Storm Reports in past 24hrs",
-                    }
-                ];
-                legend.refresh();
+                // Create a new Legend widget for the GeoJSON layer
+                var geojsonLegend = new Legend({
+                    view: view,
+                    layerInfos: [
+                        {
+                            layer: geojsonLayer,
+                            title: "Day 1 Convective Outlook"
+                        }
+                    ]
+                });
+
+                // Create a container for the Legend widget
+                var geojsonLegendContainer = document.createElement("div");
+                geojsonLegendContainer.className = "small-legend";
+                geojsonLegendContainer.appendChild(geojsonLegend.container);
+
+                // Add the Legend widget to the view
+                view.ui.add(geojsonLegendContainer, "bottom-right");
 
                 // Update the date div
                 if (data) {
@@ -482,6 +479,25 @@
                     ]
                 }
             });
+
+            // Create a new Legend widget for the storm reports layer
+            var stormreportsLegend = new Legend({
+                view: view,
+                layerInfos: [
+                    {
+                        layer: stormreportsJson,
+                        title: "Storm Reports in past 24hrs",
+                    }
+                ]
+            });
+            
+            // Create a container for the Legend widget
+            var stormreportsLegendContainer = document.createElement("div");
+            stormreportsLegendContainer.className = "small-legend";
+            stormreportsLegendContainer.appendChild(stormreportsLegend.container);
+
+            // Add the Legend widget to the view
+            view.ui.add(stormreportsLegendContainer, "bottom-right");
         }
     );
     </script>
