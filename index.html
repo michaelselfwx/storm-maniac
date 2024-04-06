@@ -483,7 +483,7 @@
                 title: "{TYPETEXT}",
                 content: function (feature) {
                     // Log the entire feature object to the console
-                    console.log(feature);
+                    console.log("Feature:", feature);
 
                     // Create a default message
                     var defaultContent = "No information available";
@@ -491,7 +491,7 @@
                     // Check if the feature has properties
                     if (feature && feature.properties) {
                         // Log the properties to the console
-                        console.log(feature.properties);
+                        console.log("Properties:", feature.properties);
 
                         // Check if the feature has the necessary attributes
                         if (feature.properties && feature.properties.VALID && feature.properties.SOURCE && feature.properties.REMARK) {
