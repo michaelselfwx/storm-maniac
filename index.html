@@ -504,6 +504,13 @@
                 }
             });
 
+            stormreportsJson.when(function() {
+                // Access the first feature in the layer
+                var firstFeature = stormreportsJson.source.items[0];
+                // Log the attributes of the first feature to the console
+                console.log(firstFeature.attributes);
+            });
+
             map.add(stormreportsJson);
 
 
