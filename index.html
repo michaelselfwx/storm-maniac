@@ -432,12 +432,14 @@
                         if (type === "HAIL") {
                             symbol = {
                                 type: "simple-marker",
+                                style: "circle",
                                 color: "grey",
                                 size: "5px"
                             };
                         } else if (type === "SNOW") {
                             symbol = {
                                 type: "simple-marker",
+                                style: "circle",
                                 color: "white",
                                 outline: {
                                     color: "grey",
@@ -448,6 +450,7 @@
                         } else if (type === "NON-TSTM WND GST") {
                             symbol = {
                                 type: "simple-marker",
+                                sytle: "triangle",
                                 color: "green",
                                 size: "5px"
                             };
@@ -455,6 +458,7 @@
                             symbol = {
                                 type: "simple-marker",
                                 color: "blue",
+                                style: "diamond",
                                 outline: {
                                     color: "black",
                                     width: 1
@@ -464,6 +468,7 @@
                         } else if (type === "TSTM WND DMG") {
                             symbol = {
                                 type: "simple-marker",
+                                style: "triangle",
                                 color: "green",
                                 outline: {
                                     color: "black",
@@ -474,6 +479,7 @@
                         } else if (type === "TSTM WND GST") {
                             symbol = {
                                 type: "simple-marker",
+                                style: "triangle",
                                 color: "green",
                                 outline: {
                                     color: "grey",
@@ -484,6 +490,7 @@
                         } else if (type === "HIGH SUST WINDS") {
                             symbol = {
                                 type: "simple-marker",
+                                style: "triangle",
                                 color: "pink",
                                 outline: {
                                     color: "black",
@@ -494,6 +501,7 @@
                         } else if (type === "RAIN") {
                             symbol = {
                                 type: "simple-marker",
+                                style: "circle",
                                 color: "blue",
                                 outline: {
                                     color: "blue",
@@ -504,13 +512,15 @@
                         } else if (type === "WILDFIRE") {
                             symbol = {
                                 type: "simple-marker",
+                                style: "diamond",
                                 color: "orange",
                                 size: "5px"
                             };
                         } else {
-                            // Default symbol for other types of reports
+                            // Default symbol for other types of reports not listed above
                             symbol = {
                                 type: "simple-marker",
+                                style: "x",
                                 color: "red",
                                 size: "5px"
                             };
