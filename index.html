@@ -479,17 +479,6 @@
             legendContainer.className = "small-legend";
             legendContainer.appendChild(legend.container);
             view.ui.add(legendContainer);
-            
-            // Toggle layers based on sidebar checkboxes
-            document.getElementById("layer1").addEventListener("change", function() {
-                    layer1.visible = this.checked;
-                });
-            document.getElementById("layer2").addEventListener("change", function() {
-                layer2.visible = this.checked;
-            });
-            document.getElementById("layer3").addEventListener("change", function() {
-                layer3.visible = this.checked;
-            });
         }
     );
     </script>
