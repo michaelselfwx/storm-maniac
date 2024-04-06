@@ -486,8 +486,38 @@
                             }
                         }
                     ]
+                },
+                popupTemplate: {
+                    title: "{TYPETEXT}",
+                    content: [
+                        {
+                            type: "fields",
+                            fieldInfos: [
+                                {
+                                    fieldName: "TIME",
+                                    label: "Time"
+                                },
+                                {
+                                    fieldName: "CITY",
+                                    label: "City",
+                                },
+                                {
+                                    fieldName: "STATE",
+                                    label: "State"
+                                },
+                                {
+                                    fieldName: "MAG",
+                                    label: "Magnitude"
+                                },
+                                {
+                                    fieldName: "REMARKS",
+                                    label: "Remarks"
+                                }
+                            ]
+                        }
+                    ]
                 }
-            })
+            });
 
             // Add the storm reports layer to the map
             map.add(stormreportsJson);
