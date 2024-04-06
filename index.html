@@ -41,9 +41,6 @@
         .small-legend .esri-legend__layer-caption {
                 display: none;
         }
-        .small-legend .esri-legend__layer-sub-caption {
-            font-size: 6px;
-        }
         .esri-layer-list {
             top: 0;
             right: 0;
@@ -482,6 +479,7 @@
                 basemapLegendVisible: true
             });
             legend.container.classList.add("small-legend");
+            legend.container.style.fontSize = "12px";
             view.ui.add(legend, "bottom-left");
         }
     );
