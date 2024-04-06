@@ -479,7 +479,7 @@
                 }
             });
 
-            stormreportsJson.on("load", function() {
+            stormreportsJson.when(function() {
                 stormreportsJson.popupTemplate = {
                     title: "{TYPETEXT}",
                     content: function(feature) {
@@ -505,6 +505,8 @@
                         }
                     }
                 };
+            }).catch(function(error) {
+                console.error("Error loading storm reports layer:", error);
             });
 
             map.add(stormreportsJson);
