@@ -481,31 +481,26 @@
 
             stormreportsJson.popupTemplate = {
                 title: "{TYPETEXT}",
-                content: function (feature) {
-                    // Create a default message
-                    var defaultContent = "No information available";
-
-                    // Check if the feature has properties
-                    if (feature && feature.properties) {
-                        // Extract the hour and minute from the VALID string
-                        var valid = feature.properties.VALID;
-                        var hour = valid.substring(8, 10);
-                        var minute = valid.substring(10, 12);
-
-                        // Format the time
-                        var time = hour + ":" + minute + " UTC";
-
-                        // Create the content for the popup
-                        var content = "Time: " + time + "<br>" +
-                            "Source: " + feature.properties.SOURCE + "<br>" +
-                            "Remarks: " + feature.properties.REMARK;
-
-                        return content;
-                    }
-
-                    // Return the default message if attributes are missing or not found
-                    return defaultContent;
-                }
+                content: [{
+                    type: "fields",
+                    fieldInfos: [
+                        {
+                            fieldName: "VALID",
+                            label: "Valid",
+                            visible: true
+                        },
+                        {
+                            fieldName: "SOURCE",
+                            label: "Source",
+                            visible: true
+                        },
+                        {
+                            fieldName: "REMARK",
+                            label: "Remark",
+                            visible: true
+                        }
+                    ]
+                }]
             };
 
             map.add(stormreportsJson);
