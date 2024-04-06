@@ -164,27 +164,12 @@
 
             view.scale = 18650000; // Sets a 1:24,0000 scale on the view
 
-            // Add this block of code
-            var layerList;
-            view.when(function() {
-                if (!layerList) {
-                    // Create a new LayerList instance
-                    layerList = new LayerList({
-                        view: view
-                    });
-
-                    // Get the container element for the left sidebar
-                    var leftColumn = document.getElementById("left-column");
-
-                    // Check if the container element exists
-                    if (leftColumn) {
-                        // Add the LayerList container to the left sidebar
-                        leftColumn.appendChild(layerList.container);
-                    } else {
-                        console.error("Left column container not found.");
-                    }
-                }
+            // Add LayerList to the view
+            var layerList = new LayerList({
+                view: view
             });
+
+            view.ui.add(layerList, "top-right");
 
             document.getElementById('toggle-left').addEventListener('click', function() {
                 toggleSidebar('left-column');
