@@ -101,7 +101,15 @@
     <!-- The div to display the map -->
     <div id="viewDiv"></div>
     <div id="dateDiv"></div>
-    <div id="left-column" class="sidebar">View Selections</div>
+    <div id="left-column" class="sidebar">
+        <h2>View Selections</h2>
+        <input type="checkbox" id="layer1" checked>
+        <label for="layer1">SPC Day 1 Convective Outlook</label><br>
+        <input type="checkbox" id="layer2" checked>
+        <label for="layer2">Layer 2</label><br>
+        <input type="checkbox" id="layer3" checked>
+        <label for="layer3">Layer 3</label><br>
+    </div>
     <div id="right-column" class="sidebar">Storm Reports</div>
     <button id="toggle-left">Menu</button>
     <button id="toggle-right">Add Report</button>
@@ -115,8 +123,9 @@
             "esri/layers/GeoJSONLayer",
             "esri/widgets/Legend",
             "esri/widgets/Search",
-            "esri/widgets/LayerList"
-        ], function (esriConfig, Map, MapView, GeoJSONLayer, Legend, Search, LayerList) {
+            "esri/widgets/LayerList",
+            "esri/widgets/Editor"
+        ], function (esriConfig, Map, MapView, GeoJSONLayer, Legend, Search, LayerList, Editor) {
             // Set the API key
             esriConfig.apiKey = "AAPKfb3b968ef66d4c848e795b3dd01897e8uTic-7qcXbjlpUVMGReQlWKWAjnWq5pH5r7mLxpcFbX1tfR5Y4bLBPhLOwFOm7NL";
 
@@ -395,7 +404,28 @@
                         dateDiv.textContent = 'Valid: ' + validFormatted + ' - ' + expireFormatted;
                     }
                 };
-            }   
+
+                // Toggle layers based on sidebar checkboxes
+                document.getElementById("layer1").addEventListener("change", function() {
+                    layer1.visible = this.checked;
+                });
+                document.getElementById("layer2").addEventListener("change", function() {
+                    layer2.visible = this.checked;
+                });
+                document.getElementById("layer3").addEventListener("change", function() {
+                    layer3.visible = this.checked;
+                });
+            }
+            
+            // Create a GeoJSON layer for the storm reports
+            var stormReportsLayer = new GeoJSONLayer({
+                url: "https://mesonet.agron.iastate.edu/data/gis/shape/4326/us/lsr_24hour.geojson", // Replace with the URL of your GeoJSON file
+                title: "Storm Reports", // The title of the layer
+                // Add any other properties you need...
+            });
+
+            // Add the storm reports layer to the map
+            map.add(stormReportsLayer);   
         }
     });
     </script>
