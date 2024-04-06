@@ -321,7 +321,8 @@
                         dateDiv.textContent = 'Valid: ' + validFormatted + ' - ' + expireFormatted;
                     }
                 };
-            
+            };
+
             // URL of the GeoJSON data
             var stormreportsJson = new GeoJSONLayer({
                 url: "https://mesonet.agron.iastate.edu/data/gis/shape/4326/us/lsr_24hour.geojson",
@@ -512,7 +513,7 @@
                 layer3.visible = this.checked;
             });
         }
-    });
+    );
     </script>
 
 </body>
