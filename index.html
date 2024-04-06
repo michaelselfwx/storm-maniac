@@ -455,6 +455,12 @@
             });
 
             map.add(stormreportsJson);
+
+            // Add a legend to the view
+            var legend = new Legend({
+                view: view,
+            });
+            view.ui.add(legend, "bottom-left");
         }
     );
     </script>
