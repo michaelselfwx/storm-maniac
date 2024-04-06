@@ -437,7 +437,7 @@
                     title: "{TYPETEXT}",
                     content: function(feature) {
                         // Extract the hour and minute from the VALID string
-                        var valid = feature.graphic.attributes.VALID;
+                        var valid = feature.graphic.attributes.properties.VALID;
                         var hour = valid.substring(8, 10);
                         var minute = valid.substring(10, 12);
 
@@ -446,8 +446,8 @@
 
                         // Create the content for the popup
                         var content = "Time: " + time + "<br>" +
-                                    "Source: " + feature.graphic.attributes.SOURCE + "<br>" +
-                                    "Remarks: " + feature.graphic.attributes.REMARK;
+                                    "Source: " + feature.graphic.attributes.properties.SOURCE + "<br>" +
+                                    "Remarks: " + feature.graphic.attributes.properties.REMARK;
 
                         return content;
                     }
