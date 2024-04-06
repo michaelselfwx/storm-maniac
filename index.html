@@ -488,9 +488,6 @@
                             fieldName: "VALID",
                             label: "Valid",
                             visible: true,
-                            format: {
-                                dateFormat: "short-date-short-time"
-                            },
                             getAlias: function (value, key, { fieldName }) {
                                 // Custom function to format the date
                                 return formatDate(value);
@@ -520,6 +517,7 @@
 
                 return `${month}/${day} @ ${hour}:${minute} UTC`;
             }
+
 
             map.add(stormreportsJson);
 
