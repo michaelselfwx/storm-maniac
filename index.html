@@ -487,11 +487,7 @@
                         {
                             fieldName: "VALID",
                             label: "Valid",
-                            visible: true,
-                            getAlias: function (value, key, { fieldName }) {
-                                // Custom function to format the date
-                                return formatDate(value);
-                            }
+                            visible: true
                         },
                         {
                             fieldName: "SOURCE",
@@ -506,6 +502,13 @@
                     ]
                 }]
             };
+
+            // Iterate through features to modify the date format
+            stormreportsJson.popupTemplate.expressionInfos = [{
+                name: "dateFormat",
+                title: "Date Format",
+                expression: formatDate("{VALID}")
+            }];
 
             // Custom function to format date
             function formatDate(dateString) {
