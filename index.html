@@ -479,38 +479,34 @@
                 }
             });
 
-            stormreportsJson.when(function() {
-                stormreportsJson.popupTemplate = {
-                    title: "{TYPETEXT}",
-                    content: function(feature) {
-                        // Log the attributes to the console
-                        console.log(feature.attributes);
-                        
-                        // Check if the feature has the necessary attributes
-                        if (feature.attributes && feature.attributes.VALID && feature.attributes.SOURCE && feature.attributes.REMARK) {
-                            // Extract the hour and minute from the VALID string
-                            var valid = feature.attributes.VALID;
-                            var hour = valid.substring(8, 10);
-                            var minute = valid.substring(10, 12);
+            stormreportsJson.popupTemplate = {
+                title: "{TYPETEXT}",
+                content: function (feature) {
+                    // Log the attributes to the console
+                    console.log(feature.attributes);
 
-                            // Format the time
-                            var time = hour + ":" + minute + " UTC";
+                    // Check if the feature has the necessary attributes
+                    if (feature.attributes && feature.attributes.VALID && feature.attributes.SOURCE && feature.attributes.REMARK) {
+                        // Extract the hour and minute from the VALID string
+                        var valid = feature.attributes.VALID;
+                        var hour = valid.substring(8, 10);
+                        var minute = valid.substring(10, 12);
 
-                            // Create the content for the popup
-                            var content = "Time: " + time + "<br>" +
-                                        "Source: " + feature.attributes.SOURCE + "<br>" +
-                                        "Remarks: " + feature.attributes.REMARK;
+                        // Format the time
+                        var time = hour + ":" + minute + " UTC";
 
-                            return content;
-                        } else {
-                            // If the feature doesn't have the necessary attributes, return a default message
-                            return "No information available";
-                        }
+                        // Create the content for the popup
+                        var content = "Time: " + time + "<br>" +
+                            "Source: " + feature.attributes.SOURCE + "<br>" +
+                            "Remarks: " + feature.attributes.REMARK;
+
+                        return content;
+                    } else {
+                        // If the feature doesn't have the necessary attributes, return a default message
+                        return "No information available";
                     }
-                };
-            }).catch(function(error) {
-                console.error("Error loading storm reports layer:", error);
-            });
+                }
+            };
 
             map.add(stormreportsJson);
 
