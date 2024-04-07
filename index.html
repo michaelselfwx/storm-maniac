@@ -272,19 +272,16 @@
                     view: view,
                     container: document.createElement("div"),
                     basemapLegendVisible: true,
+                    respectLayerVisibility: false,
                     layerInfos: [
                         {
                             layer: stormreportsJson,
-                            title: "Official Storm Reports (past 24hrs)"
+                            title: "Storm Report Icons"
                         },
                         {
                             layer: geojsonLayer,
                             title: "SPC Day 1 Convective Outlook"
                         },
-                        {
-                            layer: userStormReports,
-                            title: "Unofficial User Storm Reports"
-                        }
                     ]
                 });
                 legend.container.classList.add("small-legend");
