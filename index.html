@@ -276,11 +276,15 @@
                     layerInfos: [
                         {
                             layer: stormreportsJson,
-                            title: "Recent Storm Reports"
+                            title: "Official Storm Reports (past 24hrs)"
                         },
                         {
                             layer: geojsonLayer,
-                            title: "Day 1 Convective Outlook"
+                            title: "SPC Day 1 Convective Outlook"
+                        },
+                        {
+                            layer: userStormReports,
+                            title: "Unofficial User Storm Reports"
                         }
                     ]
                 });
@@ -354,7 +358,7 @@
             // URL of the GeoJSON data
             var stormreportsJson = new GeoJSONLayer({
                 url: "https://mesonet.agron.iastate.edu/data/gis/shape/4326/us/lsr_24hour.geojson",
-                title: "Recent Storm Reports",
+                title: "Official Storm Reports",
                 renderer: {
                     type: "unique-value",
                     field: "TYPETEXT",
