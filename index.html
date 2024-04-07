@@ -506,47 +506,8 @@
 
             var userStormReports = new FeatureLayer({
                 url: "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/User_Storm_Reports/FeatureServer",
-                outFields: ["TYPETEXT", "REMARK", "VALID"],
+                outFields: ["TYPETEXT", "REMARK", "VALID", "SOURCE"],
                 id: "userStormReports",
-                fields: [
-                    {
-                        name: "TYPETEXT",
-                        alias: "Type",
-                        type: "string",
-                        domain: {
-                            type: "codedValue",
-                            name: "Type",
-                            codedValues: [
-                                { name: "RAIN", code: "RAIN" },
-                                { name: "HAIL", code: "HAIL" },
-                                { name: "SNOW", code: "SNOW" },
-                                { name: "NON-TSTM WND GST", code: "NON-TSTM WND GST" },
-                                { name: "TSTM WND GST", code: "TSTM WND GST" },
-                                { name: "TSTM WND DMG", code: "TSTM WND DMG" },
-                                { name: "HIGH SUST WINDS", code: "HIGH SUST WINDS" },
-                                { name: "TORNADO", code: "TORNADO" },
-                                { name: "FLOOD", code: "FLOOD" },
-                                { name: "WILDFIRE", code: "WILDFIRE" },
-                                { name: "OTHER", code: "OTHER" }
-                            ]
-                        }
-                    },
-                    {
-                        name: "REMARK",
-                        alias: "Remarks",
-                        type: "string"
-                    },
-                    {
-                        name: "SOURCE",
-                        alias: "Source",
-                        type: "string"
-                    },
-                    {
-                        name: "VALID",
-                        alias: "Date/Time",
-                        type: "date"
-                    }
-                ],
                 renderer: {
                     type: "unique-value",
                     field: "TYPETEXT",
@@ -723,17 +684,11 @@
                 { code: "OTHER", name: "OTHER" }
             ];
 
-            // Create a CodedValueDomain using the stormReportTypes
-            var codedValueDomain = {
-                type: "coded-value",
-                codedValues: stormReportTypes
-            };
-
             // Set up the Editor widget
             var editor = new Editor({
                 view: view,
                 layerInfos: [{
-                    url: "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/User_Storm_Reports/FeatureServer",
+                    layer: userStormReports,
                     fieldConfig: [
                         {
                             name: "TYPETEXT",
@@ -745,8 +700,7 @@
                                     label: "Type",
                                     fieldConfig: {
                                         type: "string",
-                                        domain: codedValueDomain
-                                    }
+                                        domain: { type: "coded-value", codedValues: stormReportTypes }                                    }
                                 }
                             }
                         },
