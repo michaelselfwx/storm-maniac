@@ -678,9 +678,7 @@
             // Set up the Editor widget
             var editor = new Editor({
                 view: view,
-                snappingOptions: { // Configure snapping options
-                    enabled: false // Disable snapping
-                },
+                visibleElements: { snappingControls: false },
                 container: document.createElement("div"),
                 layerInfos: [{
                     layer: userStormReports,
