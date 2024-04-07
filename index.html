@@ -744,14 +744,34 @@
                 }]
             });
 
+
+            // Listen for the "widget-ready" event to ensure the Editor is fully initialized
+            editor.when(function() {
+                // Customize the Editor toolbar to exclude the snapping toggle button
+                editor.viewModel.toolbar.visibleElements = {
+                    menuButton: true,
+                    undoRedoMenu: true,
+                    cutButton: true,
+                    copyButton: true,
+                    pasteButton: true,
+                    deleteButton: true,
+                    editGeometryButton: true,
+                    reshapeButton: true,
+                    rotateButton: true,
+                    scaleButton: true,
+                    unionButton: true,
+                    subtractButton: true,
+                    intersectButton: true,
+                    vertexEditingButton: true,
+                    moveButton: true,
+                    reshapeFeatureButton: true,
+                    snappingOption: false
+                };
+            });
+
             // Add Editor widget to the view
             editor.container.classList.add("editor-widget");
             view.ui.add(editor, "bottom-right");
-
-            // Customize the Editor toolbar to exclude the snapping toggle button
-            editor.viewModel.toolbar.visibleElements = {
-                snappingOption: false // Exclude the snapping toggle button
-            };
 
 
         }   
