@@ -634,12 +634,90 @@
                     ]
                 }
             });
+
+            userStormReports.popupTemplate = {
+                title: "{TYPETEXT}",
+                content: [{
+                    type: "fields",
+                    fieldInfos: [
+                        {
+                            fieldName: "VALID",
+                            label: "Valid",
+                            visible: true
+                        },
+                        {
+                            fieldName: "SOURCE",
+                            label: "Source",
+                            visible: true
+                        },
+                        {
+                            fieldName: "REMARK",
+                            label: "Remark",
+                            visible: true
+                        }
+                    ]
+                }]
+            };
+
             map.add(userStormReports);
 
-             // Add Editor widget to the view
-             var editor = new Editor({
-                view: view
+            // Define the options for the storm report type dropdown
+            var stormReportTypes = [
+                { label: "RAIN", value: "RAIN" },
+                { label: "HAIL", value: "HAIL" },
+                { label: "SNOW", value: "SNOW" },
+                { label: "NON-TSTM WND GST", value: "NON-TSTM WND GST" },
+                { label: "TSTM WND GST", value: "TSTM WND GST" },
+                { label: "TSTM WND DMG", value: "TSTM WND DMG" },
+                { label: "HIGH SUST WINDS", value: "HIGH SUST WINDS" },
+                { label: "TORNADO", value: "TORNADO" },
+                { label: "FLOOD", value: "FLOOD" },
+                { label: "WILDFIRE", value: "WILDFIRE" },
+                { label: "OTHER", value: "OTHER" }
+            ];
+
+            // Define the form template for the Editor widget
+            var editorTemplate = {
+                title: "Add Storm Report",
+                content: [{
+                    type: "fields",
+                    fieldInfos: [
+                        {
+                            fieldName: "TYPETEXT",
+                            label: "Type",
+                            visible: true,
+                            editorType: "dropdown", // Specify the editor type as dropdown
+                            options: stormReportTypes // Provide the dropdown options
+                        },
+                        {
+                            fieldName: "REMARK",
+                            label: "Remarks",
+                            visible: true
+                        },
+                        {
+                            fieldName: "SOURCE",
+                            label: "Source",
+                            visible: true
+                        },
+                        {
+                            fieldName: "VALID",
+                            label: "Date/Time",
+                            visible: true
+                        }
+                    ]
+                }]
+            };
+
+            // Set up the Editor widget with the customized form template
+            var editor = new Editor({
+                view: view,
+                layerInfos: [{
+                    layer: userStormReports,
+                    template: editorTemplate // Use the customized form template
+                }]
             });
+
+            // Add Editor widget to the view
             view.ui.add(editor, "bottom-right");
 
         }   
