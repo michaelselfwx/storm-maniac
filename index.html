@@ -728,7 +728,7 @@
                 type: "coded-value",
                 codedValues: stormReportTypes
             };
-            
+
             // Set up the Editor widget
             var editor = new Editor({
                 view: view,
@@ -745,7 +745,7 @@
                                     label: "Type",
                                     fieldConfig: {
                                         type: "string",
-                                        domain: { type: "coded-value", codedValues: stormReportTypes }
+                                        domain: codedValueDomain
                                     }
                                 }
                             }
