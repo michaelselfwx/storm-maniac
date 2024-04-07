@@ -744,6 +744,11 @@
                 }]
             });
 
+            // Customize the Editor toolbar to exclude the snapping toggle button
+            editor.viewModel.toolbar.visibleElements = {
+                snappingOption: false // Exclude the snapping toggle button
+            };
+
             // Add Editor widget to the view
             editor.container.classList.add("editor-widget");
             view.ui.add(editor, "bottom-right");
