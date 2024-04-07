@@ -723,6 +723,12 @@
                 { label: "OTHER", value: "OTHER" }
             ];
 
+            // Create a CodedValueDomain using the stormReportTypes
+            var codedValueDomain = {
+                type: "coded-value",
+                codedValues: stormReportTypes
+            };
+            
             // Set up the Editor widget
             var editor = new Editor({
                 view: view,
@@ -762,7 +768,7 @@
                     ]
                 }]
             });
-            
+
             // Add Editor widget to the view
             view.ui.add(editor, "bottom-right");
 
