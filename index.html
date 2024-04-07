@@ -686,21 +686,6 @@
 
             map.add(userStormReports);
 
-            // Define the options for the storm report type dropdown
-            var stormReportTypes = [
-                { code: "RAIN", name: "RAIN" },
-                { code: "HAIL", name: "HAIL" },
-                { code: "SNOW", name: "SNOW" },
-                { code: "NON-TSTM WND GST", name: "NON-TSTM WND GST" },
-                { code: "TSTM WND GST", name: "TSTM WND GST" },
-                { code: "TSTM WND DMG", name: "TSTM WND DMG" },
-                { code: "HIGH SUST WINDS", name: "HIGH SUST WINDS" },
-                { code: "TORNADO", name: "TORNADO" },
-                { code: "FLOOD", name: "FLOOD" },
-                { code: "WILDFIRE", name: "WILDFIRE" },
-                { code: "OTHER", name: "OTHER" }
-            ];
-
             // Set up the Editor widget
             var editor = new Editor({
                 view: view,
@@ -715,15 +700,7 @@
                             name: "TYPETEXT",
                             label: "Type",
                             editorType: "field-selector",
-                            editorTypeConfig: {
-                                fieldConfig: {
-                                    name: "TYPETEXT",
-                                    label: "Type",
-                                    fieldConfig: {
-                                        type: "string",
-                                        domain: { type: "coded-value", codedValues: stormReportTypes }                                    }
-                                }
-                            }
+                        
                         },
                         {
                             name: "REMARK",
