@@ -391,7 +391,7 @@
                                     color: "green",
                                     width: 1
                                 },
-                                size: "7.5px"
+                                size: "5px"
                             }
                         },
                         {
@@ -404,7 +404,7 @@
                                     color: "grey",
                                     width: 1
                                 },
-                                size: "7.5px"
+                                size: "5px"
                             }
                         },
                         {
@@ -508,6 +508,45 @@
                 url: "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/User_Storm_Reports/FeatureServer",
                 outFields: ["TYPETEXT", "REMARK", "VALID"],
                 id: "userStormReports",
+                fields: [
+                    {
+                        name: "TYPETEXT",
+                        alias: "Type",
+                        type: "esriFieldTypeString",
+                        domain: {
+                            type: "codedValue",
+                            name: "Type",
+                            codedValues: [
+                                { name: "RAIN", code: "RAIN" },
+                                { name: "HAIL", code: "HAIL" },
+                                { name: "SNOW", code: "SNOW" },
+                                { name: "NON-TSTM WND GST", code: "NON-TSTM WND GST" },
+                                { name: "TSTM WND GST", code: "TSTM WND GST" },
+                                { name: "TSTM WND DMG", code: "TSTM WND DMG" },
+                                { name: "HIGH SUST WINDS", code: "HIGH SUST WINDS" },
+                                { name: "TORNADO", code: "TORNADO" },
+                                { name: "FLOOD", code: "FLOOD" },
+                                { name: "WILDFIRE", code: "WILDFIRE" },
+                                { name: "OTHER", code: "OTHER" }
+                            ]
+                        }
+                    },
+                    {
+                        name: "REMARK",
+                        alias: "Remarks",
+                        type: "esriFieldTypeString"
+                    },
+                    {
+                        name: "SOURCE",
+                        alias: "Source",
+                        type: "esriFieldTypeString"
+                    },
+                    {
+                        name: "VALID",
+                        alias: "Date/Time",
+                        type: "esriFieldTypeDate"
+                    }
+                ],
                 renderer: {
                     type: "unique-value",
                     field: "TYPETEXT",
@@ -557,7 +596,7 @@
                                     color: "green",
                                     width: 1
                                 },
-                                size: "7.5px"
+                                size: "5px"
                             }
                         },
                         {
@@ -570,7 +609,7 @@
                                     color: "grey",
                                     width: 1
                                 },
-                                size: "7.5px"
+                                size: "5px"
                             }
                         },
                         {
