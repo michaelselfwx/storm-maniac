@@ -723,47 +723,46 @@
                 { label: "OTHER", value: "OTHER" }
             ];
 
-            // Define the form template for the Editor widget
-            var editorTemplate = {
-                title: "Add Storm Report",
-                content: [{
-                    type: "fields",
-                    fieldInfos: [
-                        {
-                            fieldName: "TYPETEXT",
-                            label: "Type",
-                            visible: true,
-                            editorType: "dropdown", // Specify the editor type as dropdown
-                            options: stormReportTypes // Provide the dropdown options
-                        },
-                        {
-                            fieldName: "REMARK",
-                            label: "Remarks",
-                            visible: true
-                        },
-                        {
-                            fieldName: "SOURCE",
-                            label: "Source",
-                            visible: true
-                        },
-                        {
-                            fieldName: "VALID",
-                            label: "Date/Time",
-                            visible: true
-                        }
-                    ]
-                }]
-            };
-
-            // Set up the Editor widget with the customized form template
+            // Set up the Editor widget
             var editor = new Editor({
                 view: view,
                 layerInfos: [{
-                    layer: userStormReports,
-                    template: editorTemplate // Use the customized form template
+                    url: "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/User_Storm_Reports/FeatureServer",
+                    fieldConfig: [
+                        {
+                            name: "TYPETEXT",
+                            label: "Type",
+                            editorType: "field-selector",
+                            editorTypeConfig: {
+                                fieldConfig: {
+                                    name: "TYPETEXT",
+                                    label: "Type",
+                                    fieldConfig: {
+                                        type: "string",
+                                        domain: { type: "coded-value", codedValues: stormReportTypes }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            name: "REMARK",
+                            label: "Remarks",
+                            editorType: "text-box"
+                        },
+                        {
+                            name: "VALID",
+                            label: "Time",
+                            editorType: "date-picker"
+                        },
+                        {
+                            name: "SOURCE",
+                            label: "Source",
+                            editorType: "text-box"
+                        }
+                    ]
                 }]
             });
-
+            
             // Add Editor widget to the view
             view.ui.add(editor, "bottom-right");
 
