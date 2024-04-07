@@ -49,6 +49,13 @@
             transform-origin: top right;
             transform: scale(0.8);
         }
+        .editor-widget {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            transform-origin: bottom right;
+            transform: scale(0.8);
+        }
         /* For mobile devices */
         @media screen and (max-width: 768px) {
             #dateDiv {
@@ -63,6 +70,9 @@
                 transform: scale(0.6);
                 margin-top: 30px;
             }
+            .editor-widget {
+                transform: scale(0.6);
+            }
         }
         /* For iPads */
         @media screen and (min-width: 769px) and (max-width: 1024px) {
@@ -74,6 +84,9 @@
             .esri-layer-list {
                 transform: scale(0.8);
                 margin-top: 30px;
+            }
+            .editor-widget {
+                transform: scale(0.8);
             }
         }
     </style>
@@ -356,7 +369,7 @@
                                     color: "black",
                                     width: 0.5
                                 },
-                                size: "5px"
+                                size: "7.5px"
                             }
                         },
                         {
@@ -365,7 +378,7 @@
                                 type: "simple-marker",
                                 style: "circle",
                                 color: "red",
-                                size: "5px"
+                                size: "10px"
                             }
                         },
                         {
@@ -378,7 +391,7 @@
                                     color: "black",
                                     width: 0.5
                                 },
-                                size: "5px"
+                                size: "7.5px"
                             }
                         },
                         {
@@ -391,7 +404,7 @@
                                     color: "black",
                                     width: 0.5
                                 },
-                                size: "5px"
+                                size: "7.5px"
                             }
                         },
                         {
@@ -404,7 +417,7 @@
                                     color: "black",
                                     width: 0.5
                                 },
-                                size: "5px"
+                                size: "7.5px"
                             }
                         },
                         {
@@ -417,7 +430,7 @@
                                     color: "black",
                                     width: 0.5
                                 },
-                                size: "7.5px"
+                                size: "10px"
                             }
                         },
                         {
@@ -430,7 +443,7 @@
                                     color: "black",
                                     width: 0.5
                                 },
-                                size: "7.5px"
+                                size: "10px"
                             }
                         },
                         {
@@ -439,7 +452,7 @@
                                 type: "simple-marker",
                                 style: "diamond",
                                 color: "red",
-                                size: "7.5px"
+                                size: "12.5px"
                             }
                         },
                         {
@@ -452,7 +465,7 @@
                                     color: "black",
                                     width: 0.5
                                 },
-                                size: "7.5px"
+                                size: "10px"
                             }
                         },
                         {
@@ -461,7 +474,7 @@
                                 type: "simple-marker",
                                 style: "diamond",
                                 color: "orange",
-                                size: "7.5px"
+                                size: "10px"
                             }
                         },
                         {
@@ -470,7 +483,7 @@
                                 type: "simple-marker",
                                 style: "x",
                                 color: "red",
-                                size: "7.5px"
+                                size: "12.5px"
                             }
                         }
                     ]
@@ -522,7 +535,7 @@
                                     color: "black",
                                     width: 0.5
                                 },
-                                size: "5px"
+                                size: "7.5px"
                             }
                         },
                         {
@@ -531,7 +544,7 @@
                                 type: "simple-marker",
                                 style: "circle",
                                 color: "red",
-                                size: "5px"
+                                size: "10px"
                             }
                         },
                         {
@@ -544,7 +557,7 @@
                                     color: "black",
                                     width: 0.5
                                 },
-                                size: "5px"
+                                size: "7.5px"
                             }
                         },
                         {
@@ -557,7 +570,7 @@
                                     color: "black",
                                     width: 0.5
                                 },
-                                size: "5px"
+                                size: "7.5px"
                             }
                         },
                         {
@@ -570,7 +583,7 @@
                                     color: "black",
                                     width: 0.5
                                 },
-                                size: "5px"
+                                size: "7.5px"
                             }
                         },
                         {
@@ -583,7 +596,7 @@
                                     color: "black",
                                     width: 0.5
                                 },
-                                size: "7.5px"
+                                size: "10px"
                             }
                         },
                         {
@@ -596,7 +609,7 @@
                                     color: "black",
                                     width: 0.5
                                 },
-                                size: "7.5px"
+                                size: "10px"
                             }
                         },
                         {
@@ -605,7 +618,7 @@
                                 type: "simple-marker",
                                 style: "diamond",
                                 color: "red",
-                                size: "7.5px"
+                                size: "12.5px"
                             }
                         },
                         {
@@ -618,7 +631,7 @@
                                     color: "black",
                                     width: 0.5
                                 },
-                                size: "7.5px"
+                                size: "10px"
                             }
                         },
                         {
@@ -627,7 +640,7 @@
                                 type: "simple-marker",
                                 style: "diamond",
                                 color: "orange",
-                                size: "7.5px"
+                                size: "10px"
                             }
                         },
                         {
@@ -636,7 +649,7 @@
                                 type: "simple-marker",
                                 style: "x",
                                 color: "red",
-                                size: "7.5px"
+                                size: "12.5px"
                             }
                         }
                     ]
@@ -724,6 +737,7 @@
             });
 
             // Add Editor widget to the view
+            editor.container.classList.add("editor-widget");
             view.ui.add(editor, "bottom-right");
 
         }   
