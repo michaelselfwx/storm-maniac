@@ -22,4 +22,4 @@ https://mesonet.agron.iastate.edu/request/download
 
 Workflow:
 
-This website took me more than 20 hours to get it to work right, let alone look appeasing to the user's eyes (whether on desktop, tablet, or mobile).
+This website took me more than 30 hours to get it to work right, let alone look appeasing to the user's eyes (whether they are on desktop, tablet, or mobile). 
