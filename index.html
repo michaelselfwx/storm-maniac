@@ -432,7 +432,7 @@
                             symbol: {
                                 type: "simple-marker",
                                 style: "triangle",
-                                color: "pink",
+                                color: [255, 105, 180, 1],
                                 outline: {
                                     color: "black",
                                     width: 0.5
@@ -598,7 +598,7 @@
                             symbol: {
                                 type: "simple-marker",
                                 style: "triangle",
-                                color: "pink",
+                                color: [255, 105, 180, 1],
                                 outline: {
                                     color: "black",
                                     width: 0.5
@@ -679,7 +679,7 @@
             // Set up the Editor widget
             var editor = new Editor({
                 view: view,
-                snappingOption: { // Configure snapping options
+                snappingOptions: { // Configure snapping options
                     enabled: false // Disable snapping
                 },
                 container: document.createElement("div"),
