@@ -1,25 +1,9 @@
 # spc_mapper
 
-Abstract:
+For my GIS Programming midterm project application, I wanted to use my meteorology knowledge and mix it with my newly learned GIS programming skills. I will create an website that shows the live Storm Predicion Center outlooks (mainly convective outlooks), while also allowing the user to add local storm reports (LSRs) of high winds, hail, tornadoes, etc. 
 
-For my project application, I want to use my meteorology knowledge and mix it with my newly learned GIS programming skills. I will create an application that shows the live Storm Predicion Center outlooks (mainly convective outlooks), while also allowing the user to add storm reports of high winds, hail, and tornadoes. 
+The layout of this application will consist mainly of a map of the continental US (CONUS). This will allow the user to see the entire SPC Outlook in just seconds instead of them having to look up the outlook on the website and not know where to go from there. The map will take up most (if not all) of the window, with edit and legend widgets on the sides of the screen. This will give the user the chance to see the specific SPC outlook data they want in front of them, instead of having to strain their eyes to find the data they are looking for. Also on the side of the screen will be multiple layers of data that the user can either deselect or select, depending on what they would like the map to look like. For example, they may only want to see the convective outlook and not the local storm reports. In this case, they would only select “outlook" and then deselect “User Storm Reports” and “Official Storm Reports”. This will make the map less crowded and personalized to what they want. On the bottom-right of the window, there will be an "Editor" widget where the user can add their own reports to the map. When they add these reports, it will be added to the database, making it visible on other user’s screens as well. This data will also be selectable in case some of the reports are inaccurate (maybe eventually adding a disclaimer will be good).
 
-The look of the application will consist mainly of a map of the continental US (CONUS). This will allow the user to see the entire SPC Outlook in just seconds instead of them having to look up the outlook on the website and not know where to go from there. The map will be in the middle of the window, with explandable widgets on the sides of the screen. This will give the user the chance to see the specific SPC outlook data they want in front of them, instead of having to strain their eyes to find the data they are looking for. On the left side of the screen there will be multiple layers of data that the user can either deselect or select, depending on what they would like the map to look like. For example, they may only want to see the convective outlook and not the names of cities or roads. In this case, they would only select “outlook" and then deselect “show road name” and “show city names”. This will make the map less crowded and personalized to what they want. On the right side of the window, this will be where the user can add their own reports to the map. When they add these reports, it will be added to the database, making it shown on other user’s screens as well. I will make sure to have this data will be selectable/reselectable in case some of the reports are inaccurate (maybe even adding a disclaimer will help). This application will be helpful for people doing physical activities outside, since lightning is a killer on the field, pun intended.
+This website took me more than 30 hours to get it to work right, let alone look appeasing to the user's eyes (whether they are on desktop, tablet, or mobile). One of the first major problems I ran into was CORS policy which would not allow me to direct "live" SPC Convective Outlook data striaght to my github page. I looked up all over the place for ways to solve this problem and the best one I saw was having a server-side proxy that you would pull the data from first and then to your website. For other personal projects I have been doing recently, I have a few raspberry pi 4s around campus and at my parents house. After using a vpn software on all my Pis and other computers, I am able to remote into these computers from my personal laptop in my apartment. Once I did this, I remoted into my rapsberry pi that is on campus and set up a server-side proxy (for the first time lol) for my website to pull the data through. I had to add the right headers so the CORS policy was "jumped" over, and it worked! If you f-12 the page, you will see the url for the server-side proxy I am using to get the data to show up. I thought this was my hardest problem I would encounter, but I wasn't really right. The next biggest issue was displaying the LSR data on the page, while also being able to add data with the same icons. I also made it where you can use the dropdown menu in the Editor to select which type of hazard it is, but this made it to where I can not shrink the Editor widget without it not showing this dropbox. This is a frustrating problem but it is the result of using Esri API and css at the same time to make the website look good on desktop, tablet, and mobile.
 
-Databases: 
-
-Basemap -
-Esri.basemap (topo-vector) -
-https://js.arcgis.com/4.25/ 
-
-NOAA Storm Prediction Center -
-https://spc.noaa.gov/products/outlooks
-
-Other weather data -
-NOAA/NWS Reports -
-https://mesonet.agron.iastate.edu/request/download 
-
-
-Workflow:
-
-This website took me more than 30 hours to get it to work right, let alone look appeasing to the user's eyes (whether they are on desktop, tablet, or mobile). 
+Database Sources Used: https://spc.noaa.gov/products/outlooks , https://mesonet.agron.iastate.edu 
