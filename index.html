@@ -295,7 +295,7 @@
 
             // Determine the closest available hour to the current hour
             var closestHour, result;
-            if (hour < availableHours[0]) {
+            if (hour <= availableHours[0]) {
                 // If the current hour is before the first available hour, use the last available hour from the previous day
                 closestHour = availableHours[availableHours.length - 1];
                 date.setDate(date.getDate() - 1);
