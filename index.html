@@ -288,14 +288,14 @@
             var year = date.getUTCFullYear();
             var month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
             var day = ('0' + date.getUTCDate()).slice(-2);
-            var hour = date.getUTCHours().toString().padStart(2, '0');
+            var hour = Number(date.getUTCHours().toString().padStart(2, '0'));
 
             // Define the available hours for the day 1 convective outlook
             var availableHours = [1, 12, 13, 16.5, 20];
 
             // Determine the closest available hour to the current hour
             var closestHour, result;
-            if (hour <= availableHours[0]) {
+            if (hour < availableHours[0]) {
                 // If the current hour is before the first available hour, use the last available hour from the previous day
                 closestHour = availableHours[availableHours.length - 1];
                 date.setDate(date.getDate() - 1);
