@@ -442,6 +442,20 @@
                 return { url: url, formattedDateTime: formattedDateTime}
             }
 
+            // Define a function to get the previous available hour
+            function getPreviousHour2(hour, date) {
+                var index = availableHours2.indexOf(hour);
+                if (index > 0) {
+                    return { hour: availableHours2[index - 1], date: date };
+                } else if (index === 0 || index === -1) {
+                    date.setDate(date.getDate() - 1);
+                    var year = date.getUTCFullYear();
+                    var month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
+                    var day = ('0' + date.getUTCDate()).slice(-2);
+                    return { hour: availableHours2[availableHours2.length - 1], date: { year: year, month: month, day: day } };
+                }
+            }
+
             // Define the available hours for the day 2 convective outlook
             var availableHours2 = [6, 17.5];
 
@@ -481,7 +495,7 @@
                 })
                 .catch(function(error) {
                     // Data for the new hour is not available, use the previous hour
-                    var previous = getPreviousHour(closestHour2, date);
+                    var previous = getPreviousHour2(closestHour2, date);
                     url = getUrlDay2(previous.hour, previous.date);
                     fetch(url.url)
                         .then(function(response) {
