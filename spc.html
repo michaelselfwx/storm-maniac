@@ -293,7 +293,7 @@
             // Define the available hours for the day 1 convective outlook
             var availableHours = [1, 12, 13, 16.5, 20];
 
-            // Determine the closest available hour to the current hour
+            // Determine the closest available hour to the current hour, for DAY 1
             var closestHour, result;
             if (hour < availableHours[0]) {
                 // If the current hour is before the first available hour, use the last available hour from the previous day
@@ -357,10 +357,28 @@
             }
 
             // Define the available hours for the day 2 convective outlook
-            var availableHoursDay2 = [6, 17.5];
+            var availableHours2 = [6, 17.5];
+
+            // Determine the closest available hour to the current hour, for DAY 2
+            var closestHour2, result2;
+            if (hour < availableHours[0]) {
+                // If the current hour is before the first available hour, use the last available hour from the previous day
+                closestHour2 = availableHours[availableHours2.length - 1];
+                date.setDate(date.getDate() - 1);
+                year = date.getUTCFullYear();
+                month = ('0' + (date.getUTCMonth() + 1)).toString().slice(-2);
+                day = (date.getUTCDate()).toString().slice(-2);
+                result2 = { closestHour2: closestHour2, date: { year: year, month: month, day: day } };
+            } else {
+                // Otherwise, use the available hour that is closest to the current hour
+                closestHour = availableHours.reduce(function(prev, curr) {
+                    return (curr <= hour && Math.abs(curr - hour) < Math.abs(prev - hour) ? curr : prev);
+                });
+                result2 = { closestHour2: closestHour2, date: date };
+            }
 
             // Get the data for the closest available hour for Day 2
-            var urlDataDay2 = getUrlDay2(closestHour, { year: year, month: month, day: day });
+            var urlDataDay2 = getUrlDay2(closestHour2, { year: year, month: month, day: day });
             console.log(urlDataDay2.url);
 
             // Fetch the data for the closest available hour for Day 2
@@ -377,7 +395,7 @@
                 })
                 .catch(function(error) {
                     // Data for the new hour is not available, use the previous hour
-                    var previous = getPreviousHour(closestHour, date);
+                    var previous = getPreviousHour(closestHour2, date);
                     url = getUrlDay2(previous.hour, previous.date);
                     fetch(url.url)
                         .then(function(response) {
