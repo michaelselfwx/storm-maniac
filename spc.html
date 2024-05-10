@@ -240,7 +240,7 @@
                     title: "Day 1 Convective Outlook",
                     renderer: renderer,
                     popupTemplate: {
-                        title: "Categorical Outlook",
+                        title: "Day 1 Categorical Outlook",
                         content: "{LABEL2}"
                     }
                 });
@@ -346,6 +346,78 @@
                         });
                 });
 
+            // Define a function to create a GeoJSON layer for DAY 2
+            function createGeoJSONLayer2(url, data) {
+                var renderer = {
+                    type: "unique-value",
+                    field: "LABEL2",
+                    uniqueValueInfos: [
+                        { 
+                            value: "General Thunderstorms Risk", 
+                            symbol: {
+                                type: "simple-fill", 
+                                color: [0, 128, 0, 0.25], 
+                                outline: { width: 0.5, color: "black" }
+                            }
+                        },
+                        { 
+                            value: "Marginal Risk", 
+                            symbol: {
+                                type: "simple-fill", 
+                                color: [255, 255, 0, 0.30], 
+                                outline: { width: 0.5, color: "black" }
+                            }
+                        },
+                        { 
+                            value: "Slight Risk", 
+                            symbol: {
+                                type: "simple-fill", 
+                                color: [255, 165, 0, 0.35], 
+                                outline: { width: 0.5, color: "black" }
+                            }
+                        },
+                        { 
+                            value: "Enhanced Risk", 
+                            symbol: {
+                                type: "simple-fill", 
+                                color: [255, 75, 0, 0.40], 
+                                outline: { width: 0.5, color: "black" }
+                            }
+                        },
+                        { 
+                            value: "Moderate Risk", 
+                            symbol: {
+                                type: "simple-fill", 
+                                color: [255, 0, 0, 0.45], 
+                                outline: { width: 0.5, color: "black" }
+                            }
+                        },
+                        { 
+                            value: "High Risk", 
+                            symbol: {
+                                type: "simple-fill", 
+                                color: [255, 0, 255, 0.5], 
+                                outline: { width: 0.5, color: "black" }
+                            }
+                        }
+                    ]
+                };
+
+                var geojsonLayer2 = new GeoJSONLayer({
+                    url: url.url,
+                    title: "Day 2 Convective Outlook",
+                    renderer: renderer,
+                    popupTemplate: {
+                        title: "Day 2 Categorical Outlook",
+                        content: "{LABEL2}"
+                    }
+                });
+
+                // Add the GeoJSON layer to the map
+                map.add(geojsonLayer2);
+            };
+
+
             // Define a function to get the URL for a given hour and date for Day 2
             function getUrlDay2(hour, date) {
                 var minutes = Math.round((hour % 1) * 60);
@@ -391,7 +463,7 @@
                 })
                 .then(function(data) {
                     // Data for the new hour is available, proceed as normal
-                    createGeoJSONLayer(urlDataDay2, data);
+                    createGeoJSONLayer2(urlDataDay2, data);
                 })
                 .catch(function(error) {
                     // Data for the new hour is not available, use the previous hour
@@ -405,7 +477,7 @@
                             return response.json();
                         })
                         .then(function(data) {
-                            createGeoJSONLayer(url, data);
+                            createGeoJSONLayer2(url, data);
                         })
                         .catch(function(error) {
                             console.error('Error fetching data:', error);
