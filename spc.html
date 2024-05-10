@@ -17,7 +17,7 @@
             height: 100%; 
             width: 100%;
         }
-        #dateDiv {
+        #dateDiv1 {
             position: absolute;
             top: 1%;
             left: 50%;
@@ -57,7 +57,7 @@
         }
         /* For mobile devices */
         @media screen and (max-width: 768px) {
-            #dateDiv {
+            #dateDiv1 {
                 width: 80%; 
                 height: 4%; 
                 font-size: calc(1px + 2.75vw); 
@@ -73,7 +73,7 @@
         }
         /* For iPads */
         @media screen and (min-width: 769px) and (max-width: 1024px) {
-            #dateDiv {
+            #dateDiv1 {
                 width: 55%; 
                 height: 3%; 
                 font-size: calc(1px + 2vw); 
@@ -94,7 +94,7 @@
 
     <!-- The div to display the map -->
     <div id="viewDiv"></div>
-    <div id="dateDiv"></div>
+    <div id="dateDiv1"></div>
 
     <!-- JavaScript for the map -->
     <script>
@@ -256,9 +256,9 @@
                     var validFormatted = validTime.substring(4,6) + "/" + validTime.substring(6,8) + "/" + validTime.substring(0,4) + " " + validTime.substring(8,10) + validTime.substring(10,12) + "z";
                     var expireFormatted = expireTime.substring(4,6) + "/" + expireTime.substring(6,8) + "/" + expireTime.substring(0,4) + " " + expireTime.substring(8,10) + expireTime.substring(10,12) + "z";
 
-                    var dateDiv = document.getElementById('dateDiv');
-                    if (!dateDiv.textContent) {
-                        dateDiv.textContent = 'Outlook Valid: ' + validFormatted + ' - ' + expireFormatted;
+                    var dateDiv1 = document.getElementById('dateDiv');
+                    if (!dateDiv1.textContent) {
+                        dateDiv1.textContent = 'Day 1 Outlook Valid: ' + validFormatted + ' - ' + expireFormatted;
                     }
                 }
 
@@ -415,6 +415,20 @@
 
                 // Add the GeoJSON layer to the map
                 map.add(geojsonLayer2);
+
+                // Update the date div
+                if (data) {
+                    var validTime = data.features[0].properties.VALID;
+                    var expireTime = data.features[0].properties.EXPIRE;
+
+                    var validFormatted = validTime.substring(4,6) + "/" + validTime.substring(6,8) + "/" + validTime.substring(0,4) + " " + validTime.substring(8,10) + validTime.substring(10,12) + "z";
+                    var expireFormatted = expireTime.substring(4,6) + "/" + expireTime.substring(6,8) + "/" + expireTime.substring(0,4) + " " + expireTime.substring(8,10) + expireTime.substring(10,12) + "z";
+
+                    var dateDiv2 = document.getElementById('dateDiv');
+                    if (!dateDiv2.textContent) {
+                        dateDiv2.textContent = 'Day 2 Outlook Valid: ' + validFormatted + ' - ' + expireFormatted;
+                    }
+                }
             };
 
 
