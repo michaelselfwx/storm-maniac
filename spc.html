@@ -361,9 +361,9 @@
 
             // Determine the closest available hour to the current hour, for DAY 2
             var closestHour2, result2;
-            if (hour < availableHours[0]) {
+            if (hour < availableHours2[0]) {
                 // If the current hour is before the first available hour, use the last available hour from the previous day
-                closestHour2 = availableHours[availableHours2.length - 1];
+                closestHour2 = availableHours2[availableHours2.length - 1];
                 date.setDate(date.getDate() - 1);
                 year = date.getUTCFullYear();
                 month = ('0' + (date.getUTCMonth() + 1)).toString().slice(-2);
@@ -371,7 +371,7 @@
                 result2 = { closestHour2: closestHour2, date: { year: year, month: month, day: day } };
             } else {
                 // Otherwise, use the available hour that is closest to the current hour
-                closestHour = availableHours.reduce(function(prev, curr) {
+                closestHour2 = availableHours2.reduce(function(prev, curr) {
                     return (curr <= hour && Math.abs(curr - hour) < Math.abs(prev - hour) ? curr : prev);
                 });
                 result2 = { closestHour2: closestHour2, date: date };
