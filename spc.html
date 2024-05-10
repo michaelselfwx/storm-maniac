@@ -346,6 +346,54 @@
                         });
                 });
 
+            // Define a function to get the URL for a given hour and date for Day 2
+            function getUrlDay2(hour, date) {
+                var minutes = Math.round((hour % 1) * 60);
+                hour = ('0' + Math.floor(hour)).slice(-2);
+                minutes = ('0' + minutes).slice(-2);
+                var formattedDateTime = date.year + date.month + date.day + '_' + hour + minutes;
+                var url = "https://ham-shack-pi.tail8c79a.ts.net/proxy?url=https://www.spc.noaa.gov/products/outlook/archive/2024/day2otlk_" + formattedDateTime + "_cat.lyr.geojson";
+                return { url: url, formattedDateTime: formattedDateTime}
+            }
+
+            // Define the available hours for the day 2 convective outlook
+            var availableHoursDay2 = [6, 17.5];
+
+            // Get the data for the closest available hour for Day 2
+            var urlDataDay2 = getUrlDay2(closestHour, { year: year, month: month, day: day });
+            console.log(urlDataDay2.url);
+
+            // Fetch the data for the closest available hour for Day 2
+            fetch(urlDataDay2.url)
+                .then(function(response) {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(function(data) {
+                    // Data for the new hour is available, proceed as normal
+                    createGeoJSONLayer(urlDataDay2, data);
+                })
+                .catch(function(error) {
+                    // Data for the new hour is not available, use the previous hour
+                    var previous = getPreviousHour(closestHour, date);
+                    url = getUrlDay2(previous.hour, previous.date);
+                    fetch(url.url)
+                        .then(function(response) {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then(function(data) {
+                            createGeoJSONLayer(url, data);
+                        })
+                        .catch(function(error) {
+                            console.error('Error fetching data:', error);
+                        });
+                });
+
             // URL of the GeoJSON data
             var stormreportsJson = new GeoJSONLayer({
                 url: "https://mesonet.agron.iastate.edu/data/gis/shape/4326/us/lsr_24hour.geojson",
