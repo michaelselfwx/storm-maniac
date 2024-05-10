@@ -367,17 +367,13 @@
                 date.setDate(date.getDate() - 1);
                 year = date.getUTCFullYear();
                 month = ('0' + (date.getUTCMonth() + 1)).toString().slice(-2);
-                day = (date.getUTCDate()).toString().slice(-2);
+                day = ('0' + date.getUTCDate()).toString().slice(-2);
                 result2 = { closestHour2: closestHour2, date: { year: year, month: month, day: day } };
             } else {
                 // Otherwise, use the available hour that is closest to the current hour
                 closestHour2 = availableHours2.reduce(function(prev, curr) {
                     return (curr <= hour && Math.abs(curr - hour) < Math.abs(prev - hour) ? curr : prev);
                 });
-
-                // Pad the day with a leading zero if it's less than 10
-                var day = date.day < 10 ? '0' + date.day : date.day;    
-                
                 result2 = { closestHour2: closestHour2, date: date };
             }
 
