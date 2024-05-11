@@ -301,7 +301,7 @@
                 date.setDate(date.getDate() - 1);
                 year = date.getUTCFullYear();
                 month = ('0' + (date.getUTCMonth() + 1)).toString().slice(-2);
-                day = ('0' + date.getUTCDate()).toString().slice(-2);
+                day = (date.getUTCDate()).toString().slice(-2);
                 result = { closestHour: closestHour, date: { year: year, month: month, day: day } };
             } else {
                 // Otherwise, use the available hour that is closest to the current hour
