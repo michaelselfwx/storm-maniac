@@ -502,7 +502,7 @@
                 })
                 .then(function(data) {
                     // Data for the new hour is available, proceed as normal
-                    createGeoJSONLayer2(urlDataDay2.url, data);
+                    createGeoJSONLayer2(urlDataDay2, data);
                 })
                 .catch(function(error) {
                     // Data for the new hour is not available, use the previous hour
