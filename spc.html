@@ -461,13 +461,16 @@
             // Define a function to get the previous available hour
             function getPreviousHour2(hour, date) {
                 var index = availableHours2.indexOf(hour);
+                var year = date.getUTCFullYear();
+                var month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
+                var day = ('0' + date.getUTCDate()).slice(-2);
                 if (index > 0) {
-                    return { hour: availableHours2[index - 1], date: date };
+                    return { hour: availableHours2[index - 1], date: { year: year, month: month, day: day } };
                 } else if (index === 0 || index === -1) {
                     date.setDate(date.getDate() - 1);
                     var year = date.getUTCFullYear();
-                    var month = ('0' + (date.getUTCMonth() + 1)).substring(-2);
-                    var day = ('0' + date.getUTCDate()).substring(-2);
+                    var month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
+                    var day = ('0' + date.getUTCDate()).slice(-2);
                     return { hour: availableHours2[availableHours2.length - 1], date: { year: year, month: month, day: day } };
                 }
             }
