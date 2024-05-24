@@ -128,6 +128,12 @@
             window.onscroll = resetTimeout;    
             window.onkeypress = resetTimeout;
 
+
+            // Create the map
+            var map = new Map({
+                basemap: "topo-vector",          
+            });
+
             // Listen for the layerview-create event
             map.on("layerview-create", function(event) {
                 // Check if the created layer view's layer is one of the outlook layers
@@ -156,12 +162,7 @@
                         });
                 }
             });
-
-            // Create the map
-            var map = new Map({
-                basemap: "topo-vector",          
-            });
-
+            
             // Create the view
             var view = new MapView({
                 container: "viewDiv",
