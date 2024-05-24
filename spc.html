@@ -502,7 +502,7 @@
                 })
                 .then(function(data) {
                     // Data for the new hour is available, proceed as normal
-                    createGeoJSONLayer2(urlDataDay2, data);
+                    createGeoJSONLayer2(urlDataDay2.url, data);
                 })
                 .catch(function(error) {
                     // Data for the new hour is not available, use the previous hour
@@ -661,11 +661,11 @@
                 result3 = { closestHour3: closestHour3, date: date };
             }
 
-            // Get the data for the closest available hour for Day 2
+            // Get the data for the closest available hour for Day 3
             var urlDataDay3 = getUrlDay3(closestHour3, { year: year, month: month, day: day });
             console.log(urlDataDay3.url);
 
-            // Fetch the data for the closest available hour for Day 2
+            // Fetch the data for the closest available hour for Day 3
             fetch(urlDataDay3.url)
                 .then(function(response) {
                     if (!response.ok) {
