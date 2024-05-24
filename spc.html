@@ -703,22 +703,28 @@
                     createGeoJSONLayer3(urlDataDay3, data);
                 })
                 .catch(function(error) {
-                    // Data for the new hour is not available, use the previous hour
-                    var previous = getPreviousHour3(closestHour3, date);
-                    url = getUrlDay3(previous.hour, previous.date);
-                    fetch(url.url)
-                        .then(function(response) {
-                            if (!response.ok) {
-                                throw new Error('Network response was not ok');
-                            }
-                            return response.json();
-                        })
-                        .then(function(data) {
-                            createGeoJSONLayer3(url, data);
-                        })
-                        .catch(function(error) {
-                            console.error('Error fetching data:', error);
-                        });
+                    if (error.message.startsWith("HTTP error")) {
+                        // Handle HTTP errors here
+                        console.log('HTTP error occurred:', error.message);
+                        // Data for the new hour is not available, use the previous hour
+                        var previous = getPreviousHour3(closestHour3, date);
+                        url = getUrlDay3(previous.hour, previous.date);
+                        fetch(url.url)
+                            .then(function(response) {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.json();
+                            })
+                            .then(function(data) {
+                                createGeoJSONLayer3(url, data);
+                            })
+                            .catch(function(error) {
+                                console.error('Error fetching data:', error);
+                            });
+                    } else {
+                        console.error('Some other error detected:', error);
+                    }
                 });
 
             // URL of the GeoJSON data
