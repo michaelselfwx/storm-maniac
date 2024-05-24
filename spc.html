@@ -515,23 +515,29 @@
                     createGeoJSONLayer2(urlDataDay2, data);
                 })
                 .catch(function(error) {
-                    // Data for the new hour is not available, use the previous hour
-                    var previous = getPreviousHour2(closestHour2, date);
-                    url = getUrlDay2(previous.hour, previous.date);
-                    console.log('Fetching data from (2):', url.url); // Print the URL
-                    fetch(url.url)
-                        .then(function(response) {
-                            if (!response.ok) {
-                                throw new Error('Network response was not ok');
-                            }
-                            return response.json();
-                        })
-                        .then(function(data) {
-                            createGeoJSONLayer2(url, data);
-                        })
-                        .catch(function(error) {
-                            console.error('Error fetching data:', error);
-                        });
+                    if (error.message.startsWith("HTTP error")) {
+                        // Handle HTTP errors here
+                        console.log('HTTP error occurred:', error.message);
+                        // Data for the new hour is not available, use the previous hour
+                        var previous = getPreviousHour2(closestHour2, date);
+                        url = getUrlDay2(previous.hour, previous.date);
+                        console.log('Fetching data from (2):', url.url); // Print the URL
+                        fetch(url.url)
+                            .then(function(response) {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.json();
+                            })
+                            .then(function(data) {
+                                createGeoJSONLayer2(url, data);
+                            })
+                            .catch(function(error) {
+                                console.error('Error fetching data:', error);
+                            });
+                    } else {
+                        console.error('Some other error detected:', error);
+                    }
                 });
 
             
