@@ -180,6 +180,10 @@
             });
             view.ui.add(layerList, "top-right");
 
+            // Define geojsonLayers globally
+            var geojsonLayer;
+            var geojsonLayer2;
+            var geojsonLayer3;
 
 
             // Define a function to get the URL for a given hour and date
@@ -299,7 +303,7 @@
                     ]
                 };
 
-                var geojsonLayer = new GeoJSONLayer({
+                geojsonLayer = new GeoJSONLayer({
                     url: url.url,
                     title: "Day 1 Convective Outlook",
                     id: "Day1ConvectiveOutlook", // Set the ID of the layer
