@@ -444,15 +444,9 @@
             
             // Define a function to get the URL for a given hour and date for Day 2
             function getUrlDay2(hour, date) {
-                console.log('date:', date);
                 var minutes = Math.round((hour % 1) * 60);
                 hour = ('0' + Math.floor(hour)).slice(-2);
                 minutes = ('0' + minutes).slice(-2);
-                console.log('year:', year);
-                console.log('month:', month);
-                console.log('day:', day);
-                console.log('hour:', hour);
-                console.log('minutes:', minutes);
                 var formattedDateTime = date.year + date.month + date.day + '_' + hour + minutes;
                 var url = "https://ham-shack-pi.tail8c79a.ts.net/proxy?url=https://www.spc.noaa.gov/products/outlook/archive/2024/day2otlk_" + formattedDateTime + "_cat.lyr.geojson";
                 return { url: url, formattedDateTime: formattedDateTime}
