@@ -148,11 +148,6 @@
             var layerList = new LayerList({
                 view: view
             });
-            // Assuming layerList is an array of numbers or strings
-            layerList.sort();
-
-            // If layerList is an array of objects, you can specify the property to sort by
-            layerList.sort((a, b) => a.id > b.id ? 1 : -1);
             view.ui.add(layerList, "top-right");
 
 
