@@ -251,7 +251,7 @@
                 });
 
                 // Add the GeoJSON layer to the map
-                map.add(geojsonLayer, 0);
+                map.add(geojsonLayer, 4);
 
                 // Update the date div
                 if (data) {
@@ -425,7 +425,7 @@
                 });
 
                 // Add the GeoJSON layer to the map
-                map.add(geojsonLayer2, 1);
+                map.add(geojsonLayer2, 3);
 
                 // Update the date div
                 if (data) {
@@ -507,6 +507,7 @@
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }
+                    console.log('Fetching data from (1):', urlDataDay2.url); // Print the URL
                     return response.json();
                 })
                 .then(function(data) {
@@ -517,6 +518,7 @@
                     // Data for the new hour is not available, use the previous hour
                     var previous = getPreviousHour2(closestHour2, date);
                     url = getUrlDay2(previous.hour, previous.date);
+                    console.log('Fetching data from (2):', url.url); // Print the URL
                     fetch(url.url)
                         .then(function(response) {
                             if (!response.ok) {
@@ -864,7 +866,7 @@
                 }]
             };
 
-            map.add(stormreportsJson, 3);
+            map.add(stormreportsJson, 1);
 
 
             var userStormReports = new FeatureLayer({
@@ -1018,7 +1020,7 @@
                 }]
             };
 
-            map.add(userStormReports, 4);
+            map.add(userStormReports, 0);
 
             // Set up the Editor widget
             var editor = new Editor({
