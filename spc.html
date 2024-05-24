@@ -179,6 +179,12 @@
 
             // Define a function to create a GeoJSON layer
             function createGeoJSONLayer(url, data) {
+                // Remove any existing "Day 3 Convective Outlook" layer
+                map.eachLayer(function (layer) {
+                    if (layer.title === "Day 1 Convective Outlook") {
+                        map.removeLayer(layer);
+                    }
+                });
                 var renderer = {
                     type: "unique-value",
                     field: "LABEL2",
@@ -347,6 +353,12 @@
 
             // Define a function to create a GeoJSON layer for DAY 2
             function createGeoJSONLayer2(url, data) {
+                // Remove any existing "Day 3 Convective Outlook" layer
+                map.eachLayer(function (layer) {
+                    if (layer.title === "Day 2 Convective Outlook") {
+                        map.removeLayer(layer);
+                    }
+                });
                 var renderer = {
                     type: "unique-value",
                     field: "LABEL2",
@@ -514,6 +526,12 @@
             
             // Define a function to create a GeoJSON layer for DAY 3
             function createGeoJSONLayer3(url, data) {
+                // Remove any existing "Day 3 Convective Outlook" layer
+                map.eachLayer(function (layer) {
+                    if (layer.title === "Day 3 Convective Outlook") {
+                        map.removeLayer(layer);
+                    }
+                });
                 var renderer = {
                     type: "unique-value",
                     field: "LABEL2",
