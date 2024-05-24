@@ -292,7 +292,7 @@
             var date = new Date();
             var year = date.getUTCFullYear();
             var month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
-            var day = ('0' + date.getUTCDate()).slice(-2);
+            var day = ('0' + date.getUTCDate()).toString().slice(-2);
             var hour = date.getUTCHours().toString().padStart(2, '0');
 
             // Define the available hours for the day 1 convective outlook
@@ -441,8 +441,7 @@
                     }
                 }
             };
-
-
+            
             // Define a function to get the URL for a given hour and date for Day 2
             function getUrlDay2(hour, date) {
                 var minutes = Math.round((hour % 1) * 60);
@@ -466,6 +465,13 @@
                     return { hour: availableHours2[availableHours2.length - 1], date: { year: year, month: month, day: day } };
                 }
             }
+
+            // Get the current date and time (UTC, not local)
+            var date = new Date();
+            var year = date.getUTCFullYear();
+            var month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
+            var day = ('0' + date.getUTCDate()).toString().slice(-2);
+            var hour = date.getUTCHours().toString().padStart(2, '0');
 
             // Define the available hours for the day 2 convective outlook
             var availableHours2 = [6, 17.5];
@@ -615,6 +621,7 @@
                 }
             };
 
+            
 
             // Define a function to get the URL for a given hour and date for Day 3
             function getUrlDay3(hour, date) {
@@ -640,6 +647,13 @@
                 }
             }
 
+            // Get the current date and time (UTC, not local)
+            var date = new Date();
+            var year = date.getUTCFullYear();
+            var month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
+            var day = ('0' + date.getUTCDate()).toString().slice(-2);
+            var hour = date.getUTCHours().toString().padStart(2, '0');
+            
             // Define the available hours for the day 3 convective outlook
             var availableHours3 = [7.5];
 
