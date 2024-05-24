@@ -250,8 +250,8 @@
                     }
                 });
 
-                // // Add the GeoJSON layer to the map
-                // map.add(geojsonLayer);
+                // Add the GeoJSON layer to the map
+                map.add(geojsonLayer, 0);
 
                 // Update the date div
                 if (data) {
@@ -286,8 +286,6 @@
                 });
                 legend.container.classList.add("small-legend");
                 view.ui.add(legend, "bottom-left");
-
-            return geojsonLayer;
             };
 
             // Get the current date and time (UTC, not local)
@@ -426,8 +424,8 @@
                     }
                 });
 
-                // // Add the GeoJSON layer to the map
-                // map.add(geojsonLayer2);
+                // Add the GeoJSON layer to the map
+                map.add(geojsonLayer2, 1);
 
                 // Update the date div
                 if (data) {
@@ -608,8 +606,8 @@
                     }
                 });
 
-                // // Add the GeoJSON layer to the map
-                // map.add(geojsonLayer3);
+                // Add the GeoJSON layer to the map
+                map.add(geojsonLayer3, 2);
 
                 // Update the date div
                 if (data) {
@@ -866,7 +864,7 @@
                 }]
             };
 
-            // map.add(stormreportsJson);
+            map.add(stormreportsJson, 3);
 
 
             var userStormReports = new FeatureLayer({
@@ -1020,10 +1018,7 @@
                 }]
             };
 
-            // map.add(userStormReports);
-
-            // Add the layers to the map in the desired order
-            map.addMany([geojsonLayer, geojsonLayer2, geojsonLayer3, stormreportsJson, userStormReports]); 
+            map.add(userStormReports, 4);
 
             // Set up the Editor widget
             var editor = new Editor({
