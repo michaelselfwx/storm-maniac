@@ -589,7 +589,6 @@
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }
-                    console.log('Fetching data from (1):', urlDataDay2.url); // Print the URL
                     return response.json();
                 })
                 .then(function(data) {
