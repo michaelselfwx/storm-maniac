@@ -283,9 +283,9 @@
                 // Add the GeoJSON layer to the map
                 map.add(geojsonLayer, 4);
 
-                day1Layer.watch("visible", function(visible) {
+                geojsonLayer.watch("visible", function(visible) {
                     if (visible) {
-                        updateDateDiv(day1Layer);
+                        updateDateDiv(geojsonLayer);
                     }
                 });
 
