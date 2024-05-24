@@ -180,7 +180,7 @@
             // Define a function to create a GeoJSON layer
             function createGeoJSONLayer(url, data) {
                 // Remove any existing "Day 3 Convective Outlook" layer
-                var existingLayer = map.findLayerById("Day 3 Convective Outlook");
+                var existingLayer = map.findLayerById("Day 1 Convective Outlook");
                 if (existingLayer) {
                     map.remove(existingLayer);
                 }
@@ -353,7 +353,7 @@
             // Define a function to create a GeoJSON layer for DAY 2
             function createGeoJSONLayer2(url, data) {
                 // Remove any existing "Day 3 Convective Outlook" layer
-                var existingLayer = map.findLayerById("Day 3 Convective Outlook");
+                var existingLayer = map.findLayerById("Day 2 Convective Outlook");
                 if (existingLayer) {
                     map.remove(existingLayer);
                 }
