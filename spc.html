@@ -394,6 +394,9 @@
                     createGeoJSONLayer(urlData, data);
                 })
                 .catch(function(error) {
+                    if (error.message.startsWith("HTTP error")) {
+                        // Handle HTTP errors here
+                        console.log('HTTP error occurred:', error.message);
                     // Data for the new hour is not available, use the previous hour
                     var previous = getPreviousHour(closestHour, date);
                     url = getUrl(previous.hour, previous.date);
@@ -410,6 +413,10 @@
                         .catch(function(error) {
                             console.error('Error fetching data:', error);
                         });
+
+                    } else {
+                        console.error('Some other error detected:', error);
+                    }
                 });
 
             // Define a function to create a GeoJSON layer for DAY 2
