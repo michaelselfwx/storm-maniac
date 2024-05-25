@@ -516,6 +516,9 @@
                 // Add the GeoJSON layer to the map
                 map.add(geojsonLayer2, 3);
 
+                // Return the created layer
+                return geojsonLayer2;
+
 
                 // // Update the date div
                 // if (data) {
@@ -601,7 +604,14 @@
                 })
                 .then(function(data) {
                     // Data for the new hour is available, proceed as normal
-                    createGeoJSONLayer2(urlDataDay2, data);
+                    var geojsonLayer2 = createGeoJSONLayer(urlDataDay2, data);
+
+                    // Watch the visible property of the layer
+                    geojsonLayer2.watch("visible", function(visible) {
+                        if (visible) {
+                            updateDateDiv(geojsonLayer2);
+                        }
+                    });
                 })
                 .catch(function(error) {
                     if (error.message.startsWith("HTTP error")) {
@@ -627,13 +637,6 @@
                         console.error('Some other error detected:', error);
                     }
                 });
-
-            geojsonLayer2.watch("visible", function(visible) {
-                if (visible) {
-                    updateDateDiv(geojsonLayer2);
-                }
-            });
-
                 
             
             // Define the updateDateDiv function
@@ -744,6 +747,8 @@
                 // Add the GeoJSON layer to the map
                 map.add(geojsonLayer3, 2);
 
+                return geojsonLayer3;
+
 
                 // // Update the date div
                 // if (data) {
@@ -828,7 +833,14 @@
                 })
                 .then(function(data) {
                     // Data for the new hour is available, proceed as normal
-                    createGeoJSONLayer3(urlDataDay3, data);
+                    var geojsonLayer3 = createGeoJSONLayer3(urlDataDay3, data);
+
+                    // Watch the visible property of the layer
+                    geojsonLayer3.watch("visible", function(visible) {
+                        if (visible) {
+                            updateDateDiv(geojsonLayer3);
+                        }
+                    });
                 })
                 .catch(function(error) {
                     if (error.message.startsWith("HTTP error")) {
@@ -855,11 +867,6 @@
                     }
                 });
 
-            geojsonLayer3.watch("visible", function(visible) {
-                if (visible) {
-                    updateDateDiv(geojsonLayer3);
-                }
-            });
 
             // URL of the GeoJSON data
             var stormreportsJson = new GeoJSONLayer({
