@@ -183,7 +183,7 @@
             }
 
             // Define the updateDateDiv function
-            function updateDateDiv(layer) {
+            function updateDateDiv1(layer) {
                     console.log(urlData.url);
                     fetch(urlData.url)
                         .then(function(response) {
@@ -376,7 +376,7 @@
                     // Watch the visible property of the layer
                     geojsonLayer.watch("visible", function(visible) {
                         if (visible) {
-                            updateDateDiv(geojsonLayer);
+                            updateDateDiv1(geojsonLayer);
                         }
                     });
                 })
@@ -408,7 +408,7 @@
 
             
                 // Define the updateDateDiv function
-            function updateDateDiv(layer) {
+            function updateDateDiv2(layer) {
                     console.log(urlDataDay2.url);
                     fetch(urlDataDay2.url)
                         .then(function(response) {
@@ -609,7 +609,7 @@
                     // Watch the visible property of the layer
                     geojsonLayer2.watch("visible", function(visible) {
                         if (visible) {
-                            updateDateDiv(geojsonLayer2);
+                            updateDateDiv2(geojsonLayer2);
                         }
                     });
                 })
@@ -640,7 +640,7 @@
                 
             
             // Define the updateDateDiv function
-            function updateDateDiv(layer) {
+            function updateDateDiv3(layer) {
                     fetch(urlDataDay3.url)
                         .then(function(response) {
                             if (!response.ok) {
@@ -838,7 +838,7 @@
                     // Watch the visible property of the layer
                     geojsonLayer3.watch("visible", function(visible) {
                         if (visible) {
-                            updateDateDiv(geojsonLayer3);
+                            updateDateDiv3(geojsonLayer3);
                         }
                     });
                 })
@@ -992,6 +992,26 @@
                             }
                         }
                     ]
+                }
+            });
+
+            // Assume layer1, layer2, layer3 are your GeoJSON layers for different days
+
+            geojsonLayer.watch("visible", function(visible) {
+                if (visible) {
+                    updateDateDiv(geojsonLayer);
+                }
+            });
+
+            geojsonLayer2.watch("visible", function(visible) {
+                if (visible) {
+                    updateDateDiv(geojsonLayer2);
+                }
+            });
+
+            geojsonLayer3.watch("visible", function(visible) {
+                if (visible) {
+                    updateDateDiv(geojsonLayer3);
                 }
             });
 
