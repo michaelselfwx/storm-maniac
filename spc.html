@@ -436,7 +436,7 @@
                         .catch(function(error) {
                             console.error('Error fetching data:', error);
                         });
-                }
+                };
 
 
             // Define a function to create a GeoJSON layer for DAY 2
@@ -543,7 +543,7 @@
                 var formattedDateTime = date.year + date.month + date.day + '_' + hour + minutes;
                 var url = "https://ham-shack-pi.tail8c79a.ts.net/proxy?url=https://www.spc.noaa.gov/products/outlook/archive/2024/day2otlk_" + formattedDateTime + "_cat.lyr.geojson";
                 return { url: url, formattedDateTime: formattedDateTime}
-            }
+            };
 
             // Define a function to get the previous available hour
             function getPreviousHour2(hour, date) {
@@ -560,7 +560,7 @@
                     var day = ('0' + date.getUTCDate()).slice(-2);
                     return { hour: availableHours2[availableHours2.length - 1], date: { year: year, month: month, day: day } };
                 }
-            }
+            };
 
             // Get the current date and time (UTC, not local)
             var date = new Date();
@@ -604,7 +604,7 @@
                 })
                 .then(function(data) {
                     // Data for the new hour is available, proceed as normal
-                    var geojsonLayer2 = createGeoJSONLayer(urlDataDay2, data);
+                    var geojsonLayer2 = createGeoJSONLayer2(urlDataDay2, data);
 
                     // Watch the visible property of the layer
                     geojsonLayer2.watch("visible", function(visible) {
