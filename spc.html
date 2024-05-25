@@ -291,9 +291,6 @@
                 // Add the GeoJSON layer to the map
                 map.add(geojsonLayer, 4);
 
-                // Return the created layer
-                return geojsonLayer;
-
                 // // Update the date div
                 // if (data) {
                 //     var validTime = data.features[0].properties.VALID;
@@ -327,6 +324,9 @@
                 });
                 legend.container.classList.add("small-legend");
                 view.ui.add(legend, "bottom-left");
+
+                // Return the created layer
+                return geojsonLayer;
             }
 
             // Get the current date and time (UTC, not local)
