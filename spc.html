@@ -291,6 +291,8 @@
                 // Add the GeoJSON layer to the map
                 map.add(geojsonLayer, 4);
 
+                // Return the created layer
+                return geojsonLayer;
 
                 // // Update the date div
                 // if (data) {
@@ -325,7 +327,7 @@
                 });
                 legend.container.classList.add("small-legend");
                 view.ui.add(legend, "bottom-left");
-            };
+            }
 
             // Get the current date and time (UTC, not local)
             var date = new Date();
@@ -369,7 +371,14 @@
                 })
                 .then(function(data) {
                     // Data for the new hour is available, proceed as normal
-                    createGeoJSONLayer(urlData, data);
+                    var geojsonLayer = createGeoJSONLayer(urlData, data);
+
+                    // Watch the visible property of the layer
+                    geojsonLayer.watch("visible", function(visible) {
+                        if (visible) {
+                            updateDateDiv(geojsonLayer);
+                        }
+                    });
                 })
                 .catch(function(error) {
                     if (error.message.startsWith("HTTP error")) {
@@ -396,12 +405,6 @@
                         console.error('Some other error detected:', error);
                     }
                 });
-
-            geojsonLayer.watch("visible", function(visible) {
-                if (visible) {
-                    updateDateDiv(geojsonLayer);
-                }
-            });
 
             
                 // Define the updateDateDiv function
