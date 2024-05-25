@@ -319,6 +319,9 @@
                 // Add the GeoJSON layer to the map
                 map.add(geojsonLayer, 4);
 
+                // Call updateDateDiv after the layer has been added to the map
+                updateDateDiv(geojsonLayer);
+
                 geojsonLayer.watch("visible", function(visible) {
                     if (visible) {
                         updateDateDiv(geojsonLayer);
@@ -404,7 +407,6 @@
                 .then(function(data) {
                     // Data for the new hour is available, proceed as normal
                     createGeoJSONLayer(urlData, data);
-                    updateDateDiv(geojsonLayer);
                 })
                 .catch(function(error) {
                     if (error.message.startsWith("HTTP error")) {
@@ -422,7 +424,6 @@
                         })
                         .then(function(data) {
                             createGeoJSONLayer(url, data);
-                            updateDateDiv(geojsonLayer);
                         })
                         .catch(function(error) {
                             console.error('Error fetching data:', error);
