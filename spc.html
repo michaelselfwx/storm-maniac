@@ -437,8 +437,8 @@
             
                 // Define the updateDateDiv function
             function updateDateDiv(layer) {
-                    console.log(urlData.url);
-                    fetch(urlData.url)
+                    console.log(urlDataDay2.url);
+                    fetch(urlDataDay2.url)
                         .then(function(response) {
                             if (!response.ok) {
                                 throw new Error('Network response was not ok');
@@ -667,8 +667,8 @@
             
             // Define the updateDateDiv function
             function updateDateDiv(layer) {
-                    console.log(urlData.url);
-                    fetch(urlData.url)
+                    console.log(urlDataDay3.url);
+                    fetch(urlDataDay3.url)
                         .then(function(response) {
                             if (!response.ok) {
                                 throw new Error('Network response was not ok');
@@ -696,7 +696,7 @@
                         });
                 }
 
-                
+
             // Define a function to create a GeoJSON layer for DAY 3
             function createGeoJSONLayer3(url, data) {
                 // Remove any existing "Day 3 Convective Outlook" layer
