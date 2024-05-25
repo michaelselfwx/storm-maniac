@@ -231,7 +231,7 @@
                                 var expireFormatted = expireTime.substring(4,6) + "/" + expireTime.substring(6,8) + "/" + expireTime.substring(0,4) + " " + expireTime.substring(8,10) + expireTime.substring(10,12) + "z";
 
                                 var dateDiv1 = document.getElementById('dateDiv1');
-                                dateDiv1.textContent = layer.title + ' Outlook Valid: ' + validFormatted + ' - ' + expireFormatted;
+                                dateDiv1.textContent = 'Day 1 Convective Outlook Valid: ' + validFormatted + ' - ' + expireFormatted;
                             } else {
                                 console.error('Data does not have VALID and EXPIRE properties:', data);
                             }
@@ -456,7 +456,7 @@
                                 var expireFormatted = expireTime.substring(4,6) + "/" + expireTime.substring(6,8) + "/" + expireTime.substring(0,4) + " " + expireTime.substring(8,10) + expireTime.substring(10,12) + "z";
 
                                 var dateDiv2 = document.getElementById('dateDiv2');
-                                dateDiv2.textContent = layer.title + ' Outlook Valid: ' + validFormatted + ' - ' + expireFormatted;
+                                dateDiv2.textContent = 'Day 2 Convective Outlook Valid: ' + validFormatted + ' - ' + expireFormatted;
                             } else {
                                 console.error('Data does not have VALID and EXPIRE properties:', data);
                             }
@@ -686,7 +686,7 @@
                                 var expireFormatted = expireTime.substring(4,6) + "/" + expireTime.substring(6,8) + "/" + expireTime.substring(0,4) + " " + expireTime.substring(8,10) + expireTime.substring(10,12) + "z";
 
                                 var dateDiv3 = document.getElementById('dateDiv3');
-                                dateDiv3.textContent = layer.title + ' Outlook Valid: ' + validFormatted + ' - ' + expireFormatted;
+                                dateDiv3.textContent = 'Day 3 Convective Outlook Valid: ' + validFormatted + ' - ' + expireFormatted;
                             } else {
                                 console.error('Data does not have VALID and EXPIRE properties:', data);
                             }
