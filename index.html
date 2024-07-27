@@ -5,11 +5,11 @@
     <link rel="icon" type="image/x-icon" href="stormmaniac_favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Storm Maniac</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
             background-color: #f4f4f4;
             text-align: center;
         }
@@ -17,9 +17,6 @@
             background-color: #007bff;
             color: #fff;
             padding: 20px 0;
-        }
-        h1 {
-            margin-bottom: 20px;
         }
         .container {
             max-width: 800px;
@@ -44,22 +41,46 @@
         <h1>Welcome to Storm Maniac</h1>
     </header>
     <div class="container">
-        <div class="project-card">
-            <h2>About Me, Michael Self</h2>
-            <p>This page gives a little insight into who I am and why I do what I do.</p>
-            <a href="aboutme.html" target="_blank">About</a>
+        <div class="card project-card">
+            <div class="card-body">
+                <h2 class="card-title">About Me, Michael Self</h2>
+                <p class="card-text">This page gives a little insight into who I am and why I do what I do.</p>
+                <a href="aboutme.html" target="_blank" class="btn btn-primary">About</a>
+            </div>
         </div>
-        <div class="project-card">
-            <h2>Project 1: SPC Outlook & Local Storm Reports Map</h2>
-            <p>Using the ArcGIS API, I have created a very user-friendly map of the most recent SPC Day 1 Convective Outlook as well as all the Local Storm Reports within the last 24 hours. What makes this page even cooler is the users ability to add their own report directly on the page.</p>
-            <a href="spc.html" target="_blank">View Project</a>
+        <div class="card project-card">
+            <div class="card-body">
+                <h2 class="card-title">Project 1: SPC Outlook & Local Storm Reports Map</h2>
+                <p class="card-text">Using the ArcGIS API, I have created a very user-friendly map of the most recent SPC Day 1 Convective Outlook as well as all the Local Storm Reports within the last 24 hours. What makes this page even cooler is the users ability to add their own report directly on the page.</p>
+                <a href="spc.html" target="_blank" class="btn btn-primary">View Project</a>
+            </div>
         </div>
-        <div class="project-card">
-            <h2>Project 2: Weather Balloon Radiosonde Tracking</h2>
-            <p>Using simple software-defined radios (SDRs), I am able to track the launch of weather balloons from all over Florida. With one receiver in the Orlando area and multiple in Gainesville, I have a large footprint of Florida within reach of my hand-built antennas.</p>
-            <a href="radiosonde.html">View Project</a>
+        <div class="card project-card">
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    <img src="profilepic.jpg" class="about-me-img" alt="Your Picture">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h2 class="card-title">About Me, Michael Self</h2>
+                        <p class="card-text">This page gives a little insight into who I am and why I do what I do.</p>
+                        <a href="aboutme.html" target="_blank" class="btn btn-primary">About</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card project-card">
+            <div class="card-body">
+                <h2 class="card-title">Project 2: Weather Balloon Radiosonde Tracking</h2>
+                <p class="card-text">Using simple software-defined radios (SDRs), I am able to track the launch of weather balloons from all over Florida. With one receiver in the Orlando area and multiple in Gainesville, I have a large footprint of Florida within reach of my hand-built antennas.</p>
+                <a href="radiosonde.html" class="btn btn-primary">View Project</a>
+            </div>
         </div>
         <!-- Add more project cards as needed -->
     </div>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
