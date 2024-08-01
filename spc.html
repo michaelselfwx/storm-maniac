@@ -370,7 +370,24 @@
                     return response.json();
                 })
                 .then(function(data) {
-                    // Data for the new hour is available, proceed as normal
+                    // Ensure valid data is available
+                    if (data.features && data.features[0] && data.features[0].properties && data.features[0].properties.VALID && data.features[0].properties.EXPIRE) {
+                        // Extract the VALID and EXPIRE times
+                        var validTime = data.features[0].properties.VALID;
+                        var expireTime = data.features[0].properties.EXPIRE;
+
+                        // Format the dates for display
+                        var validFormatted = validTime.substring(4,6) + "/" + validTime.substring(6,8) + "/" + validTime.substring(0,4) + " " + validTime.substring(8,10) + validTime.substring(10,12) + "z";
+                        var expireFormatted = expireTime.substring(4,6) + "/" + expireTime.substring(6,8) + "/" + expireTime.substring(0,4) + " " + expireTime.substring(8,10) + expireTime.substring(10,12) + "z";
+
+                        // Update the dateDiv1 with the valid and expire times
+                        var dateDiv1 = document.getElementById('dateDiv1');
+                        dateDiv1.textContent = 'Day 1 Convective Outlook Valid: ' + validFormatted + ' - ' + expireFormatted;
+                    } else {
+                        console.error('Data does not have VALID and EXPIRE properties:', data);
+                    }
+
+                    // Now create the GeoJSON layer
                     var geojsonLayer = createGeoJSONLayer(urlData, data);
 
                     // Watch the visible property of the layer
@@ -381,29 +398,7 @@
                     });
                 })
                 .catch(function(error) {
-                    if (error.message.startsWith("HTTP error")) {
-                        // Handle HTTP errors here
-                        console.log('HTTP error occurred:', error.message);
-                    // Data for the new hour is not available, use the previous hour
-                    var previous = getPreviousHour(closestHour, date);
-                    url = getUrl(previous.hour, previous.date);
-                    fetch(url.url)
-                        .then(function(response) {
-                            if (!response.ok) {
-                                throw new Error('Network response was not ok');
-                            }
-                            return response.json();
-                        })
-                        .then(function(data) {
-                            createGeoJSONLayer(url, data);
-                        })
-                        .catch(function(error) {
-                            console.error('Error fetching data:', error);
-                        });
-
-                    } else {
-                        console.error('Some other error detected:', error);
-                    }
+                    console.error('Error fetching data:', error);
                 });
 
             
