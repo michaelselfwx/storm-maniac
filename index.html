@@ -12,34 +12,49 @@
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             text-align: center;
+            padding: 10px;
         }
         header {
             background-color: #007bff;
             color: #fff;
-            padding: 20px 0;
+            padding: 10px 0;
         }
         .container {
             max-width: 80%;
             margin: auto;
-            padding: 20px;
+            padding: 10px;
         }
         .project-card {
             background-color: #fff;
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            padding: 20px;
-            margin-bottom: 20px;
+            padding: 10px;
+            margin-bottom: 10px;
             text-align: left;
         }
         .project-card h2 {
             margin-top: 0;
+            font-size: 1.23rem;
         }
         .about-me-img {
             max-width: 100%;
             height: auto;
-            max-height: 200px; /* Set a maximum height to control the size */
+            max-height: 150px; /* Set a maximum height to control the size */
             display: block;
             margin: auto;
+        }
+        h1 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 1000; /* Optional: to make the font bold */
+            font-size: 1.5rem; /* Reduced font size */
+        }
+        @media (max-width: 768px) {
+            .project-card h2 {
+                font-size: 1rem;
+            }
+            h1 {
+                font-size: 1.25rem;
+            }
         }
     </style>
 </head>
