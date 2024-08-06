@@ -1220,21 +1220,6 @@
                 // Add Expand widget to the view
                 view.ui.add(layerListExpand, "top-right");
 
-            // Add a legend to the view
-            var legend = new Legend({
-                view: view,
-                container: document.createElement("div"),
-                basemapLegendVisible: true,
-                respectLayerVisibility: false,
-                layerInfos: [
-                    {
-                        layer: userStormReports,
-                        title: "Storm Report Icons"
-                    }
-                ]
-            });
-            legend.container.classList.add("small-legend");
-
             // Wrap Legend in Expand widget
             var legendExpand = new Expand({
                 view: view,
