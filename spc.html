@@ -337,18 +337,6 @@
                 // Add Expand widget to the view
                 view.ui.add(legendExpand, "bottom-left");
 
-                // Hide specific labels in the legend
-                view.whenLayerView(userStormReports).then(function() {
-                    setTimeout(function() {
-                        var legendItems = document.querySelectorAll('.esri-legend__layer-cell--info');
-                        legendItems.forEach(function(item) {
-                            if (item.innerText.includes("LABEL2") || item.innerText.includes("TYPETEXT")) {
-                                item.style.display = 'none';
-                            }
-                        });
-                    }, 1000); // Delay to ensure legend is rendered
-                });
-
                 // Return the created layer
                 return geojsonLayer;
             }
