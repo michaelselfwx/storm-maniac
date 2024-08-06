@@ -326,6 +326,17 @@
                 });
                 legend.container.classList.add("small-legend");
 
+                // Wrap Legend in Expand widget
+                var legendExpand = new Expand({
+                    view: view,
+                    content: legend,
+                    expandIconClass: "esri-icon-legend", // Optional, defaults to "esri-icon-expand"
+                    expandTooltip: "Legend"
+                });
+
+                // Add Expand widget to the view
+                view.ui.add(legendExpand, "bottom-left");
+
                 // Return the created layer
                 return geojsonLayer;
             }
@@ -1219,17 +1230,6 @@
 
                 // Add Expand widget to the view
                 view.ui.add(layerListExpand, "top-right");
-
-            // Wrap Legend in Expand widget
-            var legendExpand = new Expand({
-                view: view,
-                content: legend,
-                expandIconClass: "esri-icon-legend", // Optional, defaults to "esri-icon-expand"
-                expandTooltip: "Legend"
-            });
-
-            // Add Expand widget to the view
-            view.ui.add(legendExpand, "bottom-left");
 
             // Assume layer1, layer2, layer3 are your GeoJSON layers for different days
 
