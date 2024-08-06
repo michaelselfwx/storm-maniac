@@ -106,8 +106,9 @@
             "esri/widgets/LayerList",
             "esri/widgets/Editor",
             "esri/Graphic",
-            "esri/layers/FeatureLayer"
-        ], function (esriConfig, Map, MapView, GeoJSONLayer, Legend, LayerList, Editor, Graphic, FeatureLayer) {
+            "esri/layers/FeatureLayer",
+            "esri/widgets/Expand"
+        ], function (esriConfig, Map, MapView, GeoJSONLayer, Legend, LayerList, Editor, Graphic, FeatureLayer, Expand) {
             // Set the API key
             esriConfig.apiKey = "AAPKfb3b968ef66d4c848e795b3dd01897e8uTic-7qcXbjlpUVMGReQlWKWAjnWq5pH5r7mLxpcFbX1tfR5Y4bLBPhLOwFOm7NL";
 
@@ -1209,6 +1210,17 @@
             // Add Editor widget to the view
             editor.container.classList.add("editor-widget");
             view.ui.add(editor, "bottom-right");
+
+            // Wrap LayerList in Expand widget
+            var layerListExpand = new Expand({
+                    view: view,
+                    content: layerList,
+                    expandIconClass: "esri-icon-layer-list", // Optional, defaults to "esri-icon-expand"
+                    expandTooltip: "Layer List"
+                });
+
+                // Add Expand widget to the view
+                view.ui.add(layerListExpand, "top-right");
 
             // Assume layer1, layer2, layer3 are your GeoJSON layers for different days
 
