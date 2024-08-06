@@ -992,25 +992,6 @@
                 }
             });
 
-            // Assume layer1, layer2, layer3 are your GeoJSON layers for different days
-
-            geojsonLayer.watch("visible", function(visible) {
-                if (visible) {
-                    updateDateDiv(geojsonLayer);
-                }
-            });
-
-            geojsonLayer2.watch("visible", function(visible) {
-                if (visible) {
-                    updateDateDiv(geojsonLayer2);
-                }
-            });
-
-            geojsonLayer3.watch("visible", function(visible) {
-                if (visible) {
-                    updateDateDiv(geojsonLayer3);
-                }
-            });
 
             stormreportsJson.popupTemplate = {
                 title: "{TYPETEXT}",
@@ -1229,6 +1210,25 @@
             editor.container.classList.add("editor-widget");
             view.ui.add(editor, "bottom-right");
 
+            // Assume layer1, layer2, layer3 are your GeoJSON layers for different days
+
+            geojsonLayer.watch("visible", function(visible) {
+                if (visible) {
+                    updateDateDiv(geojsonLayer);
+                }
+            });
+
+            geojsonLayer2.watch("visible", function(visible) {
+                if (visible) {
+                    updateDateDiv(geojsonLayer2);
+                }
+            });
+
+            geojsonLayer3.watch("visible", function(visible) {
+                if (visible) {
+                    updateDateDiv(geojsonLayer3);
+                }
+            });
 
         }   
 
