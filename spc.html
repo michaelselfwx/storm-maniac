@@ -1220,6 +1220,17 @@
             editor.container.classList.add("editor-widget");
             view.ui.add(editor, "bottom-right");
 
+            // Wrap Editor in Expand widget
+            var editorExpand = new Expand({
+                    view: view,
+                    content: editor,
+                    expandIconClass: "esri-icon-editor", // Optional, defaults to "esri-icon-expand"
+                    expandTooltip: "Editor"
+                });
+
+                // Add Expand widget to the view
+                view.ui.add(editorExpand, "bottom-right");
+
             // Wrap LayerList in Expand widget
             var layerListExpand = new Expand({
                     view: view,
