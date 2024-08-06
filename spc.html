@@ -1223,26 +1223,29 @@
 
             // Add a legend to the view
             var legend = new Legend({
-                    view: view,
-                    container: document.createElement("div"),
-                    basemapLegendVisible: true,
-                    respectLayerVisibility: false,
-                    layerInfos: [
-                        {
-                            layer: userStormReports,
-                            title: "Storm Report Icons"
-                        }
-                    ]
-                });
-                legend.container.classList.add("small-legend");
+                view: view,
+                container: document.createElement("div"),
+                basemapLegendVisible: true,
+                respectLayerVisibility: false,
+                layerInfos: [
+                    {
+                        layer: userStormReports,
+                        title: "Storm Report Icons"
+                    }
+                ]
+            });
+            legend.container.classList.add("small-legend");
 
-                // Wrap Legend in Expand widget
-                var legendExpand = new Expand({
-                    view: view,
-                    content: legend,
-                    expandIconClass: "esri-icon-legend", // Optional, defaults to "esri-icon-expand"
-                    expandTooltip: "Legend"
-                });
+            // Wrap Legend in Expand widget
+            var legendExpand = new Expand({
+                view: view,
+                content: legend,
+                expandIconClass: "esri-icon-legend", // Optional, defaults to "esri-icon-expand"
+                expandTooltip: "Legend"
+            });
+
+            // Add Expand widget to the view
+            view.ui.add(legendExpand, "bottom-left");
 
             // Assume layer1, layer2, layer3 are your GeoJSON layers for different days
 
