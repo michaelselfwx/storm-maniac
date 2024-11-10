@@ -165,7 +165,7 @@
                 var minutes = Math.round((hour % 1) * 60);
                 hour = ('0' + Math.floor(hour)).slice(-2);
                 minutes = ('0' + minutes).slice(-2);
-                var formattedDateTime = date.year + date.month + date.day + '_' + hour + minutes;
+                var formattedDateTime = date.year + ('0' + date.month).slice(-2) + date.day + '_' + hour + minutes;
                 var url = "https://apartment-optiplex.tail37d1f9.ts.net/proxy?url=https://www.spc.noaa.gov/products/outlook/archive/2024/day1otlk_" + formattedDateTime + "_cat.lyr.geojson";
                 return { url: url, formattedDateTime: formattedDateTime}
             }
