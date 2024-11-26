@@ -52,14 +52,14 @@
             document.getElementById(iframeId).style.display = 'none';
             document.getElementById(errorMessageId).style.display = 'block';
         }
-
-        window.addEventListener('error', function(e) {
-            if (e.target.tagName === 'IFRAME') {
-                const iframeId = e.target.id;
-                const errorMessageId = iframeId === 'W4DFU-iframe' ? 'error-message1' : 'error-message2';
+        function setIframeTimeout(iframeId, errorMessageId, timeout) {
+            window[iframeId + 'Timeout'] = setTimeout(function() {
                 iframeError(iframeId, errorMessageId);
-            }
-        }, true);
+            }, timeout); 
+        }
+
+        setIframeTimeout('W4DFU-iframe', 'error-message1', 10000); // 10 seconds timeout
+        setIframeTimeout('KN4EOL-11-iframe', 'error-message2', 10000); // 10 seconds timeout
     </script>
 </body>
 </html>
