@@ -61,6 +61,15 @@
 
         setIframeTimeout('W4DFU-iframe', 'error-message1', 10000); // 10 seconds timeout
         setIframeTimeout('KN4EOL-11-iframe', 'error-message2', 10000); // 10 seconds timeout
+        
+        // Add event listeners to handle iframe errors
+        document.getElementById('W4DFU-iframe').addEventListener('error', function() {
+            iframeError('W4DFU-iframe', 'error-message1');
+        });
+
+        document.getElementById('KN4EOL-11-iframe').addEventListener('error', function() {
+            iframeError('KN4EOL-11-iframe', 'error-message2');
+        });
     </script>
 </body>
 </html>
