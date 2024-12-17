@@ -1,27 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="stormmaniac_favicon.png">
-    <title>My CV</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My CV | Storm Maniac</title>
     <style>
-        html, body {
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
             margin: 0;
             padding: 0;
-            height: 100%;
-            width: 100%;
-            overflow: hidden; /* Ensures no scrollbars appear */
         }
-        embed {
-            display: block;
+        header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 0;
+        }
+        iframe {
             width: 100%;
-            height: 100%;
+            height: 95vh;
             border: none;
         }
     </style>
 </head>
 <body>
-    <embed src="Self_CV_Nov_2024.pdf" type="application/pdf">
+    <header>
+        <h1>My CV</h1>
+    </header>
+    <iframe src="Self_CV_Nov_2024.pdf" title="Michael Self's CV"></iframe>
 </body>
 </html>
