@@ -1,34 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/x-icon" href="stormmaniac_favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My CV | Storm Maniac</title>
+    <link rel="icon" type="image/x-icon" href="stormmaniac_favicon.png">
+    <title>My CV</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            text-align: center;
+        html, body {
             margin: 0;
             padding: 0;
-        }
-        header {
-            background-color: #007bff;
-            color: #fff;
-            padding: 10px 0;
-        }
-        iframe {
+            height: 100%;
             width: 100%;
-            height: 95vh;
+            overflow: hidden; /* Ensures no scrollbars appear */
+        }
+        embed {
+            display: block;
+            width: 100%;
+            height: 100%;
             border: none;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>My CV</h1>
-    </header>
-    <embed src="Self_CV_Nov_2024.pdf" type="application/pdf" width="100%" height="100%">
+    <embed src="Self_CV_Nov_2024.pdf" type="application/pdf">
 </body>
 </html>
