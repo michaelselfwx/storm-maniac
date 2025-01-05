@@ -54,6 +54,21 @@
             bottom: 0;
             right: 0;
         }
+        .esri-expand {
+            max-width: 300px; /* Set a maximum width for the expand widget */
+        }
+        .esri-layer-list {
+            max-height: 400px; /* Set a maximum height for the layer list */
+            overflow-y: auto;  /* Enable vertical scrolling if content exceeds max height */
+        }
+        @media screen and (max-width: 768px) {
+            .esri-expand {
+                max-width: 100%; /* Full width on mobile */
+            }
+            .esri-layer-list {
+                max-height: 200px; /* Smaller height on mobile */
+            }
+        }
         /* For mobile devices */
         @media screen and (max-width: 768px) {
             #dateDiv1 {
