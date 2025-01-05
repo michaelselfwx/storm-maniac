@@ -1236,14 +1236,15 @@
 
             // Wrap LayerList in Expand widget
             var layerListExpand = new Expand({
-                    view: view,
-                    content: layerList,
-                    expandIconClass: "esri-icon-layer-list", // Optional, defaults to "esri-icon-expand"
-                    expandTooltip: "Layer List"
-                });
+                view: view,
+                content: layerList,
+                expandIconClass: "esri-icon-layer-list", // Optional, defaults to "esri-icon-expand"
+                expandTooltip: "Layer List",
+                expanded: window.innerWidth > 768 // Start expanded if screen width is greater than 768px
+            });
 
-                // Add Expand widget to the view
-                view.ui.add(layerListExpand, "top-right");
+            // Add Expand widget to the view
+            view.ui.add(layerListExpand, "top-right");
 
             // Assume layer1, layer2, layer3 are your GeoJSON layers for different days
 
