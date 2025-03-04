@@ -87,6 +87,7 @@
     <!-- ArcGIS API's CSS file and JS library -->
     <link rel="stylesheet" href="https://js.arcgis.com/4.25/esri/themes/light/main.css">
     <script src="https://js.arcgis.com/4.25/"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Turf.js/6.5.0/turf.min.js"></script>
 
 </head>
 <body>
@@ -241,6 +242,18 @@
                             filteredFeatures.push(feature);
                             addedCategories.add(category);
                             break;
+                        }
+                    }
+                }
+
+                // Subtract higher risk areas from lower risk areas
+                for (var i = 0; i < filteredFeatures.length; i++) {
+                    for (var j = i + 1; j < filteredFeatures.length; j++) {
+                        var higherRiskFeature = filteredFeatures[i];
+                        var lowerRiskFeature = filteredFeatures[j];
+                        var difference = turf.difference(lowerRiskFeature, higherRiskFeature);
+                        if (difference) {
+                            filteredFeatures[j] = difference;
                         }
                     }
                 }
