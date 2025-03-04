@@ -222,11 +222,34 @@
 
             // Define a function to create a GeoJSON layer
             function createGeoJSONLayer(url, data) {
-                // Remove any existing "Day 3 Convective Outlook" layer
+                // Remove any existing "Day 1 Convective Outlook" layer
                 var existingLayer = map.findLayerById("Day1ConvectiveOutlook");
                 if (existingLayer) {
                     map.remove(existingLayer);
                 }
+
+                // Filter the data to only include the highest risk category
+                var highestRiskCategories = ["High Risk", "Moderate Risk", "Enhanced Risk", "Slight Risk", "Marginal Risk", "General Thunderstorms Risk"];
+                var filteredFeatures = [];
+                var addedCategories = new Set();
+
+                for (var i = 0; i < highestRiskCategories.length; i++) {
+                    var category = highestRiskCategories[i];
+                    for (var j = 0; j < data.features.length; j++) {
+                        var feature = data.features[j];
+                        if (feature.properties.LABEL2 === category && !addedCategories.has(category)) {
+                            filteredFeatures.push(feature);
+                            addedCategories.add(category);
+                            break;
+                        }
+                    }
+                }
+
+                var filteredData = {
+                    type: "FeatureCollection",
+                    features: filteredFeatures
+                };
+
                 var renderer = {
                     type: "unique-value",
                     field: "LABEL2",
@@ -283,7 +306,7 @@
                 };
 
                 geojsonLayer = new GeoJSONLayer({
-                    url: url.url,
+                    source: filteredData.features,
                     title: "Day 1 Convective Outlook",
                     id: "Day1ConvectiveOutlook", // Set the ID of the layer
                     visible: true,
