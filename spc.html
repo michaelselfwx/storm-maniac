@@ -229,52 +229,6 @@
                     map.remove(existingLayer);
                 }
 
-                // Filter the data to only include the highest risk category
-                var highestRiskCategories = ["High Risk", "Moderate Risk", "Enhanced Risk", "Slight Risk", "Marginal Risk", "General Thunderstorms Risk"];
-                var filteredFeatures = [];
-                var addedCategories = new Set();
-
-                for (var i = 0; i < highestRiskCategories.length; i++) {
-                    var category = highestRiskCategories[i];
-                    for (var j = 0; j < data.features.length; j++) {
-                        var feature = data.features[j];
-                        if (feature.properties.LABEL2 === category && !addedCategories.has(category)) {
-                            filteredFeatures.push(feature);
-                            addedCategories.add(category);
-                            break;
-                        }
-                    }
-                }
-
-                // Subtract higher risk areas from lower risk areas
-                for (var i = 0; i < filteredFeatures.length; i++) {
-                    for (var j = i + 1; j < filteredFeatures.length; j++) {
-                        var higherRiskFeature = filteredFeatures[i];
-                        var lowerRiskFeature = filteredFeatures[j];
-                        var difference = turf.difference(lowerRiskFeature, higherRiskFeature);
-                        if (difference) {
-                            filteredFeatures[j] = difference;
-                        } else {
-                            filteredFeatures[j] = null; // Remove the feature if it is completely overlapped
-                        }
-                    }
-                }
-
-                // Remove null features
-                filteredFeatures = filteredFeatures.filter(function(feature) {
-                    return feature !== null;
-                });
-
-
-                var filteredData = {
-                    type: "FeatureCollection",
-                    features: filteredFeatures
-                };
-
-                // Create a Blob from the filtered data
-                var blob = new Blob([JSON.stringify(filteredData)], { type: "application/json" });
-                var blobUrl = URL.createObjectURL(blob);
-
                 var renderer = {
                     type: "unique-value",
                     field: "LABEL2",
@@ -331,7 +285,7 @@
                 };
 
                 geojsonLayer = new GeoJSONLayer({
-                    url: blobUrl,
+                    url: url.url,
                     title: "Day 1 Convective Outlook",
                     id: "Day1ConvectiveOutlook", // Set the ID of the layer
                     visible: true,
