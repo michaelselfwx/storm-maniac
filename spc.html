@@ -250,6 +250,10 @@
                     features: filteredFeatures
                 };
 
+                // Create a Blob from the filtered data
+                var blob = new Blob([JSON.stringify(filteredData)], { type: "application/json" });
+                var blobUrl = URL.createObjectURL(blob);
+
                 var renderer = {
                     type: "unique-value",
                     field: "LABEL2",
@@ -306,7 +310,7 @@
                 };
 
                 geojsonLayer = new GeoJSONLayer({
-                    source: filteredData,
+                    url: blobUrl,
                     title: "Day 1 Convective Outlook",
                     id: "Day1ConvectiveOutlook", // Set the ID of the layer
                     visible: true,
