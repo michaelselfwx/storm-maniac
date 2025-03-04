@@ -254,9 +254,17 @@
                         var difference = turf.difference(lowerRiskFeature, higherRiskFeature);
                         if (difference) {
                             filteredFeatures[j] = difference;
+                        } else {
+                            filteredFeatures[j] = null; // Remove the feature if it is completely overlapped
                         }
                     }
                 }
+
+                // Remove null features
+                filteredFeatures = filteredFeatures.filter(function(feature) {
+                    return feature !== null;
+                });
+
 
                 var filteredData = {
                     type: "FeatureCollection",
