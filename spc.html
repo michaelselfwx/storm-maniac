@@ -87,7 +87,7 @@
     <!-- ArcGIS API's CSS file and JS library -->
     <link rel="stylesheet" href="https://js.arcgis.com/4.25/esri/themes/light/main.css">
     <script src="https://js.arcgis.com/4.25/"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+
 </head>
 <body>
 
@@ -107,7 +107,8 @@
             "esri/widgets/Editor",
             "esri/Graphic",
             "esri/layers/FeatureLayer",
-            "esri/widgets/Expand"
+            "esri/widgets/Expand",
+            "https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"
         ], function (esriConfig, Map, MapView, GeoJSONLayer, Legend, LayerList, Editor, Graphic, FeatureLayer, Expand) {
             // Set the API key
             esriConfig.apiKey = "AAPKfb3b968ef66d4c848e795b3dd01897e8uTic-7qcXbjlpUVMGReQlWKWAjnWq5pH5r7mLxpcFbX1tfR5Y4bLBPhLOwFOm7NL";
