@@ -87,7 +87,6 @@
     <!-- ArcGIS API's CSS file and JS library -->
     <link rel="stylesheet" href="https://js.arcgis.com/4.25/esri/themes/light/main.css">
     <script src="https://js.arcgis.com/4.25/"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
 </head>
 <body>
 
@@ -228,6 +227,9 @@
                 if (existingLayer) {
                     map.remove(existingLayer);
                 }
+
+                console.log(turf); // Check if it's available
+                const turfInstance = turf.default || turf; // Fix reference issue
 
                 // Define the severity order
                 var severityOrder = ["High Risk", "Moderate Risk", "Enhanced Risk", "Slight Risk", "Marginal Risk", "General Thunderstorms Risk"];
