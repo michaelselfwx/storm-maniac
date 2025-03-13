@@ -112,6 +112,8 @@
             // Set the API key
             esriConfig.apiKey = "AAPKfb3b968ef66d4c848e795b3dd01897e8uTic-7qcXbjlpUVMGReQlWKWAjnWq5pH5r7mLxpcFbX1tfR5Y4bLBPhLOwFOm7NL";
 
+            console.log("Turf loaded:", turf);
+            
             // Make sure the page refreshes when the user is inactive
             var timeout;
             var delay = 5 * 60 * 1000; // 5 minutes
@@ -227,9 +229,6 @@
                 if (existingLayer) {
                     map.remove(existingLayer);
                 }
-
-                console.log(turf); // Check if it's available
-                const turfInstance = turf.default || turf; // Fix reference issue
 
                 // Define the severity order
                 var severityOrder = ["High Risk", "Moderate Risk", "Enhanced Risk", "Slight Risk", "Marginal Risk", "General Thunderstorms Risk"];
