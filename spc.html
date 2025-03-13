@@ -87,7 +87,7 @@
     <!-- ArcGIS API's CSS file and JS library -->
     <link rel="stylesheet" href="https://js.arcgis.com/4.25/esri/themes/light/main.css">
     <script src="https://js.arcgis.com/4.25/"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
 </head>
 <body>
 
@@ -226,6 +226,19 @@
                 var existingLayer = map.findLayerById("Day1ConvectiveOutlook");
                 if (existingLayer) {
                     map.remove(existingLayer);
+                }
+
+                // Define the severity order
+                var severityOrder = ["High Risk", "Moderate Risk", "Enhanced Risk", "Slight Risk", "Marginal Risk", "General Thunderstorms Risk"];
+
+                // Sort the features by severity
+                data.features.sort((a, b) => severityOrder.indexOf(a.properties.LABEL2) - severityOrder.indexOf(b.properties.LABEL2));
+
+                // Clip the polygons
+                for (let i = 0; i < data.features.length; i++) {
+                    for (let j = i + 1; j < data.features.length; j++) {
+                        data.features[j] = turf.difference(data.features[j], data.features[i]);
+                    }
                 }
 
                 var renderer = {
