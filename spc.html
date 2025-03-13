@@ -107,12 +107,10 @@
             "esri/Graphic",
             "esri/layers/FeatureLayer",
             "esri/widgets/Expand",
-            "https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"
+            "https://cdn.jsdelivr.net/npm/@turf/turf@7/turf.min.js"
         ], function (esriConfig, Map, MapView, GeoJSONLayer, Legend, LayerList, Editor, Graphic, FeatureLayer, Expand) {
             // Set the API key
             esriConfig.apiKey = "AAPKfb3b968ef66d4c848e795b3dd01897e8uTic-7qcXbjlpUVMGReQlWKWAjnWq5pH5r7mLxpcFbX1tfR5Y4bLBPhLOwFOm7NL";
-
-            console.log("Turf loaded:", turf);
             
             // Make sure the page refreshes when the user is inactive
             var timeout;
