@@ -241,9 +241,12 @@
                             try {
                                 // Ensure both features are valid polygons
                                 if (data.features[i].geometry.type === "Polygon" && data.features[j].geometry.type === "Polygon") {
+                                    console.log(`Clipping feature ${j} with feature ${i}`);
                                     let difference = turf.difference(data.features[j], data.features[i]);
                                     if (difference) {
                                         data.features[j] = difference;
+                                    } else {
+                                        console.warn(`No difference found for feature ${j} with feature ${i}`);
                                     }
                                 }
                             } catch (error) {
