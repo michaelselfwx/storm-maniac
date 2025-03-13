@@ -237,9 +237,19 @@
                 // Clip the polygons
                 for (let i = 0; i < data.features.length; i++) {
                     for (let j = i + 1; j < data.features.length; j++) {
-                        data.features[j] = turf.difference(data.features[j], data.features[i]);
+                        if (data.features[i] && data.features[j]) {
+                            try {
+                                let difference = turf.difference(data.features[j], data.features[i]);
+                                if (difference) {
+                                    data.features[j] = difference;
+                                }
+                            } catch (error) {
+                                console.error('Error performing turf.difference:', error);
+                            }
+                        }
                     }
                 }
+
 
                 var renderer = {
                     type: "unique-value",
