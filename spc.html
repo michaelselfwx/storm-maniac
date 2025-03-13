@@ -239,9 +239,12 @@
                     for (let j = i + 1; j < data.features.length; j++) {
                         if (data.features[i] && data.features[j]) {
                             try {
-                                let difference = turf.difference(data.features[j], data.features[i]);
-                                if (difference) {
-                                    data.features[j] = difference;
+                                // Ensure both features are valid polygons
+                                if (data.features[i].geometry.type === "Polygon" && data.features[j].geometry.type === "Polygon") {
+                                    let difference = turf.difference(data.features[j], data.features[i]);
+                                    if (difference) {
+                                        data.features[j] = difference;
+                                    }
                                 }
                             } catch (error) {
                                 console.error('Error performing turf.difference:', error);
