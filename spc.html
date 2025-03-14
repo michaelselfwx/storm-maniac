@@ -497,22 +497,44 @@
                 // Sort the features by severity
                 data.features.sort((a, b) => severityOrder.indexOf(a.properties.LABEL2) - severityOrder.indexOf(b.properties.LABEL2));
 
+                // Function to convert MultiPolygon to Polygon
+                function convertMultiPolygonToPolygon(multiPolygon) {
+                    if (multiPolygon.geometry.type === "MultiPolygon") {
+                        return multiPolygon.geometry.coordinates.map(coords => {
+                            return {
+                                type: "Feature",
+                                geometry: {
+                                    type: "Polygon",
+                                    coordinates: coords
+                                },
+                                properties: multiPolygon.properties
+                            };
+                        });
+                    }
+                    return [multiPolygon];
+                }
+
                 // Clip the polygons
                 for (let i = 0; i < data.features.length; i++) {
                     for (let j = i + 1; j < data.features.length; j++) {
-                        console.log(data.features);
                         if (data.features[i] && data.features[j]) {
                             try {
-                                // Ensure both features are valid polygons
-                                if (data.features[i].geometry.type === "MultiPolygon" && data.features[j].geometry.type === "MultiPolygon") {
-                                    console.log(`Clipping feature ${j} with feature ${i}`);
-                                    let difference = turf.difference(data.features[j], data.features[i]);
-                                    if (difference) {
-                                        data.features[j] = difference;
-                                    } else {
-                                        console.warn(`No difference found for feature ${j} with feature ${i}`);
-                                    }
-                                }
+                                // Convert MultiPolygon to Polygon
+                                let polygonsI = convertMultiPolygonToPolygon(data.features[i]);
+                                let polygonsJ = convertMultiPolygonToPolygon(data.features[j]);
+
+                                // Perform difference operation for each pair of polygons
+                                polygonsJ.forEach((polygonJ, index) => {
+                                    polygonsI.forEach(polygonI => {
+                                        let difference = turf.difference(polygonJ, polygonI);
+                                        if (difference) {
+                                            polygonsJ[index] = difference;
+                                        }
+                                    });
+                                });
+
+                                // Update the feature with the new polygons
+                                data.features[j].geometry.coordinates = polygonsJ.map(polygon => polygon.geometry.coordinates);
                             } catch (error) {
                                 console.error('Error performing turf.difference:', error);
                             }
