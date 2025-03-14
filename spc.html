@@ -497,21 +497,18 @@
                 // Sort the features by severity
                 data.features.sort((a, b) => severityOrder.indexOf(a.properties.LABEL2) - severityOrder.indexOf(b.properties.LABEL2));
 
-                // Function to convert MultiPolygon to Polygon
-                function convertMultiPolygonToPolygon(multiPolygon) {
-                    if (multiPolygon.geometry.type === "MultiPolygon") {
-                        return multiPolygon.geometry.coordinates.map(coords => {
-                            return {
-                                type: "Feature",
-                                geometry: {
-                                    type: "Polygon",
-                                    coordinates: coords
-                                },
-                                properties: multiPolygon.properties
-                            };
-                        });
+                function convertMultiPolygonToPolygon(feature) {
+                    if (feature.geometry.type === "MultiPolygon") {
+                        return feature.geometry.coordinates.map(coords => ({
+                            type: "Feature",
+                            geometry: {
+                                type: "Polygon",
+                                coordinates: coords
+                            },
+                            properties: feature.properties
+                        }));
                     }
-                    return [multiPolygon];
+                    return [feature];
                 }
 
                 // Clip the polygons
