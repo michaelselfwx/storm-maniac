@@ -490,6 +490,38 @@
                 if (existingLayer) {
                     map.remove(existingLayer);
                 }
+
+                // Define the severity order
+                var severityOrder = ["High Risk", "Moderate Risk", "Enhanced Risk", "Slight Risk", "Marginal Risk", "General Thunderstorms Risk"];
+
+                // Sort the features by severity
+                data.features.sort((a, b) => severityOrder.indexOf(a.properties.LABEL2) - severityOrder.indexOf(b.properties.LABEL2));
+
+                // Clip the polygons
+                for (let i = 0; i < data.features.length; i++) {
+                    for (let j = i + 1; j < data.features.length; j++) {
+                        console.log(data.features);
+                        console.log(data.features[i]);
+                        console.log(data.features[j]);
+                        if (data.features[i] && data.features[j]) {
+                            try {
+                                // Ensure both features are valid polygons
+                                if (data.features[i].geometry.type === "Polygon" && data.features[j].geometry.type === "Polygon") {
+                                    console.log(`Clipping feature ${j} with feature ${i}`);
+                                    let difference = turf.difference(data.features[j], data.features[i]);
+                                    if (difference) {
+                                        data.features[j] = difference;
+                                    } else {
+                                        console.warn(`No difference found for feature ${j} with feature ${i}`);
+                                    }
+                                }
+                            } catch (error) {
+                                console.error('Error performing turf.difference:', error);
+                            }
+                        }
+                    }
+                }
+                
                 var renderer = {
                     type: "unique-value",
                     field: "LABEL2",
