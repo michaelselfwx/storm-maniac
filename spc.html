@@ -534,6 +534,8 @@
                                             let difference = turf.difference(polygonJ, polygonI);
                                             if (difference) {
                                                 polygonsJ[index] = difference;
+                                            } else {
+                                                console.warn(`No difference found for feature ${j} with feature ${i}`);
                                             }
                                         } else {
                                             console.warn(`Invalid coordinates for feature ${i} or feature ${j}`);
