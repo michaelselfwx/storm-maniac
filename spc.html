@@ -506,7 +506,7 @@
                                 // Ensure both features are valid polygons
                                 if (data.features[i].geometry.type === "MultiPolygon" && data.features[j].geometry.type === "MultiPolygon") {
                                     console.log(`Clipping feature ${j} with feature ${i}`);
-                                    let difference = turf.difference(data.features[j], data.features[i]);
+                                    let difference = turf.difference(data.features.geometry.coordinates[j], data.features.geometry.coordinates[i]);
                                     if (difference) {
                                         data.features[j] = difference;
                                     } else {
