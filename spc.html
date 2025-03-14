@@ -501,12 +501,10 @@
                 for (let i = 0; i < data.features.length; i++) {
                     for (let j = i + 1; j < data.features.length; j++) {
                         console.log(data.features);
-                        console.log(data.features[i]);
-                        console.log(data.features[j]);
                         if (data.features[i] && data.features[j]) {
                             try {
                                 // Ensure both features are valid polygons
-                                if (data.features[i].geometry.type === "Polygon" && data.features[j].geometry.type === "Polygon") {
+                                if (data.features[i].geometry.type === "MultiPolygon" && data.features[j].geometry.type === "MultiPolygon") {
                                     console.log(`Clipping feature ${j} with feature ${i}`);
                                     let difference = turf.difference(data.features[j], data.features[i]);
                                     if (difference) {
@@ -521,7 +519,7 @@
                         }
                     }
                 }
-                
+
                 var renderer = {
                     type: "unique-value",
                     field: "LABEL2",
