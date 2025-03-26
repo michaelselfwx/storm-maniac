@@ -148,7 +148,34 @@
 
             // Add LayerList to the view
             var layerList = new LayerList({
-                view: view
+                view: view,
+                listItemCreatedFunction: function(event) {
+                    // Only include specific layers in this LayerList
+                    var item = event.item;
+                    if (item.layer.id !== "Day1ConvectiveOutlook" &&
+                        item.layer.id !== "Day2ConvectiveOutlook" &&
+                        item.layer.id !== "Day3ConvectiveOutlook" &&
+                        item.later.id !== "stormreportsJson" &&
+                        item.layer.id !== "userStormReports") {
+                        event.item.visible = false; // Exclude other layers
+                    }
+                }
+            });
+
+            // Add LayerList to the view for the second set of layers
+            var layerList2 = new LayerList({
+                view: view,
+                listItemCreatedFunction: function(event) {
+                    // Only include specific layers in this LayerList
+                    var item = event.item;
+                    if (item.layer.id !== "Day4ConvectiveOutlook" &&
+                        item.layer.id !== "Day5ConvectiveOutlook" &&
+                        item.layer.id !== "Day6ConvectiveOutlook" &&
+                        item.layer.id !== "Day7ConvectiveOutlook" &&
+                        item.layer.id !== "Day8ConvectiveOutlook") {
+                        event.item.visible = false; // Exclude other layers
+                    }
+                }
             });
 
             // Define geojsonLayers globally
@@ -1971,12 +1998,23 @@
                 // Add Expand widget to the view
                 view.ui.add(editorExpand, "bottom-right");
 
+
+            layerList.visibleElements = {
+                catalogLayerList: true,
+                closeButton: false,
+                collapseButton: true,
+                errors: true,
+                filter: true,
+                heading: true,
+                statusIndicators: true
+                };
+
             // Wrap LayerList in Expand widget
             var layerListExpand = new Expand({
                     view: view,
                     content: layerList,
                     expandIconClass: "esri-icon-layer-list", // Optional, defaults to "esri-icon-expand"
-                    expandTooltip: "Layer List",
+                    expandTooltip: "Day 1-3 Convective Outlooks & Storm Reports",
                     expanded: window.innerWidth > 786
                 });
 
@@ -1988,7 +2026,7 @@
                     view: view,
                     content: layerList2,
                     expandIconClass: "esri-icon-layer-list", // Optional, defaults to "esri-icon-expand"
-                    expandTooltip: "Layer List",
+                    expandTooltip: "Day 4-8 Convective Outlooks",
                     expanded: window.innerWidth > 786
                 });
 
