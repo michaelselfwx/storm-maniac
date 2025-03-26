@@ -843,6 +843,13 @@
                 });
 
 
+
+            // Add another LayerList to the view
+            var layerList2 = new LayerList({
+                view: view
+            });
+
+
             // Define the updateDateDiv function
             function updateDateDiv4(layer) {
                     fetch(urlDataDay4.url)
@@ -1975,6 +1982,18 @@
 
                 // Add Expand widget to the view
                 view.ui.add(layerListExpand, "top-right");
+
+            // Wrap LayerList in Expand widget
+            var layerListExpand2 = new Expand({
+                    view: view,
+                    content: layerList2,
+                    expandIconClass: "esri-icon-layer-list", // Optional, defaults to "esri-icon-expand"
+                    expandTooltip: "Layer List",
+                    expanded: window.innerWidth > 786
+                });
+
+                // Add Expand widget to the view
+                view.ui.add(layerListExpand2, "top-left");
 
             // Add in watch functions so the valid date/time updates correctly when a layer is shown
 
