@@ -49,6 +49,12 @@
             transform-origin: top right;
             transform: scale(1);
         }
+        /* Set max size for expanded widget */
+        .esri-expand__content {
+            max-width: 400px;   /* Max width */
+            max-height: 500px;  /* Max height */
+            overflow: auto;     /* Add scroll if content exceeds max size */
+        }
         .editor-widget {
             position: absolute;
             bottom: 0;
@@ -901,12 +907,12 @@
 
                 var geojsonLayer4 = new GeoJSONLayer({
                     url: url.url,
-                    title: "Day 4 Severe Weather Outlook",
+                    title: "Day 4 Severe Outlook",
                     id: "Day4ConvectiveOutlook", // Set the ID of the layer
                     visible: false,
                     renderer: renderer,
                     popupTemplate: {
-                        title: "Day 4 Severe Weather Outlook",
+                        title: "Day 4 Severe Outlook",
                         content: "{LABEL2}"
                     }
                 });
@@ -1054,12 +1060,12 @@
 
                 var geojsonLayer5 = new GeoJSONLayer({
                     url: url.url,
-                    title: "Day 5 Severe Weather Outlook",
+                    title: "Day 5 Severe Outlook",
                     id: "Day5ConvectiveOutlook", // Set the ID of the layer
                     visible: false,
                     renderer: renderer,
                     popupTemplate: {
-                        title: "Day 5 Severe Weather Outlook",
+                        title: "Day 5 Severe Outlook",
                         content: "{LABEL2}"
                     }
                 });
@@ -1207,12 +1213,12 @@
 
                 var geojsonLayer6 = new GeoJSONLayer({
                     url: url.url,
-                    title: "Day 6 Severe Weather Outlook",
+                    title: "Day 6 Severe Outlook",
                     id: "Day6ConvectiveOutlook", // Set the ID of the layer
                     visible: false,
                     renderer: renderer,
                     popupTemplate: {
-                        title: "Day 6 Severe Weather Outlook",
+                        title: "Day 6 Severe Outlook",
                         content: "{LABEL2}"
                     }
                 });
@@ -1360,12 +1366,12 @@
 
                 var geojsonLayer7 = new GeoJSONLayer({
                     url: url.url,
-                    title: "Day 7 Severe Weather Outlook",
+                    title: "Day 7 Severe Outlook",
                     id: "Day7ConvectiveOutlook", // Set the ID of the layer
                     visible: false,
                     renderer: renderer,
                     popupTemplate: {
-                        title: "Day 7 Severe Weather Outlook",
+                        title: "Day 7 Severe Outlook",
                         content: "{LABEL2}"
                     }
                 });
@@ -1514,12 +1520,12 @@
 
                 var geojsonLayer8 = new GeoJSONLayer({
                     url: url.url,
-                    title: "Day 8 Severe Weather Outlook",
+                    title: "Day 8 Severe Outlook",
                     id: "Day8ConvectiveOutlook", // Set the ID of the layer
                     visible: false,
                     renderer: renderer,
                     popupTemplate: {
-                        title: "Day 8 Severe Weather Outlook",
+                        title: "Day 8 Severe Outlook",
                         content: "{LABEL2}"
                     }
                 });
