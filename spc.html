@@ -445,64 +445,6 @@
                     map.remove(existingLayer);
                 }
 
-                // Define the severity order
-                var severityOrder = ["High Risk", "Moderate Risk", "Enhanced Risk", "Slight Risk", "Marginal Risk", "General Thunderstorms Risk"];
-
-                // Sort the features by severity
-                data.features.sort((a, b) => severityOrder.indexOf(a.properties.LABEL2) - severityOrder.indexOf(b.properties.LABEL2));
-
-                function convertMultiPolygonToPolygon(feature) {
-                    if (feature.geometry.type === "MultiPolygon") {
-                        return feature.geometry.coordinates.map(coords => ({
-                            type: "Feature",
-                            geometry: {
-                                type: "Polygon",
-                                coordinates: coords
-                            },
-                            properties: feature.properties
-                        }));
-                    }
-                    return [feature];
-                }
-
-                // Clip the polygons
-                for (let i = 0; i < data.features.length; i++) {
-                    for (let j = i + 1; j < data.features.length; j++) {
-                        if (data.features[i] && data.features[j]) {
-                            try {
-                                console.log(data.features[i]);
-                                console.log(data.features[j]);
-                                // Convert MultiPolygon to Polygon
-                                let polygonsI = convertMultiPolygonToPolygon(data.features[i]);
-                                let polygonsJ = convertMultiPolygonToPolygon(data.features[j]);
-
-                                console.log(polygonsI);
-                                console.log(polygonsJ);
-                                // Perform difference operation for each pair of polygons
-                                polygonsJ.forEach((polygonJ, index) => {
-                                    polygonsI.forEach(polygonI => {
-                                        if (polygonJ.geometry.coordinates.length > 0 && polygonI.geometry.coordinates.length > 0) {
-                                            let difference = turf.difference(polygonJ, polygonI);
-                                            if (difference) {
-                                                polygonsJ[index] = difference;
-                                            } else {
-                                                console.warn(`No difference found for feature ${j} with feature ${i}`);
-                                            }
-                                        } else {
-                                            console.warn(`Invalid coordinates for feature ${i} or feature ${j}`);
-                                        }
-                                    });
-                                });
-
-                                // Update the feature with the new polygons
-                                data.features[j].geometry.coordinates = polygonsJ.map(polygon => polygon.geometry.coordinates);
-                            } catch (error) {
-                                console.error('Error performing turf.difference:', error);
-                            }
-                        }
-                    }
-                }
-
                 var renderer = {
                     type: "unique-value",
                     field: "LABEL2",
@@ -575,21 +517,6 @@
 
                 // Return the created layer
                 return geojsonLayer2;
-
-
-                // // Update the date div
-                // if (data) {
-                //     var validTime = data.features[0].properties.VALID;
-                //     var expireTime = data.features[0].properties.EXPIRE;
-
-                //     var validFormatted = validTime.substring(4,6) + "/" + validTime.substring(6,8) + "/" + validTime.substring(0,4) + " " + validTime.substring(8,10) + validTime.substring(10,12) + "z";
-                //     var expireFormatted = expireTime.substring(4,6) + "/" + expireTime.substring(6,8) + "/" + expireTime.substring(0,4) + " " + expireTime.substring(8,10) + expireTime.substring(10,12) + "z";
-
-                //     var dateDiv2 = document.getElementById('dateDiv');
-                //     if (!dateDiv2.textContent) {
-                //         dateDiv2.textContent = 'Day 2 Outlook Valid: ' + validFormatted + ' - ' + expireFormatted;
-                //     }
-                // }
             };
             
             // Define a function to get the URL for a given hour and date for Day 2
@@ -598,7 +525,7 @@
                 hour = ('0' + Math.floor(hour)).slice(-2);
                 minutes = ('0' + minutes).slice(-2);
                 var formattedDateTime = date.year + date.month + date.day + '_' + hour + minutes;
-                var url = "https://apartment-optiplex.tail37d1f9.ts.net/proxy?url=https://www.spc.noaa.gov/products/outlook/archive/" + date.year + "/day2otlk_" + formattedDateTime + "_cat.lyr.geojson";
+                var url = "https://apartment-optiplex.tail37d1f9.ts.net/proxy?url=https://www.spc.noaa.gov/products/outlook/archive/" + date.year + "/day2otlk_" + formattedDateTime + "_cat.nolyr.geojson";
                 return { url: url, formattedDateTime: formattedDateTime}
             };
 
@@ -806,20 +733,6 @@
 
                 return geojsonLayer3;
 
-
-                // // Update the date div
-                // if (data) {
-                //     var validTime = data.features[0].properties.VALID;
-                //     var expireTime = data.features[0].properties.EXPIRE;
-
-                //     var validFormatted = validTime.substring(4,6) + "/" + validTime.substring(6,8) + "/" + validTime.substring(0,4) + " " + validTime.substring(8,10) + validTime.substring(10,12) + "z";
-                //     var expireFormatted = expireTime.substring(4,6) + "/" + expireTime.substring(6,8) + "/" + expireTime.substring(0,4) + " " + expireTime.substring(8,10) + expireTime.substring(10,12) + "z";
-
-                //     var dateDiv3 = document.getElementById('dateDiv');
-                //     if (!dateDiv3.textContent) {
-                //         dateDiv3.textContent = 'Day 3 Outlook Valid: ' + validFormatted + ' - ' + expireFormatted;
-                //     }
-                // }
             };
 
             
@@ -830,7 +743,7 @@
                 hour = ('0' + Math.floor(hour)).slice(-2);
                 minutes = ('0' + minutes).slice(-2);
                 var formattedDateTime = date.year + date.month + date.day + '_' + hour + minutes;
-                var url = "https://apartment-optiplex.tail37d1f9.ts.net/proxy?url=https://www.spc.noaa.gov/products/outlook/archive/" + date.year + "/day3otlk_" + formattedDateTime + "_cat.lyr.geojson";
+                var url = "https://apartment-optiplex.tail37d1f9.ts.net/proxy?url=https://www.spc.noaa.gov/products/outlook/archive/" + date.year + "/day3otlk_" + formattedDateTime + "_cat.nolyr.geojson";
                 return { url: url, formattedDateTime: formattedDateTime}
             }
 
@@ -1009,7 +922,7 @@
             // Define a function to get the URL for a given hour and date for Day 4
             function getUrlDay4(date) {
                 var formattedDate = date.year + date.month + date.day;
-                var url = "https://apartment-optiplex.tail37d1f9.ts.net/proxy?url=https://www.spc.noaa.gov/products/outlook/archive/" + date.year + "/day4prob_" + formattedDate + ".lyr.geojson";
+                var url = "https://apartment-optiplex.tail37d1f9.ts.net/proxy?url=https://www.spc.noaa.gov/products/outlook/archive/" + date.year + "/day4prob_" + formattedDate + ".nolyr.geojson";
                 return { url: url, formattedDate: formattedDate}
             }
 
