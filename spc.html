@@ -1982,11 +1982,6 @@
                 statusIndicators: true
             };
 
-            // Add LayerList to the view for the second set of layers
-            var layerList2 = new LayerList({
-                view: view,
-            });
-
             // Wrap LayerList in Expand widget
             var layerListExpand = new Expand({
                     view: view,
@@ -1999,17 +1994,6 @@
                 // Add Expand widget to the view
                 view.ui.add(layerListExpand, "top-right");
 
-            // Wrap LayerList in Expand widget
-            var layerListExpand2 = new Expand({
-                    view: view,
-                    content: layerList2,
-                    expandIconClass: "esri-icon-layer-list", // Optional, defaults to "esri-icon-expand"
-                    expandTooltip: "Day 4-8 Convective Outlooks",
-                    expanded: window.innerWidth > 786
-                });
-
-                // Add Expand widget to the view
-                view.ui.add(layerListExpand2, "top-left");
 
             // Add in watch functions so the valid date/time updates correctly when a layer is shown
 
