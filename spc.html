@@ -991,6 +991,620 @@
                     }
                 });
 
+
+            // Define the updateDateDiv function
+            function updateDateDiv5(layer) {
+                    fetch(urlDataDay5.url)
+                        .then(function(response) {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then(function(data) {
+                            // Check if the data has features and the first feature has VALID and EXPIRE properties
+                            if (data.features && data.features[0] && data.features[0].properties && data.features[0].properties.VALID && data.features[0].properties.EXPIRE) {
+                                // Update the date div
+                                var validTime = data.features[0].properties.VALID;
+                                var expireTime = data.features[0].properties.EXPIRE;
+
+                                var validFormatted = validTime.substring(4,6) + "/" + validTime.substring(6,8) + "/" + validTime.substring(0,4) + " " + validTime.substring(8,10) + validTime.substring(10,12) + "z";
+                                var expireFormatted = expireTime.substring(4,6) + "/" + expireTime.substring(6,8) + "/" + expireTime.substring(0,4) + " " + expireTime.substring(8,10) + expireTime.substring(10,12) + "z";
+
+                                var dateDiv5 = document.getElementById('dateDiv1');
+                                dateDiv5.textContent = 'Day 5 Convective Outlook Valid: ' + validFormatted + ' - ' + expireFormatted;
+                            } else {
+                                console.error('Data does not have VALID and EXPIRE properties:', data);
+                            }
+                        })
+                        .catch(function(error) {
+                            console.error('Error fetching data:', error);
+                        });
+                }
+
+
+            // Define a function to create a GeoJSON layer for DAY 5
+            function createGeoJSONLayer5(url, data) {
+                // Remove any existing "Day 5 Convective Outlook" layer
+                var existingLayer = map.findLayerById("Day5ConvectiveOutlook");
+                if (existingLayer) {
+                    map.remove(existingLayer);
+                }
+                var renderer = {
+                    type: "unique-value",
+                    field: "LABEL2",
+                    uniqueValueInfos: [
+                        { 
+                            "value": "15% Any Severe Risk", 
+                            "symbol": {
+                                "type": "simple-fill", 
+                                "color": [255, 224, 102, 0.75], 
+                                "outline": { "width": 0.5, "color": "black" }
+                            }
+                        },
+                        { 
+                            "value": "30% Any Severe Risk", 
+                            "symbol": {
+                                "type": "simple-fill", 
+                                "color": [255, 163, 102, 0.75], 
+                                "outline": { "width": 0.5, "color": "black" }
+                            }
+                        }
+                    ]
+                };
+
+                var geojsonLayer5 = new GeoJSONLayer({
+                    url: url.url,
+                    title: "Day 5 Convective Outlook",
+                    id: "Day5ConvectiveOutlook", // Set the ID of the layer
+                    visible: false,
+                    renderer: renderer,
+                    popupTemplate: {
+                        title: "Day 5 Categorical Outlook",
+                        content: "{LABEL2}"
+                    }
+                });
+
+                // Add the GeoJSON layer to the map
+                map.add(geojsonLayer5, 4);
+
+                return geojsonLayer5;
+
+            };
+
+
+            // Define a function to get the URL for a given hour and date for Day 5
+            function getUrlDay5(date) {
+                var formattedDate = date.year + date.month + date.day;
+                var url = "https://apartment-optiplex.tail37d1f9.ts.net/proxy?url=https://www.spc.noaa.gov/products/exper/day4-8/archive/" + date.year + "/day5prob_" + formattedDate + ".nolyr.geojson";
+                return { url: url, formattedDate: formattedDate}
+            }
+
+
+            // Define a function to get the previous date
+            function getPreviousDate(date) {
+                date.setDate(date.getDate() - 1);
+                var year = date.getUTCFullYear();
+                var month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
+                var day = ('0' + date.getUTCDate()).slice(-2);
+                return { date: { year: year, month: month, day: day } };
+            }
+
+            // Get the current date (UTC, not local)
+            var date = new Date();
+            var year = date.getUTCFullYear();
+            var month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
+            var day = ('0' + date.getUTCDate()).toString().slice(-2);
+
+            // Get the data Day 5
+            var urlDataDay5 = getUrlDay5({ year: year, month: month, day: day });
+            console.log(urlDataDay5.url);
+
+            // Fetch the data for the current Day 5
+            fetch(urlDataDay5.url)
+                .then(function(response) {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(function(data) {
+                    // Data from today is available, proceed as normal
+                    var geojsonLayer5 = createGeoJSONLayer5(urlDataDay5, data);
+
+                    // Watch the visible property of the layer
+                    geojsonLayer5.watch("visible", function(visible) {
+                        if (visible) {
+                            updateDateDiv5(geojsonLayer5);
+                        }
+                    });
+                })
+                .catch(function(error) {
+                    if (error.message.startsWith("HTTP error")) {
+                        // Handle HTTP errors here
+                        console.log('HTTP error occurred:', error.message);
+                        // Data from today is not available, use the previous day's data
+                        var previous = getPreviousDate(date);
+                        url = getUrlDay5(previous.date);
+                        fetch(url.url)
+                            .then(function(response) {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.json();
+                            })
+                            .then(function(data) {
+                                createGeoJSONLayer5(url, data);
+                            })
+                            .catch(function(error) {
+                                console.error('Error fetching data:', error);
+                            });
+                    } else {
+                        console.error('Some other error detected:', error);
+                    }
+                });
+
+
+                // Define the updateDateDiv function
+                function updateDateDiv6(layer) {
+                    fetch(urlDataDay6.url)
+                        .then(function(response) {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then(function(data) {
+                            // Check if the data has features and the first feature has VALID and EXPIRE properties
+                            if (data.features && data.features[0] && data.features[0].properties && data.features[0].properties.VALID && data.features[0].properties.EXPIRE) {
+                                // Update the date div
+                                var validTime = data.features[0].properties.VALID;
+                                var expireTime = data.features[0].properties.EXPIRE;
+
+                                var validFormatted = validTime.substring(4,6) + "/" + validTime.substring(6,8) + "/" + validTime.substring(0,4) + " " + validTime.substring(8,10) + validTime.substring(10,12) + "z";
+                                var expireFormatted = expireTime.substring(4,6) + "/" + expireTime.substring(6,8) + "/" + expireTime.substring(0,4) + " " + expireTime.substring(8,10) + expireTime.substring(10,12) + "z";
+
+                                var dateDiv6 = document.getElementById('dateDiv1');
+                                dateDiv6.textContent = 'Day 6 Convective Outlook Valid: ' + validFormatted + ' - ' + expireFormatted;
+                            } else {
+                                console.error('Data does not have VALID and EXPIRE properties:', data);
+                            }
+                        })
+                        .catch(function(error) {
+                            console.error('Error fetching data:', error);
+                        });
+                }
+
+
+            // Define a function to create a GeoJSON layer for DAY 6
+            function createGeoJSONLayer6(url, data) {
+                // Remove any existing "Day 6 Convective Outlook" layer
+                var existingLayer = map.findLayerById("Day6ConvectiveOutlook");
+                if (existingLayer) {
+                    map.remove(existingLayer);
+                }
+                var renderer = {
+                    type: "unique-value",
+                    field: "LABEL2",
+                    uniqueValueInfos: [
+                        { 
+                            "value": "15% Any Severe Risk", 
+                            "symbol": {
+                                "type": "simple-fill", 
+                                "color": [255, 224, 102, 0.75], 
+                                "outline": { "width": 0.5, "color": "black" }
+                            }
+                        },
+                        { 
+                            "value": "30% Any Severe Risk", 
+                            "symbol": {
+                                "type": "simple-fill", 
+                                "color": [255, 163, 102, 0.75], 
+                                "outline": { "width": 0.5, "color": "black" }
+                            }
+                        }
+                    ]
+                };
+
+                var geojsonLayer6 = new GeoJSONLayer({
+                    url: url.url,
+                    title: "Day 6 Convective Outlook",
+                    id: "Day6ConvectiveOutlook", // Set the ID of the layer
+                    visible: false,
+                    renderer: renderer,
+                    popupTemplate: {
+                        title: "Day 6 Categorical Outlook",
+                        content: "{LABEL2}"
+                    }
+                });
+
+                // Add the GeoJSON layer to the map
+                map.add(geojsonLayer6, 5);
+
+                return geojsonLayer6;
+
+            };
+
+
+            // Define a function to get the URL for a given hour and date for Day 6
+            function getUrlDay6(date) {
+                var formattedDate = date.year + date.month + date.day;
+                var url = "https://apartment-optiplex.tail37d1f9.ts.net/proxy?url=https://www.spc.noaa.gov/products/exper/day4-8/archive/" + date.year + "/day6prob_" + formattedDate + ".nolyr.geojson";
+                return { url: url, formattedDate: formattedDate}
+            }
+
+
+            // Define a function to get the previous date
+            function getPreviousDate(date) {
+                date.setDate(date.getDate() - 1);
+                var year = date.getUTCFullYear();
+                var month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
+                var day = ('0' + date.getUTCDate()).slice(-2);
+                return { date: { year: year, month: month, day: day } };
+            }
+
+            // Get the current date (UTC, not local)
+            var date = new Date();
+            var year = date.getUTCFullYear();
+            var month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
+            var day = ('0' + date.getUTCDate()).toString().slice(-2);
+
+            // Get the data Day 6
+            var urlDataDay6 = getUrlDay6({ year: year, month: month, day: day });
+            console.log(urlDataDay6.url);
+
+            // Fetch the data for the current Day 6
+            fetch(urlDataDay6.url)
+                .then(function(response) {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(function(data) {
+                    // Data from today is available, proceed as normal
+                    var geojsonLayer6 = createGeoJSONLayer6(urlDataDay6, data);
+
+                    // Watch the visible property of the layer
+                    geojsonLayer6.watch("visible", function(visible) {
+                        if (visible) {
+                            updateDateDiv6(geojsonLayer6);
+                        }
+                    });
+                })
+                .catch(function(error) {
+                    if (error.message.startsWith("HTTP error")) {
+                        // Handle HTTP errors here
+                        console.log('HTTP error occurred:', error.message);
+                        // Data from today is not available, use the previous day's data
+                        var previous = getPreviousDate(date);
+                        url = getUrlDay6(previous.date);
+                        fetch(url.url)
+                            .then(function(response) {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.json();
+                            })
+                            .then(function(data) {
+                                createGeoJSONLayer6(url, data);
+                            })
+                            .catch(function(error) {
+                                console.error('Error fetching data:', error);
+                            });
+                    } else {
+                        console.error('Some other error detected:', error);
+                    }
+                });
+
+            
+            // Define the updateDateDiv function
+            function updateDateDiv7(layer) {
+                    fetch(urlDataDay7.url)
+                        .then(function(response) {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then(function(data) {
+                            // Check if the data has features and the first feature has VALID and EXPIRE properties
+                            if (data.features && data.features[0] && data.features[0].properties && data.features[0].properties.VALID && data.features[0].properties.EXPIRE) {
+                                // Update the date div
+                                var validTime = data.features[0].properties.VALID;
+                                var expireTime = data.features[0].properties.EXPIRE;
+
+                                var validFormatted = validTime.substring(4,6) + "/" + validTime.substring(6,8) + "/" + validTime.substring(0,4) + " " + validTime.substring(8,10) + validTime.substring(10,12) + "z";
+                                var expireFormatted = expireTime.substring(4,6) + "/" + expireTime.substring(6,8) + "/" + expireTime.substring(0,4) + " " + expireTime.substring(8,10) + expireTime.substring(10,12) + "z";
+
+                                var dateDiv7 = document.getElementById('dateDiv1');
+                                dateDiv7.textContent = 'Day 7 Convective Outlook Valid: ' + validFormatted + ' - ' + expireFormatted;
+                            } else {
+                                console.error('Data does not have VALID and EXPIRE properties:', data);
+                            }
+                        })
+                        .catch(function(error) {
+                            console.error('Error fetching data:', error);
+                        });
+                }
+
+
+            // Define a function to create a GeoJSON layer for DAY 7
+            function createGeoJSONLayer7(url, data) {
+                // Remove any existing "Day 7 Convective Outlook" layer
+                var existingLayer = map.findLayerById("Day7ConvectiveOutlook");
+                if (existingLayer) {
+                    map.remove(existingLayer);
+                }
+                var renderer = {
+                    type: "unique-value",
+                    field: "LABEL2",
+                    uniqueValueInfos: [
+                        { 
+                            "value": "15% Any Severe Risk", 
+                            "symbol": {
+                                "type": "simple-fill", 
+                                "color": [255, 224, 102, 0.75], 
+                                "outline": { "width": 0.5, "color": "black" }
+                            }
+                        },
+                        { 
+                            "value": "30% Any Severe Risk", 
+                            "symbol": {
+                                "type": "simple-fill", 
+                                "color": [255, 163, 102, 0.75], 
+                                "outline": { "width": 0.5, "color": "black" }
+                            }
+                        }
+                    ]
+                };
+
+                var geojsonLayer7 = new GeoJSONLayer({
+                    url: url.url,
+                    title: "Day 7 Convective Outlook",
+                    id: "Day7ConvectiveOutlook", // Set the ID of the layer
+                    visible: false,
+                    renderer: renderer,
+                    popupTemplate: {
+                        title: "Day 7 Categorical Outlook",
+                        content: "{LABEL2}"
+                    }
+                });
+
+                // Add the GeoJSON layer to the map
+                map.add(geojsonLayer7, 6);
+
+                return geojsonLayer7;
+
+            };
+
+
+            // Define a function to get the URL for a given hour and date for Day 7
+            function getUrlDay7(date) {
+                var formattedDate = date.year + date.month + date.day;
+                var url = "https://apartment-optiplex.tail37d1f9.ts.net/proxy?url=https://www.spc.noaa.gov/products/exper/day4-8/archive/" + date.year + "/day7prob_" + formattedDate + ".nolyr.geojson";
+                return { url: url, formattedDate: formattedDate}
+            }
+
+
+            // Define a function to get the previous date
+            function getPreviousDate(date) {
+                date.setDate(date.getDate() - 1);
+                var year = date.getUTCFullYear();
+                var month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
+                var day = ('0' + date.getUTCDate()).slice(-2);
+                return { date: { year: year, month: month, day: day } };
+            }
+
+            // Get the current date (UTC, not local)
+            var date = new Date();
+            var year = date.getUTCFullYear();
+            var month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
+            var day = ('0' + date.getUTCDate()).toString().slice(-2);
+
+            // Get the data Day 7
+            var urlDataDay7 = getUrlDay7({ year: year, month: month, day: day });
+            console.log(urlDataDay7.url);
+
+            // Fetch the data for the current Day 7
+            fetch(urlDataDay7.url)
+                .then(function(response) {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(function(data) {
+                    // Data from today is available, proceed as normal
+                    var geojsonLayer7 = createGeoJSONLayer7(urlDataDay7, data);
+
+                    // Watch the visible property of the layer
+                    geojsonLayer7.watch("visible", function(visible) {
+                        if (visible) {
+                            updateDateDiv7(geojsonLayer7);
+                        }
+                    });
+                })
+                .catch(function(error) {
+                    if (error.message.startsWith("HTTP error")) {
+                        // Handle HTTP errors here
+                        console.log('HTTP error occurred:', error.message);
+                        // Data from today is not available, use the previous day's data
+                        var previous = getPreviousDate(date);
+                        url = getUrlDay7(previous.date);
+                        fetch(url.url)
+                            .then(function(response) {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.json();
+                            })
+                            .then(function(data) {
+                                createGeoJSONLayer7(url, data);
+                            })
+                            .catch(function(error) {
+                                console.error('Error fetching data:', error);
+                            });
+                    } else {
+                        console.error('Some other error detected:', error);
+                    }
+                });
+
+
+
+            // Define the updateDateDiv function
+            function updateDateDiv8(layer) {
+                    fetch(urlDataDay8.url)
+                        .then(function(response) {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then(function(data) {
+                            // Check if the data has features and the first feature has VALID and EXPIRE properties
+                            if (data.features && data.features[0] && data.features[0].properties && data.features[0].properties.VALID && data.features[0].properties.EXPIRE) {
+                                // Update the date div
+                                var validTime = data.features[0].properties.VALID;
+                                var expireTime = data.features[0].properties.EXPIRE;
+
+                                var validFormatted = validTime.substring(4,6) + "/" + validTime.substring(6,8) + "/" + validTime.substring(0,4) + " " + validTime.substring(8,10) + validTime.substring(10,12) + "z";
+                                var expireFormatted = expireTime.substring(4,6) + "/" + expireTime.substring(6,8) + "/" + expireTime.substring(0,4) + " " + expireTime.substring(8,10) + expireTime.substring(10,12) + "z";
+
+                                var dateDiv8 = document.getElementById('dateDiv1');
+                                dateDiv8.textContent = 'Day 8 Convective Outlook Valid: ' + validFormatted + ' - ' + expireFormatted;
+                            } else {
+                                console.error('Data does not have VALID and EXPIRE properties:', data);
+                            }
+                        })
+                        .catch(function(error) {
+                            console.error('Error fetching data:', error);
+                        });
+                }
+
+
+            // Define a function to create a GeoJSON layer for DAY 8
+            function createGeoJSONLayer8(url, data) {
+                // Remove any existing "Day 8 Convective Outlook" layer
+                var existingLayer = map.findLayerById("Day8ConvectiveOutlook");
+                if (existingLayer) {
+                    map.remove(existingLayer);
+                }
+                var renderer = {
+                    type: "unique-value",
+                    field: "LABEL2",
+                    uniqueValueInfos: [
+                        { 
+                            "value": "15% Any Severe Risk", 
+                            "symbol": {
+                                "type": "simple-fill", 
+                                "color": [255, 224, 102, 0.75], 
+                                "outline": { "width": 0.5, "color": "black" }
+                            }
+                        },
+                        { 
+                            "value": "30% Any Severe Risk", 
+                            "symbol": {
+                                "type": "simple-fill", 
+                                "color": [255, 163, 102, 0.75], 
+                                "outline": { "width": 0.5, "color": "black" }
+                            }
+                        }
+                    ]
+                };
+
+                var geojsonLayer8 = new GeoJSONLayer({
+                    url: url.url,
+                    title: "Day 8 Convective Outlook",
+                    id: "Day8ConvectiveOutlook", // Set the ID of the layer
+                    visible: false,
+                    renderer: renderer,
+                    popupTemplate: {
+                        title: "Day 8 Categorical Outlook",
+                        content: "{LABEL2}"
+                    }
+                });
+
+                // Add the GeoJSON layer to the map
+                map.add(geojsonLayer8, 7);
+
+                return geojsonLayer8;
+
+            };
+
+
+            // Define a function to get the URL for a given hour and date for Day 8
+            function getUrlDay8(date) {
+                var formattedDate = date.year + date.month + date.day;
+                var url = "https://apartment-optiplex.tail37d1f9.ts.net/proxy?url=https://www.spc.noaa.gov/products/exper/day4-8/archive/" + date.year + "/day8prob_" + formattedDate + ".nolyr.geojson";
+                return { url: url, formattedDate: formattedDate}
+            }
+
+
+            // Define a function to get the previous date
+            function getPreviousDate(date) {
+                date.setDate(date.getDate() - 1);
+                var year = date.getUTCFullYear();
+                var month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
+                var day = ('0' + date.getUTCDate()).slice(-2);
+                return { date: { year: year, month: month, day: day } };
+            }
+
+            // Get the current date (UTC, not local)
+            var date = new Date();
+            var year = date.getUTCFullYear();
+            var month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
+            var day = ('0' + date.getUTCDate()).toString().slice(-2);
+
+            // Get the data Day 8
+            var urlDataDay8 = getUrlDay8({ year: year, month: month, day: day });
+            console.log(urlDataDay8.url);
+
+            // Fetch the data for the current Day 8
+            fetch(urlDataDay8.url)
+                .then(function(response) {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(function(data) {
+                    // Data from today is available, proceed as normal
+                    var geojsonLayer8 = createGeoJSONLayer8(urlDataDay8, data);
+
+                    // Watch the visible property of the layer
+                    geojsonLayer8.watch("visible", function(visible) {
+                        if (visible) {
+                            updateDateDiv8(geojsonLayer8);
+                        }
+                    });
+                })
+                .catch(function(error) {
+                    if (error.message.startsWith("HTTP error")) {
+                        // Handle HTTP errors here
+                        console.log('HTTP error occurred:', error.message);
+                        // Data from today is not available, use the previous day's data
+                        var previous = getPreviousDate(date);
+                        url = getUrlDay8(previous.date);
+                        fetch(url.url)
+                            .then(function(response) {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.json();
+                            })
+                            .then(function(data) {
+                                createGeoJSONLayer8(url, data);
+                            })
+                            .catch(function(error) {
+                                console.error('Error fetching data:', error);
+                            });
+                    } else {
+                        console.error('Some other error detected:', error);
+                    }
+                });
+
+
             // URL of the GeoJSON data
             var stormreportsJson = new GeoJSONLayer({
                 url: "https://mesonet.agron.iastate.edu/data/gis/shape/4326/us/lsr_24hour.geojson",
