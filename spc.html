@@ -1970,33 +1970,6 @@
             // Add LayerList to the view
             var layerList = new LayerList({
                 view: view,
-                listItemCreatedFunction: function(event) {
-                    // Only include specific layers in this LayerList
-                    var item = event.item;
-                    if (item.layer.id !== "Day1ConvectiveOutlook" &&
-                        item.layer.id !== "Day2ConvectiveOutlook" &&
-                        item.layer.id !== "Day3ConvectiveOutlook" &&
-                        item.layer.id !== "stormreportsJson" &&
-                        item.layer.id !== "userStormReports") {
-                        event.item.visible = false; // Exclude other layers
-                    }
-                }
-            });
-
-            // Add LayerList to the view for the second set of layers
-            var layerList2 = new LayerList({
-                view: view,
-                listItemCreatedFunction: function(event) {
-                    // Only include specific layers in this LayerList
-                    var item = event.item;
-                    if (item.layer.id !== "Day4ConvectiveOutlook" &&
-                        item.layer.id !== "Day5ConvectiveOutlook" &&
-                        item.layer.id !== "Day6ConvectiveOutlook" &&
-                        item.layer.id !== "Day7ConvectiveOutlook" &&
-                        item.layer.id !== "Day8ConvectiveOutlook") {
-                        event.item.visible = false; // Exclude other layers
-                    }
-                }
             });
 
             layerList.visibleElements = {
@@ -2007,7 +1980,12 @@
                 filter: true,
                 heading: true,
                 statusIndicators: true
-                };
+            };
+
+            // Add LayerList to the view for the second set of layers
+            var layerList2 = new LayerList({
+                view: view,
+            });
 
             // Wrap LayerList in Expand widget
             var layerListExpand = new Expand({
