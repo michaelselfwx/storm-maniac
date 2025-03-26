@@ -156,6 +156,10 @@
             var geojsonLayer2;
             var geojsonLayer3;
             var geojsonLayer4;
+            var geojsonLayer5;
+            var geojsonLayer6;
+            var geojsonLayer7;
+            var geojsonLayer8;
             var stormreportsJson;
             var userStormReports;
 
@@ -1972,7 +1976,7 @@
                 // Add Expand widget to the view
                 view.ui.add(layerListExpand, "top-right");
 
-            // Assume layer1, layer2, layer3 are your GeoJSON layers for different days
+            // Add in watch functions so the valid date/time updates correctly when a layer is shown
 
             geojsonLayer.watch("visible", function(visible) {
                 if (visible) {
@@ -1995,6 +1999,30 @@
             geojsonLayer4.watch("visible", function(visible) {
                 if (visible) {
                     updateDateDiv(geojsonLayer4);
+                }
+            });
+
+            geojsonLayer5.watch("visible", function(visible) {
+                if (visible) {
+                    updateDateDiv(geojsonLayer5);
+                }
+            });
+
+            geojsonLayer6.watch("visible", function(visible) {
+                if (visible) {
+                    updateDateDiv(geojsonLayer6);
+                }
+            });
+
+            geojsonLayer7.watch("visible", function(visible) {
+                if (visible) {
+                    updateDateDiv(geojsonLayer7);
+                }
+            });
+
+            geojsonLayer8.watch("visible", function(visible) {
+                if (visible) {
+                    updateDateDiv(geojsonLayer8);
                 }
             });
 
