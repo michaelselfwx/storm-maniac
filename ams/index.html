@@ -11,25 +11,6 @@
       .page { max-width: 1100px; margin: 0 auto; padding: 12px; }
       h1, h2 { margin: 10px 0; }
 
-      /* Stacked, centered iframe container with a controlled height */
-      .iframe-wrap {
-        width: 100%;
-        max-width: 1100px;
-        margin: 8px auto;
-        height: clamp(240px, 40vh, 480px); /* responsive: min 240px, ideal 40vh, max 480px */
-        background: #000;
-        border-radius: 6px;
-        overflow: hidden;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.12);
-      }
-
-      .iframe-wrap iframe {
-        width: 100%;
-        height: 100%;
-        border: 0;
-        display: block;
-      }
-
       .iframe-actions { text-align: center; margin-top: 6px; font-size: 0.95rem; }
       .iframe-actions a { color: #0366d6; text-decoration: none; }
     </style>
@@ -44,8 +25,8 @@
         title="W4DFU Dentistry Raspberry Pi Receiver"
         src="https://ham-shack-pi.tail37d1f9.ts.net/"
         loading="lazy"
-        allow="accelerometer; autoplay; clipboard-read; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen>
+        width="100%" 
+        height="600px">
       </iframe>
     </div>
     <div class="iframe-actions">
@@ -58,15 +39,13 @@
         title="Base Station Raspberry Pi Receiver"
         src="https://truck-pi.tail37d1f9.ts.net/"
         loading="lazy"
-        allow="accelerometer; autoplay; clipboard-read; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen>
+        width="100%" 
+        height="600px">
       </iframe>
     </div>
     <div class="iframe-actions">
       <a href="https://truck-pi.tail37d1f9.ts.net/" target="_blank" rel="noopener">Open Base Station in new tab</a>
     </div>
-
-    <!-- ...existing code... -->
   </div>
 </body>
 </html>
