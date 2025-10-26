@@ -79,6 +79,9 @@
     const previewInfo = document.getElementById('previewInfo');
     const reloadBtn = document.getElementById('reloadBtn');
 
+    // allowlist of previewable extensions
+    const PREVIEW_EXTS = ['.csv', '.txt'];
+
     function fmtDate(iso){ try{return new Date(iso).toLocaleString()}catch(e){return iso} }
 
     async function loadManifest(){
@@ -98,6 +101,10 @@
       if(!items || !items.length){ filesEl.innerHTML = '<div class="small hint">No files in manifest.</div>'; return; }
       filesEl.innerHTML = '';
       items.forEach(it=>{
+        const filename = it.filename || '';
+        const ext = (filename.includes('.') ? filename.slice(filename.lastIndexOf('.')).toLowerCase() : '');
+        const canPreview = PREVIEW_EXTS.includes(ext);
+
         const el = document.createElement('div');
         el.className = 'file-card';
         el.innerHTML = `
@@ -107,19 +114,30 @@
           </div>
           <div class="actions">
             <a class="btn" href="./data/${encodeURIComponent(it.filename)}" download>Download</a>
-            <button class="btn primary" data-file="${it.filename}">Preview</button>
+            ${ canPreview
+               ? `<button class="btn primary" data-file="${it.filename}">Preview</button>`
+               : `<span class="small hint" style="align-self:center">Preview N/A</span>`
+            }
           </div>
         `;
         filesEl.appendChild(el);
       });
 
-      // attach preview handlers
+      // attach preview handlers only to existing preview buttons
       filesEl.querySelectorAll('button[data-file]').forEach(btn=>{
         btn.onclick = () => previewCSV(btn.getAttribute('data-file'));
       });
     }
 
     async function previewCSV(filename){
+      // runtime guard (extra safety)
+      const ext = (filename && filename.includes('.')) ? filename.slice(filename.lastIndexOf('.')).toLowerCase() : '';
+      if(!PREVIEW_EXTS.includes(ext)){
+        previewInfo.textContent = filename + ' — preview not available for this file type';
+        previewArea.innerHTML = '<div class="small hint">Preview not available for this file type.</div>';
+        return;
+      }
+
       previewInfo.textContent = `Previewing ${filename} — loading…`;
       previewArea.innerHTML = '';
       try{
