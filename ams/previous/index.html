@@ -145,7 +145,7 @@
       previewInfo.textContent = `Previewing ${filename} — loading…`;
       previewArea.innerHTML = '';
       try{
-        const url = `./data/${encodeURIComponent(filename)}`;
+        const url = `../data/${encodeURIComponent(filename)}`;
         const res = await fetch(url);
         if(!res.ok) throw new Error('file fetch failed');
         const text = await res.text();
