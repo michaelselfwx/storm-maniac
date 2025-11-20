@@ -1,0 +1,86 @@
+[
+{
+    "filename": "20230415_AMS_WBL_filtered.csv",
+    "label": "2023 Filtered Data (.csv)",
+    "date": "2025-11-20T01:50:00Z",
+    "size": "85 KB"
+},
+{
+    "filename": "20230415_AMS_WBL_raw_heights.txt",
+    "label": "2023 Raw Time-Height Data (.txt)",
+    "date": "2025-11-20T01:50:00Z",
+    "size": "69 KB"
+},
+{
+    "filename": "20230415_AMS_WBL_sharppy_input.txt",
+    "label": "2023 SharpPy Formatted Input (.txt)",
+    "date": "2025-11-20T01:50:00Z",
+    "size": "30 KB"
+},
+{
+    "filename": "20230415_AMS_WBL_intrp_skewt.png",
+    "label": "2023 Intrp Skew-T (.png)",
+    "date": "2025-11-20T01:50:00Z",
+    "size": "127 KB"
+},
+{
+    "filename": "20230415_AMS_WBL_skewt_sondemonitor.jpg",
+    "label": "2023 Sondemonitor Skew-T (.jpg)",
+    "date": "2025-11-20T01:50:00Z",
+    "size": "396 KB"
+},
+{
+    "filename": "20230415_AMS_WBL_skewt_sondemonitor.jpg",
+    "label": "2023 Sondemonitor Stuve (.jpg)",
+    "date": "2025-11-20T01:50:00Z",
+    "size": "385 KB"
+},
+{
+    "filename": "20240323_AMS_WBL_intrp_SkewT.txt",
+    "label": "S24 Intrp Skew-T Data (.txt)",
+    "date": "2025-11-20T01:57:00Z",
+    "size": "3 KB"
+},
+{
+    "filename": "20240323_AMS_WBL_intrp_SkewT.jpg",
+    "label": "S24 Intrp Skew-T (.jpg)",
+    "date": "2025-11-20T01:57:00Z",
+    "size": "700 KB"
+},
+{
+    "filename": "20240323_AMS_WBL_sharppy_input.txt",
+    "label": "S24 SharpPy Formatted Input (.txt)",
+    "date": "2025-11-20T01:57:00Z",
+    "size": "127 KB"
+},
+{
+    "filename": "20240323_AMS_WBL_raw.csv",
+    "label": "S24 Raw Data (.csv)",
+    "date": "2025-11-20T01:57:00Z",
+    "size": "575 KB"
+},
+{
+    "filename": "20241027_AMS_WBL_raw.txt",
+    "label": "F24 Raw Data (.txt)",
+    "date": "2025-11-20T02:00:00Z",
+    "size": "559 KB"
+},
+{
+    "filename": "20241027_AMS_WBL_intrp_skewt.png",
+    "label": "F24 Intrp Skew-T (.png)",
+    "date": "2025-11-20T02:00:00Z",
+    "size": "8.1 MB"
+},
+{
+    "filename": "20241027_AMS_WBL_skewt.png",
+    "label": "F24 Skew-T (.png)",
+    "date": "2025-11-20T02:00:00Z",
+    "size": "8.10 MB"
+},
+{
+    "filename": "20241027_AMS_WBL_sharppy_input.txt",
+    "label": "F24 SharpPy Formatted Input (.txt)",
+    "date": "2025-11-20T02:00:00Z",
+    "size": "142 KB"
+}
+]
