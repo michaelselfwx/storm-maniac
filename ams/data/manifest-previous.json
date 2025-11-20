@@ -36,13 +36,13 @@
     "size": "385 KB"
 },
 {
-    "filename": "20240323_AMS_WBL_intrp_SkewT.txt",
+    "filename": "20240323_AMS_WBL_intrp_skewt.txt",
     "label": "S24 Intrp Skew-T Data (.txt)",
     "date": "2025-11-20T01:57:00Z",
     "size": "3 KB"
 },
 {
-    "filename": "20240323_AMS_WBL_intrp_SkewT.jpg",
+    "filename": "20240323_AMS_WBL_intrp_skewt.jpg",
     "label": "S24 Intrp Skew-T (.jpg)",
     "date": "2025-11-20T01:57:00Z",
     "size": "700 KB"
@@ -85,3 +85,4 @@
 }
 
 ]
+
