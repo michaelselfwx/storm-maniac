@@ -40,7 +40,14 @@
     </div>
     <div class="container">
         <h2>24hr Meteogram</h2>
-        <iframe id="weather-iframe" src="https://sensor-pi.tail37d1f9.ts.net/meteogram" width="100vw" height="100vh"></iframe>
+        <img id="meteo" src="https://your-domain.com/meteogram.png">
+        <script>
+        setInterval(() => {
+            document.getElementById("meteo").src =
+                "https://your-domain.com/meteogram.png?ts=" + Date.now();
+        }, 5 * 60 * 1000); // 5 minutes
+        </script>
+
     </div>
 </body>
 </html>
