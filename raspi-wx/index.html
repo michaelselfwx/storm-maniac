@@ -40,17 +40,12 @@
     </div>
     <div class="container">
         <h2>24hr Meteogram</h2>
-        <img id="meteogram" style="width:100%; height:auto;">
-
+        <img id="meteogram" src="/meteogram.png?t={{ timestamp }}" style="width:100%; height:auto;">
         <script>
-        function loadMeteogram() {
+        setInterval(function(){
             const img = document.getElementById("meteogram");
-            img.src = "https://sensor-pi.tail37d1f9.ts.net/meteogram.png?t=" + Date.now();
-        }
-        loadMeteogram();
-        
-        // also auto-refresh every 5 minutes:
-        setInterval(loadMeteogram, 5 * 60 * 1000);
+            img.src = "/meteogram.png?t=" + Date.now();
+        }, 5 * 60 * 1000); // refresh every 5 min
         </script>
 
     </div>
