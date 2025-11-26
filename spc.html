@@ -971,7 +971,7 @@
                     });
                 })
                 .catch(function(error) {
-                    if (error.message.startsWith("HTTP error")) {
+                    if (error) {
                         // Handle HTTP errors here
                         console.log('HTTP error occurred:', error.message);
                         // Data from today is not available, use the previous day's data
