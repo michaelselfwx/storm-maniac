@@ -974,32 +974,51 @@
                     });
                 })
                 .catch(function(error) {
-                    if (error) {
-                        // Handle HTTP errors here
-                        console.log('HTTP error occurred:', error.message);
-                        // Data from today is not available, use the previous day's data
-                        var previous = getPreviousDate(date);
-                        url = getUrlDay4(previous.date);
-                        fetch(url.url)
-                            .then(function(response) {
-                                if (!response.ok) {
-                                    throw new Error('Network response was not ok');
+                    console.log("Primary fetch failed:", error.message);
+                
+                    // compute previous day properly
+                    var prevDate = new Date();
+                    prevDate.setUTCDate(prevDate.getUTCDate() - 1);
+                
+                    var prevYear  = prevDate.getUTCFullYear();
+                    var prevMonth = ('0' + (prevDate.getUTCMonth() + 1)).slice(-2);
+                    var prevDay   = ('0' + prevDate.getUTCDate()).slice(-2);
+                
+                    var prevUrlData = getUrlDay4({
+                        year: prevYear,
+                        month: prevMonth,
+                        day: prevDay
+                    });
+                
+                    console.log("Trying previous day:", prevUrlData.url);
+                
+                    fetch(prevUrlData.url)
+                        .then(function(response) {
+                            if (!response.ok) {
+                                throw new Error('Previous day fetch failed');
+                            }
+                            return response.json();
+                        })
+                        .then(function(data) {
+                            if (data.error) {
+                                throw new Error(data.error);
+                            }
+                
+                            console.log("Previous day fetch succeeded");
+                
+                            var geojsonLayer4 = createGeoJSONLayer4(prevUrlData, data);
+                
+                            geojsonLayer4.watch("visible", function(visible) {
+                                if (visible) {
+                                    updateDateDiv4(geojsonLayer4);
                                 }
-                                return response.json();
-                            })
-                            .then(function(data) {
-                                if (data.error) {
-                                    throw new Error(data.error);
-                                }
-                                createGeoJSONLayer4(url, data);
-                            })
-                            .catch(function(error) {
-                                console.error('Error fetching data:', error);
                             });
-                    } else {
-                        console.error('Some other error detected:', error);
-                    }
+                        })
+                        .catch(function(error) {
+                            console.error("Fallback failed:", error.message);
+                        });
                 });
+
 
 
             // Define the updateDateDiv function
