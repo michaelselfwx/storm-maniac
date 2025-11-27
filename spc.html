@@ -115,7 +115,7 @@
         ], function (esriConfig, Map, MapView, GeoJSONLayer, Legend, LayerList, Editor, Graphic, FeatureLayer, Expand) {
             // Set the API key
             esriConfig.apiKey = "AAPKfb3b968ef66d4c848e795b3dd01897e8uTic-7qcXbjlpUVMGReQlWKWAjnWq5pH5r7mLxpcFbX1tfR5Y4bLBPhLOwFOm7NL";
-            
+
             // Make sure the page refreshes when the user is inactive
             var timeout;
             var delay = 5 * 60 * 1000; // 5 minutes
@@ -139,7 +139,7 @@
                 basemap: "streets-navigation-vector",          
             });
 
-            
+
             // Create the view
             var view = new MapView({
                 container: "viewDiv",
@@ -409,7 +409,7 @@
                     console.error('Error fetching data:', error);
                 });
 
-            
+
                 // Define the updateDateDiv function
             function updateDateDiv2(layer) {
                     console.log(urlDataDay2.url);
@@ -523,7 +523,7 @@
                 // Return the created layer
                 return geojsonLayer2;
             };
-            
+
             // Define a function to get the URL for a given hour and date for Day 2
             function getUrlDay2(hour, date) {
                 var minutes = Math.round((hour % 1) * 60);
@@ -626,8 +626,8 @@
                         console.error('Some other error detected:', error);
                     }
                 });
-                
-            
+
+
             // Define the updateDateDiv function
             function updateDateDiv3(layer) {
                     fetch(urlDataDay3.url)
@@ -740,7 +740,7 @@
 
             };
 
-            
+
 
             // Define a function to get the URL for a given hour and date for Day 3
             function getUrlDay3(hour, date) {
@@ -960,11 +960,8 @@
                     return response.json();
                 })
                 .then(function(data) {
-                    if (data.error) {
-                        throw new Error(data.error);
-                    }
-                    // Today works
-                    createGeoJSONLayer4(urlDataDay4, data);
+                    // Data from today is available, proceed as normal
+                    var geojsonLayer4 = createGeoJSONLayer4(urlDataDay4, data);
 
                     // Watch the visible property of the layer
                     geojsonLayer4.watch("visible", function(visible) {
@@ -974,7 +971,7 @@
                     });
                 })
                 .catch(function(error) {
-                    if (error) {
+                    if (error.message.startsWith("HTTP error")) {
                         // Handle HTTP errors here
                         console.log('HTTP error occurred:', error.message);
                         // Data from today is not available, use the previous day's data
@@ -982,6 +979,9 @@
                         url = getUrlDay4(previous.date);
                         fetch(url.url)
                             .then(function(response) {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
                                 return response.json();
                             })
                             .then(function(data) {
@@ -1301,7 +1301,7 @@
                     }
                 });
 
-            
+
             // Define the updateDateDiv function
             function updateDateDiv7(layer) {
                     fetch(urlDataDay7.url)
@@ -1930,7 +1930,7 @@
                             name: "TYPETEXT",
                             label: "Type",
                             editorType: "field-selector",
-                        
+
                         },
                         {
                             name: "REMARK",
