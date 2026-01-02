@@ -968,23 +968,28 @@
                     });
                 })
                 .catch(function(error) {
-                    console.log('Error fetching Day 4 data:', error.message);
-                    // Data from today is not available, use the previous day's data
-                    var previous = getPreviousDate(new Date());
-                    var fallbackUrl = getUrlDay4(previous.date);
-                    fetch(fallbackUrl.url)
-                        .then(function(response) {
-                            if (!response.ok) {
-                                throw new Error('Network response was not ok');
-                            }
-                            return response.json();
-                        })
-                        .then(function(data) {
-                            createGeoJSONLayer4(fallbackUrl, data);
-                        })
-                        .catch(function(error) {
-                            console.error('Error fetching Day 4 fallback data:', error);
-                        });
+                    if (error.message.startsWith("HTTP error")) {
+                        // Handle HTTP errors here
+                        console.log('HTTP error occurred:', error.message);
+                        // Data from today is not available, use the previous day's data
+                        var previous = getPreviousDate(date);
+                        url = getUrlDay4(previous.date);
+                        fetch(url.url)
+                            .then(function(response) {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.json();
+                            })
+                            .then(function(data) {
+                                createGeoJSONLayer4(url, data);
+                            })
+                            .catch(function(error) {
+                                console.error('Error fetching data:', error);
+                            });
+                    } else {
+                        console.error('Some other error detected:', error);
+                    }
                 });
 
 
@@ -1116,23 +1121,28 @@
                     });
                 })
                 .catch(function(error) {
-                    console.log('Error fetching Day 5 data:', error.message);
-                    // Data from today is not available, use the previous day's data
-                    var previous = getPreviousDate(new Date());
-                    var fallbackUrl = getUrlDay5(previous.date);
-                    fetch(fallbackUrl.url)
-                        .then(function(response) {
-                            if (!response.ok) {
-                                throw new Error('Network response was not ok');
-                            }
-                            return response.json();
-                        })
-                        .then(function(data) {
-                            createGeoJSONLayer5(fallbackUrl, data);
-                        })
-                        .catch(function(error) {
-                            console.error('Error fetching Day 5 fallback data:', error);
-                        });
+                    if (error.message.startsWith("HTTP error")) {
+                        // Handle HTTP errors here
+                        console.log('HTTP error occurred:', error.message);
+                        // Data from today is not available, use the previous day's data
+                        var previous = getPreviousDate(date);
+                        url = getUrlDay5(previous.date);
+                        fetch(url.url)
+                            .then(function(response) {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.json();
+                            })
+                            .then(function(data) {
+                                createGeoJSONLayer5(url, data);
+                            })
+                            .catch(function(error) {
+                                console.error('Error fetching data:', error);
+                            });
+                    } else {
+                        console.error('Some other error detected:', error);
+                    }
                 });
 
 
@@ -1239,7 +1249,6 @@
             var year = date.getUTCFullYear();
             var month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
             var day = ('0' + date.getUTCDate()).toString().slice(-2);
-            var hour = date.getUTCHours().toString().padStart(2, '0');
 
             // Get the data Day 6
             var urlDataDay6 = getUrlDay6({ year: year, month: month, day: day });
@@ -1265,23 +1274,28 @@
                     });
                 })
                 .catch(function(error) {
-                    console.log('Error fetching Day 6 data:', error.message);
-                    // Data from today is not available, use the previous day's data
-                    var previous = getPreviousDate(new Date());
-                    var fallbackUrl = getUrlDay6(previous.date);
-                    fetch(fallbackUrl.url)
-                        .then(function(response) {
-                            if (!response.ok) {
-                                throw new Error('Network response was not ok');
-                            }
-                            return response.json();
-                        })
-                        .then(function(data) {
-                            createGeoJSONLayer6(fallbackUrl, data);
-                        })
-                        .catch(function(error) {
-                            console.error('Error fetching Day 6 fallback data:', error);
-                        });
+                    if (error.message.startsWith("HTTP error")) {
+                        // Handle HTTP errors here
+                        console.log('HTTP error occurred:', error.message);
+                        // Data from today is not available, use the previous day's data
+                        var previous = getPreviousDate(date);
+                        url = getUrlDay6(previous.date);
+                        fetch(url.url)
+                            .then(function(response) {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.json();
+                            })
+                            .then(function(data) {
+                                createGeoJSONLayer6(url, data);
+                            })
+                            .catch(function(error) {
+                                console.error('Error fetching data:', error);
+                            });
+                    } else {
+                        console.error('Some other error detected:', error);
+                    }
                 });
 
 
@@ -1413,23 +1427,28 @@
                     });
                 })
                 .catch(function(error) {
-                    console.log('Error fetching Day 7 data:', error.message);
-                    // Data from today is not available, use the previous day's data
-                    var previous = getPreviousDate(new Date());
-                    var fallbackUrl = getUrlDay7(previous.date);
-                    fetch(fallbackUrl.url)
-                        .then(function(response) {
-                            if (!response.ok) {
-                                throw new Error('Network response was not ok');
-                            }
-                            return response.json();
-                        })
-                        .then(function(data) {
-                            createGeoJSONLayer7(fallbackUrl, data);
-                        })
-                        .catch(function(error) {
-                            console.error('Error fetching Day 7 fallback data:', error);
-                        });
+                    if (error.message.startsWith("HTTP error")) {
+                        // Handle HTTP errors here
+                        console.log('HTTP error occurred:', error.message);
+                        // Data from today is not available, use the previous day's data
+                        var previous = getPreviousDate(date);
+                        url = getUrlDay7(previous.date);
+                        fetch(url.url)
+                            .then(function(response) {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.json();
+                            })
+                            .then(function(data) {
+                                createGeoJSONLayer7(url, data);
+                            })
+                            .catch(function(error) {
+                                console.error('Error fetching data:', error);
+                            });
+                    } else {
+                        console.error('Some other error detected:', error);
+                    }
                 });
 
 
@@ -1562,23 +1581,28 @@
                     });
                 })
                 .catch(function(error) {
-                    console.log('Error fetching Day 8 data:', error.message);
-                    // Data from today is not available, use the previous day's data
-                    var previous = getPreviousDate(new Date());
-                    var fallbackUrl = getUrlDay8(previous.date);
-                    fetch(fallbackUrl.url)
-                        .then(function(response) {
-                            if (!response.ok) {
-                                throw new Error('Network response was not ok');
-                            }
-                            return response.json();
-                        })
-                        .then(function(data) {
-                            createGeoJSONLayer8(fallbackUrl, data);
-                        })
-                        .catch(function(error) {
-                            console.error('Error fetching Day 8 fallback data:', error);
-                        });
+                    if (error.message.startsWith("HTTP error")) {
+                        // Handle HTTP errors here
+                        console.log('HTTP error occurred:', error.message);
+                        // Data from today is not available, use the previous day's data
+                        var previous = getPreviousDate(date);
+                        url = getUrlDay8(previous.date);
+                        fetch(url.url)
+                            .then(function(response) {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.json();
+                            })
+                            .then(function(data) {
+                                createGeoJSONLayer8(url, data);
+                            })
+                            .catch(function(error) {
+                                console.error('Error fetching data:', error);
+                            });
+                    } else {
+                        console.error('Some other error detected:', error);
+                    }
                 });
 
 
