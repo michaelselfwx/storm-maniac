@@ -964,6 +964,7 @@
                     new Date(Date.UTC(date.year, date.month - 1, date.day))
                 );
                 var prevUrlData = getUrlDay4(prev.date);
+                console.log(todayUrlData.url);
                 return fetch(todayUrlData.url)
                     .then(function (response) {
                         if (!response.ok) throw new Error("Today unavailable");
@@ -973,6 +974,7 @@
                     })
                     .catch(function () {
                         console.log("Day 4 today not available, using previous day");
+                        console.log(prevUrlData.url);
                         return fetch(prevUrlData.url)
                             .then(function (response) {
                                 if (!response.ok) throw new Error("Previous day unavailable");
@@ -1132,6 +1134,7 @@
                 var prev = getPreviousDate(
                     new Date(Date.UTC(date.year, date.month - 1, date.day))
                 );
+                console.log(todayUrlData.url);
                 var prevUrlData = getUrlDay5(prev.date);
                 return fetch(todayUrlData.url)
                     .then(function (response) {
@@ -1142,6 +1145,7 @@
                     })
                     .catch(function () {
                         console.log("Day 5 today not available, using previous day");
+                        console.log(prevUrlData.url);
                         return fetch(prevUrlData.url)
                             .then(function (response) {
                                 if (!response.ok) throw new Error("Previous day unavailable");
@@ -1302,6 +1306,7 @@
                 var prev = getPreviousDate(
                     new Date(Date.UTC(date.year, date.month - 1, date.day))
                 );
+                console.log(todayUrlData.url);
                 var prevUrlData = getUrlDay6(prev.date);
 
                 return fetch(todayUrlData.url)
@@ -1313,6 +1318,7 @@
                     })
                     .catch(function () {
                         console.log("Day 6 today not available, using previous day");
+                        console.log(prevUrlData.url);
                         return fetch(prevUrlData.url)
                             .then(function (response) {
                                 if (!response.ok) throw new Error("Previous day unavailable");
@@ -1474,6 +1480,7 @@
                 var prev = getPreviousDate(
                     new Date(Date.UTC(date.year, date.month - 1, date.day))
                 );
+                console.log(todayUrlData.url);
                 var prevUrlData = getUrlDay7(prev.date);
                 return fetch(todayUrlData.url)
                     .then(function (response) {
@@ -1484,6 +1491,7 @@
                     })
                     .catch(function () {
                         console.log("Day 7 today not available, using previous day");
+                        console.log(prevUrlData.url);
                         return fetch(prevUrlData.url)
                             .then(function (response) {
                                 if (!response.ok) throw new Error("Previous day unavailable");
@@ -1646,6 +1654,7 @@
                 var prev = getPreviousDate(
                     new Date(Date.UTC(date.year, date.month - 1, date.day))
                 );
+                console.log(todayUrlData.url);
                 var prevUrlData = getUrlDay8(prev.date);
                 return fetch(todayUrlData.url)
                     .then(function (response) {
@@ -1656,6 +1665,7 @@
                     })
                     .catch(function () {
                         console.log("Day 8 today not available, using previous day");
+                        console.log(prevUrlData.url);
                         return fetch(prevUrlData.url)
                             .then(function (response) {
                                 if (!response.ok) throw new Error("Previous day unavailable");
