@@ -5,24 +5,33 @@
   <link rel="icon" type="image/x-icon" href="../stormmaniac_favicon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pi WX Sensor | Storm Maniac</title>
-  <style>
+    <style>
     html, body {
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
+        width: 100%;
+        min-height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+        background: #fff;
     }
 
     #weather-iframe {
-      display: block;
-      width: 100vw;
-      height: 100vh;
-      border: 0;
+        display: block;
+        width: 100%;
+        height: 100dvh;   /* better on mobile than 100vh */
+        min-height: 100vh;
+        border: 0;
     }
-  </style>
+
+    .bottom-spacer {
+        height: calc(72px + env(safe-area-inset-bottom));
+        background: #fff;
+    }
+    </style>
 </head>
 <body>
   <iframe id="weather-iframe" src="https://sensor-pi.tail37d1f9.ts.net/"></iframe>
+  <div class="bottom-spacer"></div>
 </body>
 </html>
